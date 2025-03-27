@@ -22,3 +22,9 @@
 - Finalised the project.
 - We decided on creating a project where AI assists teachers with their work.
 
+### March 27
+- First Scrum meeting
+- Made and agreed upon a contract
+- Compiled all previous weeks notes and plans and commited them to the repo
+- Ensured all team members had access to repo
+- Began work on GitHub Projects project
