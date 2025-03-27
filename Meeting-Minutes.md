@@ -20,4 +20,5 @@
 - Compiled findings from the research task.
 - Discussed opinions about the project.
 - Finalised the project.
+- We decided on creating a project where AI assists teachers with their work.
 
