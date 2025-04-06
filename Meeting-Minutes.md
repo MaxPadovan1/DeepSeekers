@@ -42,6 +42,6 @@
 - wrote user stories separately and combined them together.
 - Discussed further on the sprint plan.
 - Decided to split the work among team members by forming 2 groups within the same group.
-- Agreed to work on figma to create medium fidelity UI.
+- Agreed to use pen n paper for low fidelity UI, and work on Figma for medium fidelity UI.
 ##### Angela, Max, Nav, Glen and Kai attended the meeting on 3rd of April.
   
