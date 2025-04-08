@@ -10,6 +10,14 @@ UAC - Given that there is a sign-in process in the application, when I enter the
 As a user I want to view the profile page, so that I can add or update my details on the profile.\
 UAC- Given that there is a profile page, when the user adds new and relevant details, then the changes can be reflected on the profile page.
 ### User Story 4- Homework with AI
+As a teacher I want to make homework with the help of AI, so that I can make sure that my students keep with the course content.\
+UAC- Given that there is a homework section, when the teacher makes homework, then the teacher can upload it into the application.
+### User Story 5- Release of homework
+As a teacher, I want to release the homework, so that the students can access the homework in a scheduled time.\
+UAC- Given that there is a homework section, when I release homework, then the students can access it in a scheduled time.
+### User Story 6- Student view homeworks
+As a student, I want to view the homeworks, so that I can work on my daily course content and thereby keep up with it.\
+UAC- Given that there is a homework section, when the teacher releases the homework, then the student can view and access it on the homework section.
 ___
 - teacher make homework with help of AI
 - teacher release homework
