@@ -27,7 +27,15 @@ UAC- Given that there is an assignment section, when the teacher releases the as
 ### User Story 9- Student view assignment
 As a student, I want to view the assignment, so that I can work on my assignment based on the information provided.\
 UAC- Given that there is an assignment section, when the teacher releases the assignment, then the student can view the assignment on the homework section and start working on it.
-### User Story 10-
+### User Story 10-Student submit assignment
+As a student, I want to submit my assignment, so that I can get graded for the work I did and the things I learned and applied on the assignment.\
+UAC- Given that there is an assignment section, when the student submits the assignment, then the teacher can access the submitted assignments for grading.
+### User Story 11- Teacher checks for plagiarism
+As a teacher, I want to check for plagiarism in the assignment, so that I can ensure my students have learned the course content well.\
+UAC- Given that there is a plagiarism checker, when the student submits the assessment, then the teacher can check for plagiarism using AI.
+### User Story 12- Teacher grades the assignment
+As a teacher, I want to grade the assignments that the students submitted, so that I can assess my students learning with the grades.\
+UAC- Given that there is an auto-grading AI, when the teacher assesses the assignment, then the AI can help the teacher grade it accordingly.
 - teacher make assignment with help of AI
 - teacher release assignment
 - student view assignments
