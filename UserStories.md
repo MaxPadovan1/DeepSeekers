@@ -41,4 +41,4 @@ ___
 - student makes flash cards with help of AI
 - student does practice quizzes
 ___
-- teacher writes lesson plan with help of ai
+- teacher writes lesson plan with help of AI
