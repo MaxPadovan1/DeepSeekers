@@ -5,12 +5,11 @@ UAC - Given that there is a sign-up page in the application, when I enter my inf
 
 ### User Story 2 - Sign in 
 As a user I want to sign in to the application with the information thatI've signed up with, so that I can use the application.\
-UAC - Given than there is a sign-in process in the application, when I enter the relevant information, then I can use the application as a signed-in user.
-___
-- student view profile page
-- student update details in profile page
-- teacher view profile page
-- teacher update details in profile picture page
+UAC - Given that there is a sign-in process in the application, when I enter the relevant information, then I can use the application as a signed-in user.
+### User Story 3- Profile page
+As a user I want to view the profile page, so that I can add or update my details on the profile.\
+UAC- Given that there is a profile page, when the user adds new and relevant details, then the changes can be reflected on the profile page.
+### User Story 4- Homework with AI
 ___
 - teacher make homework with help of AI
 - teacher release homework
