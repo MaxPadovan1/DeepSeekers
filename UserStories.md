@@ -36,12 +36,7 @@ UAC- Given that there is a plagiarism checker, when the student submits the asse
 ### User Story 12- Teacher grades the assignment
 As a teacher, I want to grade the assignments that the students submitted, so that I can assess my students learning with the grades.\
 UAC- Given that there is an auto-grading AI, when the teacher assesses the assignment, then the AI can help the teacher grade it accordingly.
-- teacher make assignment with help of AI
-- teacher release assignment
-- student view assignments
-- student submit assignments
-- teacher checks for plagiarism with help of AI
-- teacher grades assignments with help of AI
+
 ___
 - teacher make test with help of AI
 - teacher release tests
