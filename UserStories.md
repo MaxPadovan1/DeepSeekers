@@ -5,38 +5,51 @@ UAC - Given that there is a sign-up page in the application, when I enter my inf
 ### User Story 2 - Sign in 
 As a user I want to sign in to the application with the information that I've signed up with, so that I can use the application.\
 UAC - Given that there is a sign-in process in the application, when I enter the relevant information, then I can use the application as a signed-in user.
-### User Story 3- Profile page
+### User Story 3 - Profile page
 As a user I want to view the profile page, so that I can add or update my details on the profile.\
-UAC- Given that there is a profile page, when the user adds new and relevant details, then the changes can be reflected on the profile page.
-### User Story 4- Teacher making homework
+UAC - Given that there is a profile page, when the user adds new and relevant details, then the changes can be reflected on the profile page.
+### User Story 4 - Teacher making homework
 As a teacher I want to make homework with the help of AI, so that I can make sure that my students keep up with the course content.\
-UAC- Given that there is a homework section, when the teacher makes homework, then the teacher can upload it into the application.
-### User Story 5- Releasing homework
+UAC - Given that there is a homework section, when the teacher makes homework, then the teacher can upload it into the application.
+### User Story 5 - Releasing homework
 As a teacher, I want to release the homework, so that the students can access the homework in a scheduled time.\
-UAC- Given that there is a homework section, when I release homework, then the students can access it in a scheduled time.
-### User Story 6- Student viewing homework
+UAC - Given that there is a homework section, when I release homework, then the students can access it in a scheduled time.
+### User Story 6 - Student viewing homework
 As a student, I want to view the homeworks, so that I can work on my daily course content and thereby keep up with it.\
-UAC- Given that there is a homework section, when the teacher releases the homework, then I can view and access it on the homework section.
-### User Story 7- Teacher making assignment
+UAC - Given that there is a homework section, when the teacher releases the homework, then I can view and access it on the homework section.
+### User Story 7 - Teacher making assignment
 As a teacher, I want to make assignment with the help of AI, so that I can upload it to the application.\
-UAC- Given that there is an assignment section, when the teacher makes assignment, then the teacher can upload it to the application.
-### User Story 8- Teacher releasing assignment
+UAC - Given that there is an assignment section, when the teacher makes assignment, then the teacher can upload it to the application.
+### User Story 8 - Teacher releasing assignment
 As a teacher, I want to release the assignment, so that my students can access the assignment, which can be used to assess their learning.\
-UAC- Given that there is an assignment section, when the teacher releases the assignment, then the students can access the assignments in a scheduled time.
-### User Story 9- Student viewing assignment
+UAC - Given that there is an assignment section, when the teacher releases the assignment, then the students can access the assignments in a scheduled time.
+### User Story 9 - Student viewing assignment
 As a student, I want to view the assignment, so that I can work on my assignment based on the information provided.\
-UAC- Given that there is an assignment section, when the teacher releases the assignment, then the student can view the assignment on the homework section and start working on it.
-### User Story 10-Student submitting assignment
+UAC - Given that there is an assignment section, when the teacher releases the assignment, then the student can view the assignment on the homework section and start working on it.
+### User Story 10 - Student submitting assignment
 As a student, I want to submit my assignment, so that I can get graded for the work I did and the things I learned and applied on the assignment.\
-UAC- Given that there is an assignment section, when the student submits the assignment, then the teacher can access the submitted assignments for grading.
-### User Story 11- Teacher checking for plagiarism
+UAC - Given that there is an assignment section, when the student submits the assignment, then the teacher can access the submitted assignments for grading.
+### User Story 11 - Teacher checking for plagiarism
 As a teacher, I want to check for plagiarism in the assignment, so that I can ensure my students have not resorted to academic dishonesty.\
-UAC- Given that there is a plagiarism checker, when the student submits the assessment, then the teacher can use the plagiarism checker to check for plagiarism with the help of AI.
-### User Story 12- Teacher grading the assignment
+UAC - Given that there is a plagiarism checker, when the student submits the assessment, then the teacher can use the plagiarism checker to check for plagiarism with the help of AI.
+### User Story 12 - Teacher grading the assignment
 As a teacher, I want to grade the assignments that the students submitted, so that I can assess my students' learning with grades.\
-UAC- Given that there is an auto-grading AI, when the teacher assesses the assignment, then the AI can help the teacher grade it accordingly.
-
-___
+UAC - Given that there is an auto-grading AI, when the teacher assesses the assignment, then the AI can help the teacher grade it accordingly.
+### User Story 13 - Teacher making tests
+As a teacher, I want to create tests using the course content that I am teaching, so that I can help with and assess my student's learning.\
+UAC - Given that there is a test section in the application, when I create the test of my course content with the help of AI, then I can upload it to the application.
+### User Story 14 - Teacher releasing tests
+As a teacher, I want to release the tests that I have created to the students, so that my students can attempt the tests on the application.\
+UAC - Given that there is a test section in the application, when I release the uploaded tests to the student cohort, then they are able to attempt the test.
+### User Story 15 - Student attempting tests
+As a student, I want to attempt the test that my teacher has uploaded to the application, so that I can evaluate my knowledge on the course content.\
+UAC - Given that there is a test section in the application, when I navigate to the test section after the teacher released the tests, then I can attempt the test and submit my answers.
+### User Story 16 - Teacher checking for cheating
+As a teacher, I want to check for cheating in my students' attempts, so that I can catch any instance of academic dishonesty in my cohort.\
+UAC - Given that there is a test section in the application, when the students have submitted their answers for the test, then I can check for malpractices within the answer with the help of AI.
+### User Story 17 - Teacher grading tests
+As a teacher, I want to grade the test attempts of my students, so that I can assess their knowledge of the course content and help them.\
+UAC - Given that there is a test section in the application, when the students submit their attempts of the tests, then I can grade their attempts with the help of an auto grading AI.
 - teacher make test with help of AI
 - teacher release tests
 - student attempt tests
