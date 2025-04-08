@@ -18,11 +18,16 @@ UAC- Given that there is a homework section, when I release homework, then the s
 ### User Story 6- Student view homeworks
 As a student, I want to view the homeworks, so that I can work on my daily course content and thereby keep up with it.\
 UAC- Given that there is a homework section, when the teacher releases the homework, then the student can view and access it on the homework section.
-___
-- teacher make homework with help of AI
-- teacher release homework
-- student view homeworks
-___
+### User Story 7- Teacher make assignment
+As a teacher, I want to make assignment with the help of AI, so that I can upload it to the application.\
+UAC- Given that there is an assignment section, when the teacher makes assignment, then the teacher can upload it to the application.
+### User Story 8- Teacher releases assignment
+As a teacher, I want to release the assignment, so that my students can access the assignment, which can be used to assess their learning.\
+UAC- Given that there is an assignment section, when the teacher releases the assignment, then the students can access the assignments in a scheduled time.
+### User Story 9- Student view assignment
+As a student, I want to view the assignment, so that I can work on my assignment based on the information provided.\
+UAC- Given that there is an assignment section, when the teacher releases the assignment, then the student can view the assignment on the homework section and start working on it.
+### User Story 10-
 - teacher make assignment with help of AI
 - teacher release assignment
 - student view assignments
