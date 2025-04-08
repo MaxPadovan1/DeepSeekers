@@ -1,7 +1,11 @@
 # User Stories
-- sign up
-- sign in
-- home page
+### User Story 1 - Sign up
+As a user I want to sign up with my information, so that I can use the application.\
+UAC - Given that there is a sign-up page in the application, when I enter my information in the sign-up page, then I can use be registered as a user in the application.
+
+### User Story 2 - Sign in 
+As a user I want to sign in to the application with the information thatI've signed up with, so that I can use the application.\
+UAC - Given than there is a sign-in process in the application, when I enter the relevant information, then I can use the application as a signed-in user.
 ___
 - sudent view profile page
 - student update destails in profile page
