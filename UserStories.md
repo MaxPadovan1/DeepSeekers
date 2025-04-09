@@ -71,9 +71,6 @@ UAC - Given that there is course content in the study section of the app, when I
 ## User Story 24 - Student making flashcards
 As a student, I want to make flashcards with the course content, so that I can use it to help with my learning process.
 UAC - Given that there is course content in the study section, when I want to create flashcards using the course content, then I can create them in the application with the help of AI.
-- teacher release course content
-- teacher makes weekly practice quizzes with help of AI
-- student makes flash cards with help of AI
-- student does practice quizzes
-___
-- teacher writes lesson plan with help of AI
+## User Story 25 - Teacher making lesson plan
+As a teacher, I want to make lesson plans for my classes, so that I can use it to prepare before my lectures.
+UAC - Given that there is a section for lesson plans, when I want to create lesson plans for my classes, then I can use the application to create them with the help of AI.
