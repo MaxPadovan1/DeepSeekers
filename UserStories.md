@@ -49,15 +49,13 @@ As a teacher, I want to check for cheating in my students' attempts, so that I c
 UAC - Given that there is a test section in the application, when the students have submitted their answers for the test, then I can check for malpractices within the answer with the help of AI.
 ### User Story 17 - Teacher grading tests
 As a teacher, I want to grade the test attempts of my students, so that I can assess their knowledge of the course content and help them.\
-UAC - Given that there is a test section in the application, when the students submit their attempts of the tests, then I can grade their attempts with the help of an auto grading AI.
-- teacher make test with help of AI
-- teacher release tests
-- student attempt tests
-- teacher checks for cheating with help of AI
-- teacher grades tests with help of AI
-___
-- teacher release grades
-- student view grades
+UAC - Given that there is a test section in the application, when the students submit their attempts of the test, then I can grade their attempts with the help of an auto grading AI.
+### User Story 18 - Teacher releasing grades
+As a teacher, I want to release my students' grades, so that I can help to give them valuable feedback on the course.\
+UAC - Given that there is a grades section in the application, when the teachers upload the grades obtained after grading the students' assignments and test attempts, then the uploaded grades are released to the application.
+### User Story 19 - Student viewing grades
+As a student, I want to receive my graded assignments and tests, so that I can improve my understanding of the course content.\
+UAC - Given that there is a grades section in the application, when the teachers release grades, then the student's grades are visible to the concerned student.
 ___
 - student view class info
 - teacher view student overview
