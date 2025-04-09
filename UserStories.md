@@ -56,7 +56,13 @@ UAC - Given that there is a grades section in the application, when the teachers
 ### User Story 19 - Student viewing grades
 As a student, I want to receive my graded assignments and tests, so that I can improve my understanding of the course content.\
 UAC - Given that there is a grades section in the application, when the teachers release grades, then the student's grades are visible to the concerned student.
-___
+### User Story 20 - Student viewing class info
+As a student, I want a class information page, so that I can view my classmates' names and contact information (email).\
+UAC - Given that there is a class information page, when I want to know my classmates or contact them, then I can view them in the class information page.
+### User Story 21 - Teacher viewing student overview
+As a teacher, I want to view my student's information, so that I can know my cohort and the information about them that I am required to be aware of.
+UAC - Given that there is a student overview section, when I want to get my student cohort's details, then I can view it in the student overview section.
+
 - student view class info
 - teacher view student overview
 - teacher update student grades in student overview
