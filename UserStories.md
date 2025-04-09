@@ -62,11 +62,15 @@ UAC - Given that there is a class information page, when I want to know my class
 ### User Story 21 - Teacher viewing student overview
 As a teacher, I want to view my student's information, so that I can know my cohort and the information about them that I am required to be aware of.
 UAC - Given that there is a student overview section, when I want to get my student cohort's details, then I can view it in the student overview section.
-
-- student view class info
-- teacher view student overview
-- teacher update student grades in student overview
-___
+## User Story 22 - Teacher releasing course content
+As a teacher, I want to give my student's the course content for each week, so that they can learn the content and keep updated with the course.\
+UAC -  Given that there is a study section for course content, when I release the course content, then the content is uploaded to the application study page.
+## User Story 23 - Teacher making weekly practice quiz
+As a teacher, I want to make weekly practice quizzes for the week's course content, so that the students can attempt the quizzes to aid with their learning.\
+UAC - Given that there is course content in the study section of the app, when I want to create practice quizzes, then I can make them with the help of AI.
+## User Story 24 - Student making flashcards
+As a student, I want to make flashcards with the course content, so that I can use it to help with my learning process.
+UAC - Given that there is course content in the study section, when I want to create flashcards using the course content, then I can create them in the application with the help of AI.
 - teacher release course content
 - teacher makes weekly practice quizzes with help of AI
 - student makes flash cards with help of AI
