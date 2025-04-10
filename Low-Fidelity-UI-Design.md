@@ -4,3 +4,8 @@
 ### Sign in page and Forgot page 
 ![Sign-In_page_and_forogt_page.jpeg](Images/Sign-In_page_and_forogt_page.jpeg)
 
+### Study and course enrollment page
+![Study_and_course_enrollment.jpeg](Images/Study_and_course_enrollment.jpeg)
+
+
+
