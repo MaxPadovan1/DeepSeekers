@@ -8,3 +8,9 @@
 ![img_4.png](img_4.png)
 ### dashboard and home pg
 ![img_5.png](img_5.png)
+### study & homework, with AI helper
+![img_6.png](img_6.png)
+### assignment & test with AI helper
+![img_7.png](img_7.png)
+### grades
+![img_8.png](img_8.png)
