@@ -6,3 +6,5 @@
 ![img_3.png](img_3.png)
 ### updated sign in & sign up pg, with reset link
 ![img_4.png](img_4.png)
+### dashboard and home pg
+![img_5.png](img_5.png)
