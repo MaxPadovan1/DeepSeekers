@@ -10,3 +10,5 @@
 ### Home and profile page
 ![Home_page_and_profile_page.jpeg](Images/Home_page_and_profile_page.jpeg)
 
+### Dashboard and study(Teacher veiw) page
+![Dashboard_and_study(teacher_veiw).jpeg](Images/Dashboard_and_study%28teacher_veiw%29.jpeg)
