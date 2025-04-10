@@ -2,6 +2,8 @@
 ![img.png](img.png)
 ### student profile and dashboard
 ![img_1.png](img_1.png)
+### study page and test page
+![img_2.png](img_2.png)
 ### student's test page
 ![student test page.jpg](Images/student%20test%20page.jpg)
 ![student test page 2.jpg](Images/student%20test%20page%202.jpg)
