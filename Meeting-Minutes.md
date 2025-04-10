@@ -44,4 +44,14 @@
 - Decided to split the work among team members by forming 2 groups within the same group.
 - Agreed to use pen n paper for low fidelity UI, and work on Figma for medium fidelity UI.
 ##### Angela, Max, Nav, Glen and Kai attended the meeting on 3rd of April.
+
+### April 7
+- Configured Project Management tool.
+#### Max and Nav met online on discord.
+
+### April 8
+- 4th weekly meeting.
+- Discussed and decided the layout for UI Design.
+- Split the remaining tasks among the members.
+##### Angela, Max, Nav, Glen and Kai attended the meeting on 3rd of April.
   
