@@ -7,5 +7,6 @@
 ### Study and course enrollment page
 ![Study_and_course_enrollment.jpeg](Images/Study_and_course_enrollment.jpeg)
 
-
+### Home and profile page
+![Home_page_and_profile_page.jpeg](Images/Home_page_and_profile_page.jpeg)
 
