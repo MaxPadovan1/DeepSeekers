@@ -55,7 +55,13 @@
 - Split the remaining tasks among the members.
 ##### Angela, Max, Nav, Glen and Kai attended the meeting on 8th of April.
 
+### April 10
+- 3rd scrum meeting.
+- Submitted the low fidelity and medium fidelity UI, alongwith the user stories.
+##### Angela, Max, Nav, Glen and Kai attended the meeting on 10th of April.
+
 ### April 24
--5th weekly meeting
--Discussed about splitting work among members.
+- 5th weekly meeting
+- Discussed about splitting work among members.
+##### Angela, Max, Nav, Glen and Kai attended the meeting on 24th of April.
   
