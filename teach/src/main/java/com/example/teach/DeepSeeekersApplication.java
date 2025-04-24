@@ -11,7 +11,7 @@ public class DeepSeeekersApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(DeepSeeekersApplication.class.getResource("DeepSeekers-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setTitle("DeepSeekers");
         stage.setScene(scene);
         stage.show();
