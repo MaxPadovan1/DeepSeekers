@@ -1,18 +1,20 @@
-##### sign in & sign up page
+# Medium Fidelity UI Design
+Available at : https://www.figma.com/design/p5rvD7GIvauciQH4mMsLdB/Medium-Fidelity-Prototype?node-id=0-1&t=q6TN8M0h8dDZIIxB-1
+### Sign in & sign up page
 ![img.png](../Images/img.png)
-### student profile and dashboard
+### Student profile and dashboard
 ![img_1.png](../Images/img_1.png)
 ### Study page and Test page
 ![img_3.png](../Images/img_3.png)
-### updated sign in & sign up pg, with reset link
+### Updated sign in & sign up pg, with reset link
 ![img_4.png](../Images/img_4.png)
-### dashboard and home pg
+### Dashboard and home pg
 ![img_5.png](../Images/img_5.png)
-### study & homework, with AI helper
+### Study & homework, with AI helper
 ![img_6.png](../Images/img_6.png)
-### assignment & test with AI helper
+### Assignment & test with AI helper
 ![img_7.png](../Images/img_7.png)
-### grades
+### Grades
 ![img_8.png](../Images/img_8.png)
 ### Teacher profile
 ![img_9.png](../Images/img_9.png)
