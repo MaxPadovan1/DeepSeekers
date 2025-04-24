@@ -54,4 +54,8 @@
 - Discussed and decided the layout for UI Design.
 - Split the remaining tasks among the members.
 ##### Angela, Max, Nav, Glen and Kai attended the meeting on 8th of April.
+
+### April 24
+-5th weekly meeting
+-Discussed about splitting work among members.
   
