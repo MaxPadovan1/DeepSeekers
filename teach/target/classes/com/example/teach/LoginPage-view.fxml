@@ -5,6 +5,6 @@
 <?import javafx.scene.control.Button?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.teach.DeepSeekersController">
+      fx:controller="com.example.teach.LoginPageController">
 
 </VBox>
