@@ -1,4 +1,4 @@
-package com.example.teach;
+package com.example.teach.controller;
 
 public class LoginPageController {
 
