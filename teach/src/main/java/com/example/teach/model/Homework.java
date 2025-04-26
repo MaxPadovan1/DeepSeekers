@@ -1,6 +1,4 @@
 package com.example.teach.model;
 
-public class User
-{
-
+public class Homework {
 }
