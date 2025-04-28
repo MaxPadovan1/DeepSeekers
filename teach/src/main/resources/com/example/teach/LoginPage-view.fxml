@@ -18,23 +18,25 @@
         </padding>
 
         <VBox alignment="CENTER_RIGHT" >
-        <padding>
-            <Insets  left="120.0" right="120.0" />
-        </padding>
-        <TextField fx:id="userId" promptText="User ID" maxWidth="500.0" prefHeight="30"/>
+            <padding>
+                <Insets  left="120.0" right="120.0" />
+            </padding>
+            <TextField fx:id="userId" promptText="User ID" maxWidth="500.0" prefHeight="30"/>
         </VBox>
+
             <VBox alignment="CENTER_RIGHT">
                 <padding>
                     <Insets  left="120.0" right="120.0" />
                 </padding>
-            <PasswordField fx:id="passwordField" promptText="Password" maxWidth="500.0" prefHeight="30"/>
+                <PasswordField fx:id="passwordField" promptText="Password" maxWidth="500.0" prefHeight="30"/>
             </VBox>
+
             <VBox alignment="CENTER_RIGHT">
                 <padding>
                     <Insets  left="120.0" right="120.0" bottom="20.0" />
                 </padding>
                 <Hyperlink fx:id="fpassword" text="Forgot Password?" maxWidth="500.0" maxHeight="150.0" />
-        </VBox>
+            </VBox>
 
         <HBox alignment="CENTER_RIGHT" spacing="50.0">
             <padding>
