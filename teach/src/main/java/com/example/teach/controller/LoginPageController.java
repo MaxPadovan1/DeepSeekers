@@ -8,29 +8,20 @@ import javafx.scene.control.TextField;
 
 
 public class LoginPageController {
-    @FXML
-    private TextField userId;
+    @FXML private TextField userId;
+    @FXML private PasswordField passwordField;
+    @FXML private Label messageLabel;
+    @FXML private Hyperlink fpassword;
+    @FXML private Label welcomeText;
+    @FXML private Label welcomeText1;
 
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Label messageLabel;
-
-    @FXML
-    private Hyperlink fpassword;
-    @FXML
-    private Label welcomeText;
-    @FXML
-    private Label welcomeText1;
-
-    @FXML
-    private void handleLogin() {
+    @FXML private void handleLogin()
+    {
         String userID = userId.getText();
         String password = passwordField.getText();
     }
-    @FXML
-    private void handleSignUp() {
+    @FXML private void handleSignUp()
+    {
         String userID = userId.getText();
         String password = passwordField.getText();
     }
