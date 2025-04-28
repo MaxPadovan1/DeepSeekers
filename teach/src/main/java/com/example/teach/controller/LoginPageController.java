@@ -1,4 +1,4 @@
-package com.example.teach;
+package com.example.teach.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
