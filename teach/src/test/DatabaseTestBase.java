@@ -1,33 +1,38 @@
-
 import com.example.teach.model.SQLiteDAO;
 import com.example.teach.model.SQliteConnection;
+import com.example.teach.model.UserDAO;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.Connection;
 import java.sql.Statement;
 
 public abstract class DatabaseTestBase {
     protected static Connection conn;
+    protected UserDAO dao;
 
     @BeforeAll
-    static void setupDatabase() throws Exception {
-        // initialize schema
-        new SQLiteDAO();
+    public static void initSchema() throws Exception {
+        // Force schema creation
+        new SQLiteDAO();  // runs createSchema() in its constructor
 
-        // grab the shared connection
+        // Grab the shared Connection
         conn = SQliteConnection.getInstance();
+    }
 
-        // wipe all tables for a fresh state
+    @BeforeEach
+    public void cleanTables() throws Exception {
         try (Statement st = conn.createStatement()) {
+            // Delete in correct order to avoid FK violations
             st.executeUpdate("DELETE FROM StudentSubjects");
             st.executeUpdate("DELETE FROM Teachers");
             st.executeUpdate("DELETE FROM Students");
             st.executeUpdate("DELETE FROM Users");
             st.executeUpdate("DELETE FROM Assignments");
             st.executeUpdate("DELETE FROM Homeworks");
-            st.executeUpdate("DELETE FROM CourseContent");
+            st.executeUpdate("DELETE FROM Study");
             st.executeUpdate("DELETE FROM Subjects");
         }
+        dao = new UserDAO();
     }
 }
-

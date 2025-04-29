@@ -57,11 +57,17 @@ public class UserDAO {
         }
     }
 
-    /** SIGN-UP: inserts into Users + Students/Teachers + StudentSubjects */
     public boolean signUp(User u) {
         if (exists(u.getId())) return false;
 
-        // 1) Users table
+        // 👉 First, enforce business rules BEFORE inserting into database
+        if (u instanceof Student student) {
+            if (student.getSubjects() != null && student.getSubjects().size() > 4) {
+                return false;  // too many subjects
+            }
+        }
+
+        // 1) Insert into Users table
         String insU = "INSERT INTO Users(id,passwordHash,firstName,lastName,role,email) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(insU)) {
             ps.setString(1, u.getId());
@@ -76,18 +82,15 @@ public class UserDAO {
             return false;
         }
 
-        // 2) Role-specific tables
+        // 2) Role-specific inserts
         try {
             if (u instanceof Student) {
-                // Students table
                 try (PreparedStatement ps = conn.prepareStatement(
                         "INSERT INTO Students(id) VALUES(?)")) {
                     ps.setString(1, u.getId());
                     ps.executeUpdate();
                 }
-                // StudentSubjects join
                 List<Subject> subs = ((Student)u).getSubjects();
-                if (subs.size() > 4) return false;
                 try (PreparedStatement ps = conn.prepareStatement(
                         "INSERT INTO StudentSubjects(student_id,subject_id) VALUES(?,?)")) {
                     for (Subject s : subs) {
@@ -98,7 +101,6 @@ public class UserDAO {
                     ps.executeBatch();
                 }
             } else {
-                // Teachers table
                 Subject s = ((Teacher)u).getSubject();
                 try (PreparedStatement ps = conn.prepareStatement(
                         "INSERT INTO Teachers(id,subject_id) VALUES(?,?)")) {
@@ -114,6 +116,7 @@ public class UserDAO {
 
         return true;
     }
+
 
     /** Helper to check for duplicate IDs */
     public boolean exists(String id) {
