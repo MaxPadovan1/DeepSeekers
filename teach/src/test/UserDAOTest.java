@@ -122,6 +122,37 @@ class UserDAOTest extends DatabaseTestBase{
         assertFalse(dao.signUp(stu));
         assertFalse(dao.exists("S8"));
     }
+
+    @Test
+    void signUpDuplicateIdFails() throws Exception {
+        Student stu1 = new Student("S100", "pass", "Charlie", "C", "charlie@e.com",
+                List.of(new Subject("T1", "TestSub")));
+        Student stu2 = new Student("S100", "pass2", "Chris", "C", "chris@e.com",
+                List.of(new Subject("T1", "TestSub")));
+
+        assertTrue(dao.signUp(stu1));
+        assertFalse(dao.signUp(stu2));
+    }
+
+    @Test
+    void signUpStudentNullSubjectsSucceeds() throws Exception {
+        Student stu = new Student("S101", "pass", "Eve", "E", "eve@e.com", null);
+
+        assertTrue(dao.signUp(stu));
+        assertTrue(dao.exists("S101"));
+    }
+
+    @Test
+    void signUpStudentExactlyFourSubjectsSucceeds() throws Exception {
+        List<Subject> subjects = List.of(
+                new Subject("A", ""), new Subject("B", ""),
+                new Subject("C", ""), new Subject("D", "")
+        );
+        Student stu = new Student("S102", "pass", "Frank", "F", "frank@e.com", subjects);
+
+        assertTrue(dao.signUp(stu));
+        assertTrue(dao.exists("S102"));
+    }
 }
 
 

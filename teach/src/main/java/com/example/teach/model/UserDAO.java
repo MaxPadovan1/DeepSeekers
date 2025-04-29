@@ -91,14 +91,16 @@ public class UserDAO {
                     ps.executeUpdate();
                 }
                 List<Subject> subs = ((Student)u).getSubjects();
-                try (PreparedStatement ps = conn.prepareStatement(
-                        "INSERT INTO StudentSubjects(student_id,subject_id) VALUES(?,?)")) {
-                    for (Subject s : subs) {
-                        ps.setString(1, u.getId());
-                        ps.setString(2, s.getId());
-                        ps.addBatch();
+                if (subs != null && !subs.isEmpty()) {
+                    try (PreparedStatement ps = conn.prepareStatement(
+                            "INSERT INTO StudentSubjects(student_id,subject_id) VALUES(?,?)")) {
+                        for (Subject s : subs) {
+                            ps.setString(1, u.getId());
+                            ps.setString(2, s.getId());
+                            ps.addBatch();
+                        }
+                        ps.executeBatch();
                     }
-                    ps.executeBatch();
                 }
             } else {
                 Subject s = ((Teacher)u).getSubject();
