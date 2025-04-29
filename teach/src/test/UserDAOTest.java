@@ -95,7 +95,7 @@ class UserDAOTest extends DatabaseTestBase{
         dao.signUp(stu);
 
         // correct email
-        assertTrue(dao.resetPassword("S6", "f@e", "rh6"));
+        assertTrue(dao.resetPassword("S6", "g@e", "rh6"));
 
         assertNull(dao.findByCredentials("S6", "h6"));
         assertNotNull(dao.findByCredentials("S6", "rh6"));
