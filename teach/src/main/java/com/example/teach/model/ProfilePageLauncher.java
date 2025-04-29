@@ -1,4 +1,4 @@
-package com.example.teach;
+package com.example.teach.model;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
