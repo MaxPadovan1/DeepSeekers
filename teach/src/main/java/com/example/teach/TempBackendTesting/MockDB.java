@@ -15,10 +15,10 @@ public class MockDB
         students = new ArrayList<>();
         teachers = new ArrayList<>();
 
-        students.add(new Student("S001", "password", "Bob", "Baker"));
-        students.add(new Student("S002", "leg", "Dave", "Smith"));
+        students.add(new Student("S001", "password", "Bob", "Baker","baker@email.com"));
+        students.add(new Student("S002", "leg", "Dave", "Smith", "smith@email.com"));
 
-        teachers.add(new Teacher("T001", "penis", "Lucy", "Davis"));
-        teachers.add(new Teacher("T002", "balls", "Sam", "Balls"));
+        teachers.add(new Teacher("T001", "penis", "Lucy", "Davis","davis@email.com"));
+        teachers.add(new Teacher("T002", "balls", "Sam", "Balls","balls@email.com"));
     }
 }
