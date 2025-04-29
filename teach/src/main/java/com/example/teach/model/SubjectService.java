@@ -1,4 +1,4 @@
-// SubjectService.java
+
 package com.example.teach.model;
 
 import java.sql.SQLException;
