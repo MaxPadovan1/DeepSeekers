@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.Insets?>
-
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.control.*?>
 
-
-
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.teach.LoginPageController" style="-fx-background-color:">
+      fx:controller="com.example.teach.controller.LoginPageController" style="-fx-background-color:">
     <HBox spacing="10.00" alignment="BOTTOM_LEFT" >
         <padding>
             <Insets left="50.0" />
@@ -22,23 +18,25 @@
         </padding>
 
         <VBox alignment="CENTER_RIGHT" >
-        <padding>
-            <Insets  left="120.0" right="120.0" />
-        </padding>
-        <TextField fx:id="userId" promptText="User ID" maxWidth="500.0" prefHeight="30"/>
+            <padding>
+                <Insets  left="120.0" right="120.0" />
+            </padding>
+            <TextField fx:id="userId" promptText="User ID" maxWidth="500.0" prefHeight="30"/>
         </VBox>
+
             <VBox alignment="CENTER_RIGHT">
                 <padding>
                     <Insets  left="120.0" right="120.0" />
                 </padding>
-            <PasswordField fx:id="passwordField" promptText="Password" maxWidth="500.0" prefHeight="30"/>
+                <PasswordField fx:id="passwordField" promptText="Password" maxWidth="500.0" prefHeight="30"/>
             </VBox>
+
             <VBox alignment="CENTER_RIGHT">
                 <padding>
                     <Insets  left="120.0" right="120.0" bottom="20.0" />
                 </padding>
                 <Hyperlink fx:id="fpassword" text="Forgot Password?" maxWidth="500.0" maxHeight="150.0" />
-        </VBox>
+            </VBox>
 
         <HBox alignment="CENTER_RIGHT" spacing="50.0">
             <padding>
