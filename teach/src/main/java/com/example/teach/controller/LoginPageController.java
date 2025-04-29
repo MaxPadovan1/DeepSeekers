@@ -1,15 +1,9 @@
 package com.example.teach.controller;
-import com.example.teach.DeepSeeekersApplication;
-import com.example.teach.TempBackendTesting.MockDB;
 import com.example.teach.model.User;
 import com.example.teach.model.Student;
 import com.example.teach.model.Teacher;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import org.sqlite.core.DB;
-
-import static com.example.teach.model.User.login;
 
 
 public class LoginPageController {
