@@ -1,10 +1,6 @@
 package com.example.teach.model;
-import com.example.teach.TempBackendTesting.MockDB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class User
@@ -14,6 +10,14 @@ public abstract class User
     private String FirstName;
     private String LastName;
     private String Email;
+
+    public User(String id, String passwordHash, String firstName, String lastName, String email) {
+        setId(id);
+        setPasswordHash(passwordHash);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+    }
 
     public void   setId(String id) { this.Id = id; }
     public String getId() { return Id; }
@@ -26,38 +30,58 @@ public abstract class User
 
     public void setLastName(String lastName) { this.LastName = lastName; }
 
+    // -------------------
+    // Authentication
+    // -------------------
+
     /**
-     * Look up a user by credentials.
-     * Returns a Student or Teacher if found, or null on bad creds.
+     * Lookup a user by ID & passwordHash.
+     * Returns a Student (with all assigned subjects)
+     * or a Teacher (with their single subject), or null.
      */
     public static User login(String id, String passwordHash) {
         return new UserDAO().findByCredentials(id, passwordHash);
     }
 
     /**
-     * Attempt to register a new Student or Teacher.
-     * Returns the new User on success, or null if the ID is invalid
-     * (wrong prefix) or already exists.
+     * Sign-up:
+     *  - Students supply up to 4 subjectIds
+     *  - Teachers supply exactly 1 subjectId
      */
     public static User signUp(String id,
                               String passwordHash,
                               String firstName,
                               String lastName,
-                              String email) {
-        // 1) enforce prefix
-        char prefix = Character.toUpperCase(id.charAt(0));
-        User newUser;
-        if (prefix == 'S') {
-            newUser = new Student(id, passwordHash, firstName, lastName, email);
-        } else if (prefix == 'T') {
-            newUser = new Teacher(id, passwordHash, firstName, lastName, email);
-        } else {
+                              String email,
+                              List<String> subjectIds) {
+        char p = Character.toUpperCase(id.charAt(0));
+        try {
+            if (p == 'S') {
+                if (subjectIds.size() > 4) return null;
+                // resolve to Subject objects
+                List<Subject> subs = new ArrayList<>();
+                for (String sid : subjectIds) {
+                    Subject s = new SubjectDAO().findById(sid);
+                    if (s == null) return null; // invalid ID
+                    subs.add(s);
+                }
+                Student stu = new Student(id, passwordHash, firstName, lastName, email, subs);
+                return new UserDAO().signUp(stu) ? stu : null;
+            }
+            else if (p == 'T') {
+                if (subjectIds.size() != 1) return null;
+                Subject s = new SubjectDAO().findById(subjectIds.get(0));
+                if (s == null) return null;
+                Teacher tch = new Teacher(id, passwordHash, firstName, lastName, email, s);
+                return new UserDAO().signUp(tch) ? tch : null;
+            }
+            else {
+                return null; // bad prefix
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
-
-        // 2) delegate the insert
-        boolean created = new UserDAO().signUp(newUser);
-        return created ? newUser : null;
     }
 
     public void setEmail(String email) {
