@@ -1,14 +1,38 @@
-/teach/target/
+teach/target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
 .DS_Store
-teach/.DS_Store
-teach/src/.DS_Store
-teach/src/main/.DS_Store
-teach/src/main/java/.DS_Store
-teach/src/main/java/com/.DS_Store
-teach/src/main/java/com/example/.DS_Store
-teach/src/main/java/com/example/teach/.DS_Store
-teach/src/test/.DS_Store
-teach/src/test/java/.DS_Store
-teach/src/test/java/com/.DS_Store
-teach/src/test/java/com/example/.DS_Store
-teach/src/test/java/com/example/teach/.DS_Store
