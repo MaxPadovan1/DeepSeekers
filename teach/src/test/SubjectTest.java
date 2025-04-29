@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class SubjectTest {
     @Test
     void constructorAndGetters() {
-        Subject s = new Subject("MATH101", "Calculus I");
-        assertEquals("MATH101", s.getId());
-        assertEquals("Calculus I", s.getName());
-        assertEquals("Calculus I", s.toString());
+        Subject s = new Subject("CS101", "Algorithms");
+        assertEquals("CS101", s.getId());
+        assertEquals("Algorithms", s.getName());
+        assertEquals("Algorithms", s.toString());
     }
 }
