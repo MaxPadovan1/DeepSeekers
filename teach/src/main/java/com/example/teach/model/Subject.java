@@ -10,4 +10,8 @@ public class Subject {
     }
     public String getId()   { return id; }
     public String getName() { return name; }
+    @Override
+    public String toString() {
+        return name;  // useful for ComboBox/ListView display
+    }
 }
