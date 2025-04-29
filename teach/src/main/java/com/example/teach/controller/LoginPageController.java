@@ -10,7 +10,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.sqlite.core.DB;
 
-import static com.example.teach.model.User.Login;
+import java.util.Optional;
+import static com.example.teach.model.User.login;
 
 
 public class LoginPageController {
@@ -24,10 +25,26 @@ public class LoginPageController {
 
     @FXML private void handleLogin()
     {
+        // 1) Grab inputs
         String userID = userId.getText();
         String password = passwordField.getText();
 
-        User loggedInUser = Login(userID, password, DeepSeeekersApplication.DB);
+        // 2) Attempt authentication
+        Optional<User> optUser = login(userID, password, DeepSeeekersApplication.DB);
+
+        // 3) Check result
+        if (optUser.isPresent()) {
+            User loggedIn = optUser.get();
+            System.out.printf("User %s %s logged in%n", loggedIn.getFirstName(), loggedIn.getLastName());
+            //jesus christ it finally works
+
+            //TODO: continue to dashboard
+        }
+        else {
+            // Invalid credentials—show a friendly message
+            System.out.println("Invalid username or password.");
+            //you fucked up
+        }
     }
     @FXML private void handleSignUp()
     {
