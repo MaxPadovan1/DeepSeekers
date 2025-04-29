@@ -1,20 +1,35 @@
 package com.example.teach.model;
 import java.util.List;
 
-public class User
+public abstract class User
 {
     private String Id;
-    private String Password;
+    private String PasswordHash;
 
     private String FirstName;
     private String LastName;
-    private int Age;
 
     private List<Subject> Subjects;
 
 
-    public static void Login(String userName, String password)
-    {
 
+    public void setId(String id)
+    {
+        this.Id = id;
+    }
+
+    public void setPasswordHash(String passwordHash)
+    {
+        this.PasswordHash = passwordHash;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.FirstName = firstName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.LastName = lastName;
     }
 }
