@@ -7,5 +7,6 @@ module com.example.teach {
     opens com.example.teach to javafx.fxml;
     exports com.example.teach;
     exports com.example.teach.controller;
+    exports com.example.teach.model;
     opens com.example.teach.controller to javafx.fxml;
 }
