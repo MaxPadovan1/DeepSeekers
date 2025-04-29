@@ -1,2 +1,14 @@
 /teach/target/
-*.iml
+.DS_Store
+teach/.DS_Store
+teach/src/.DS_Store
+teach/src/main/.DS_Store
+teach/src/main/java/.DS_Store
+teach/src/main/java/com/.DS_Store
+teach/src/main/java/com/example/.DS_Store
+teach/src/main/java/com/example/teach/.DS_Store
+teach/src/test/.DS_Store
+teach/src/test/java/.DS_Store
+teach/src/test/java/com/.DS_Store
+teach/src/test/java/com/example/.DS_Store
+teach/src/test/java/com/example/teach/.DS_Store
