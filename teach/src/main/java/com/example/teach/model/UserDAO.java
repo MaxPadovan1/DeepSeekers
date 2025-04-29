@@ -127,4 +127,46 @@ public class UserDAO {
             return false;
         }
     }
+    /** Update firstName, lastName, email for a given user. ID is immutable. */
+    public boolean updateProfile(User u) {
+        String sql = "UPDATE Users SET firstName=?, lastName=?, email=? WHERE id=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, u.getFirstName());
+            ps.setString(2, u.getLastName());
+            ps.setString(3, u.getEmail());
+            ps.setString(4, u.getId());
+            return ps.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    /** Change password when user knows their old password. */
+    public boolean changePassword(String id, String oldHash, String newHash) {
+        String sql = "UPDATE Users SET passwordHash=? WHERE id=? AND passwordHash=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newHash);
+            ps.setString(2, id);
+            ps.setString(3, oldHash);
+            return ps.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    /** Reset password via “forgot password” flow (verify by email). */
+    public boolean resetPassword(String id, String email, String newHash) {
+        String sql = "UPDATE Users SET passwordHash=? WHERE id=? AND email=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newHash);
+            ps.setString(2, id);
+            ps.setString(3, email);
+            return ps.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -2,6 +2,9 @@ package com.example.teach.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public abstract class User
 {
@@ -84,6 +87,8 @@ public abstract class User
         }
     }
 
+
+
     public void setEmail(String email) {
         Email = email;
     }
@@ -94,6 +99,28 @@ public abstract class User
 
     public String getLastName() {
         return LastName;
+    }
+
+    /**
+     * Hashes the given plain‐text password with SHA-256.
+     * Returns the hex‐encoded digest.
+     */
+    public static String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[]   bytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(bytes);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 not available", e);
+        }
+    }
+
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 
 
