@@ -65,32 +65,32 @@
             <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 10px" text="Dashboard" />
             <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Profile" />
             <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Class Info" />
-            <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Lesson Plan" />
+            <Label style="-fx-text-fill: white;-fx-cursor: hand;-fx-font-size: 18px;-fx-padding: 20px" text="Lesson Plan" fx:id="lessonPlanLabel" onMouseEntered="#handleMouseEnter" onMouseExited="#handleMouseExit" />
             <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Home page" />
         </VBox>
     </left>
 
     <!-- 🆕 Second Header Bar (Below) -->
-    <HBox style="-fx-background-color: #34495E; -fx-padding: 10px;"  spacing="10">
+<!--    <HBox style="-fx-background-color: #34495E; -fx-padding: 10px;"  spacing="10">-->
 
         <!-- Back Button (left) -->
 
 
 
-        <Pane HBox.hgrow="ALWAYS" />
+<!--        <Pane HBox.hgrow="ALWAYS" />-->
 
-        <!-- Notification Button (right) -->
-        <Button fx:id="notificationButton" onAction="#showNotifications" style="-fx-background-color: transparent;">
-            <graphic>
-                <ImageView fitWidth="24" fitHeight="24">
-                    <image>
-                        <Image url="@images/notification_bell.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
+<!--        &lt;!&ndash; Notification Button (right) &ndash;&gt;-->
+<!--        <Button fx:id="notificationButton" onAction="#showNotifications" style="-fx-background-color: transparent;">-->
+<!--            <graphic>-->
+<!--                <ImageView fitWidth="24" fitHeight="24">-->
+<!--                    <image>-->
+<!--                        <Image url="@images/notification_bell.png" />-->
+<!--                    </image>-->
+<!--                </ImageView>-->
+<!--            </graphic>-->
+<!--        </Button>-->
 
-    </HBox>
+<!--    </HBox>-->
 
 
     <!-- Center Content Area -->
