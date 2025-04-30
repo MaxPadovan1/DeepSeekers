@@ -1,51 +1,76 @@
 package com.example.teach.controller;
-import com.example.teach.model.User;
-import com.example.teach.model.Student;
-import com.example.teach.model.Teacher;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import  javafx.scene.Node;
+import javafx.event.ActionEvent;
+
+import java.io.IOException;
 
 
 public class LoginPageController {
-    @FXML private TextField userId;
-    @FXML private PasswordField passwordField;
-    @FXML private Label messageLabel;
-    @FXML private Hyperlink fpassword;
-    @FXML private Label welcomeText;
-    @FXML private Label welcomeText1;
-
-
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
-        alert.setHeaderText(null);
-        alert.showAndWait();
-    }
     @FXML
-    private void handleLogin() {
-        String userID   = userId.getText();
+    private TextField userId;
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private Label errorLabel;
+
+    @FXML
+    private Hyperlink fPassword;
+    @FXML
+    private Label welcomeText;
+    @FXML
+    private Label welcomeText1;
+
+    @FXML
+    private void handleLogin(ActionEvent event) {
+        String userID = userId.getText();
         String password = passwordField.getText();
 
-        // call the 2-arg static method on User
-        User loggedInUser = User.login(userID, password);
+        boolean loginSuccessful=true;
 
-        if (loggedInUser == null) {
-            showError("Invalid credentials");
-        } else if (loggedInUser instanceof Student) {
-            openStudentDashboard((Student)loggedInUser);
-        } else {
-            openTeacherDashboard((Teacher)loggedInUser);
+        if(loginSuccessful)
+        {
+            openDashboard(event);
+        }
+        else
+        {
+            errorLabel.setText("Invalid userID or password!");
         }
     }
-    @FXML private void handleSignUp()
+
+    private void openDashboard(ActionEvent event)
     {
+        try{
+            FXMLLoader fxmlLoader= new FXMLLoader(getClass().getResource("/com/example/teach/Dashboard-view.fxml"));
+            Parent dashboardRoot= fxmlLoader.load();
+
+            Stage currentstage=(Stage) ((Node) event.getSource()).getScene().getWindow();
+            //get the new scene
+            Scene dashboardScene=new Scene(dashboardRoot);
+            currentstage.setTitle("Dashboard");
+            currentstage.setScene(dashboardScene);
+            currentstage.show();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleSignUp() {
         String userID = userId.getText();
         String password = passwordField.getText();
     }
-    @FXML void openStudentDashboard(Student s) {
-        // e.g. FXMLLoader.load("StudentDashboard.fxml"), pass `s` via a setter on the controller, etc.
-    }
 
-    @FXML private void openTeacherDashboard(Teacher t) {
-        // load teacher view, etc.
-    }
+
 }
