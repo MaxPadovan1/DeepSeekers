@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.teach.controller.SignUpController"
+      spacing="10" alignment="CENTER" padding="20">
+
+    <Label text="Sign Up Form" style="-fx-font-size: 18px;"/>
+
+    <TextField fx:id="idField" promptText="User ID"/>
+    <PasswordField fx:id="passwordField" promptText="Password"/>
+    <TextField fx:id="firstNameField" promptText="First Name"/>
+    <TextField fx:id="lastNameField" promptText="Last Name"/>
+    <TextField fx:id="emailField" promptText="Email"/>
+
+    <ComboBox fx:id="roleBox" promptText="Select Role"/>
+    <TextField fx:id="subjectsField" promptText="Comma-separated subjects (Student only)"/>
+
+    <Button text="Sign Up" onAction="#handleSignUp"/>
+    <Label fx:id="statusLabel" textFill="red"/>
+
+</VBox>
+
