@@ -15,24 +15,14 @@ import java.io.IOException;
 
 
 public class LoginPageController {
-    @FXML
-    private TextField userId;
+    @FXML private TextField userId;
+    @FXML private PasswordField passwordField;
+    @FXML private Label errorLabel;
+    @FXML private Hyperlink fPassword;
+    @FXML private Label welcomeText;
+    @FXML private Label welcomeText1;
 
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Label errorLabel;
-
-    @FXML
-    private Hyperlink fPassword;
-    @FXML
-    private Label welcomeText;
-    @FXML
-    private Label welcomeText1;
-
-    @FXML
-    private void handleLogin(ActionEvent event) {
+    @FXML private void handleLogin(ActionEvent event) {
         String userID = userId.getText();
         String password = passwordField.getText();
 
@@ -66,11 +56,8 @@ public class LoginPageController {
             e.printStackTrace();
         }
     }
-    @FXML
-    private void handleSignUp() {
+    @FXML private void handleSignUp() {
         String userID = userId.getText();
         String password = passwordField.getText();
     }
-
-
 }
