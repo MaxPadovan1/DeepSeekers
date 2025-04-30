@@ -103,7 +103,7 @@
 
         </children>
     </HBox>
-   <Accordion>
+   <Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="1280.0">
      <panes>
        <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="1280.0" text="Assignment 1">
          <content>
@@ -171,7 +171,7 @@
                </AnchorPane>
          </content>
        </TitledPane>
-         <TitledPane animated="false" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="320.0" prefWidth="1280.0" text="Test 1">
+         <TitledPane animated="false" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="1280.0" text="Test 2">
             <content>
                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="1280.0">
                   <children>
@@ -237,7 +237,7 @@
                </AnchorPane>
             </content>
          </TitledPane>
-         <TitledPane animated="false" layoutX="10.0" layoutY="330.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="320.0" prefWidth="1280.0" text="Assignment 2">
+         <TitledPane animated="false" layoutX="10.0" layoutY="307.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="1280.0" text="Assignment 2">
             <content>
                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="1280.0">
                   <children>
@@ -303,7 +303,7 @@
                </AnchorPane>
             </content>
          </TitledPane>
-         <TitledPane animated="false" layoutX="10.0" layoutY="353.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="320.0" prefWidth="1280.0" text="Test 2">
+         <TitledPane animated="false" layoutX="10.0" layoutY="57.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="1280.0" text="Test 2">
             <content>
                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="1280.0">
                   <children>
