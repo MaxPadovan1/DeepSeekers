@@ -1,9 +1,17 @@
 package com.example.teach.model;
-import java.util.List;
 
-public class Subject
-{
-    private List<Homework> Homework;
-    //private List<Test> Tests;
-    private List<Assignment> Assignments;
+public class Subject {
+    private String id;
+    private String name;
+
+    public Subject(String id, String name) {
+        this.id   = id;
+        this.name = name;
+    }
+    public String getId()   { return id; }
+    public String getName() { return name; }
+    @Override
+    public String toString() {
+        return name;  // useful for ComboBox/ListView display
+    }
 }
