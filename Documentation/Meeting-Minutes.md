@@ -65,3 +65,8 @@
 - Discussed about splitting work among members.
 ##### Angela, Max, Nav, Glen and Kai attended the meeting on 24th of April.
   
+### April 29
+- 7th weekly meeting
+- Discussed about the work going to be done by front end and back end.
+- Also discussed about About how to create the video presentation and ideas
+#### Glen, Kai, Nav, Angela, Max attended the meeting on the 29th April.
