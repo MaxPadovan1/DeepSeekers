@@ -202,7 +202,6 @@ public class SignUpViewBasicController {
             Parent root = loader.load();
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1280, 720));
-            stage.setTitle("Login");
         } catch (IOException e) {
             messageLabel.setText("Could not return to login.");
         }
