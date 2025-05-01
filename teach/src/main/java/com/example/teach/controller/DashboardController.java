@@ -120,28 +120,6 @@ public class DashboardController {
         }
     }
     @FXML
-    private void goToProfile(MouseEvent event) {
-        switchToProfileScene(((Node) event.getSource()).getScene().getWindow());
-    }
-
-    @FXML
-    private void goToProfile(ActionEvent event) {
-        switchToProfileScene(((MenuItem) event.getSource()).getParentPopup().getOwnerWindow());
-    }
-
-    private void switchToProfileScene(Window window) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/ProfilePage.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) window;
-            stage.setScene(new Scene(root));
-            stage.setTitle("Profile");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
     private void goToDashboard(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/Dashboard-view.fxml"));
