@@ -36,7 +36,7 @@
                 </graphic>
             </Button>
             <Region HBox.hgrow="ALWAYS"/>
-            <MenuButton text="Ezekiel Landon" style="-fx-text-fill: white;">
+            <MenuButton fx:id="userMenu" style="-fx-text-fill: white;">
                 <items>
                     <MenuItem text="Profile"/>
                     <MenuItem text="Logout"/>

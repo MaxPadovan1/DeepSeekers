@@ -41,20 +41,32 @@ public class LoginPageController {
         } else {
             // 3b) Success → debug print + open dashboard
             System.out.println("🔑 Logged in: " + loggedIn);
-            openDashboard(event);
+            openDashboard(event, loggedIn);
         }
     }
 
-    private void openDashboard(ActionEvent event) {
+    /**
+     * Loads the dashboard, injects the logged-in User into its controller,
+     * and then shows it in the same window.
+     */
+    private void openDashboard(ActionEvent event, User loggedIn) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/teach/Dashboard-view.fxml")
             );
             Parent dashboardRoot = loader.load();
+
+            // 1) grab the DashboardController instance
+            DashboardController dashCtrl = loader.getController();
+            // 2) inject our User
+            dashCtrl.setUser(loggedIn);
+
+            // 3) swap scenes
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(dashboardRoot, 1280, 720);
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
             errorLabel.setText("Could not load Dashboard. Please try again.");
