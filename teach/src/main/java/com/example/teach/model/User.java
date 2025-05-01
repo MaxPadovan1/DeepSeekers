@@ -60,7 +60,7 @@ public abstract class User
         char p = Character.toUpperCase(id.charAt(0));
         try {
             if (p == 'S') {
-                if (subjectIds.size() > 4) return null;
+                if (subjectIds.size() != 4) return null;
                 // resolve to Subject objects
                 List<Subject> subs = new ArrayList<>();
                 for (String sid : subjectIds) {

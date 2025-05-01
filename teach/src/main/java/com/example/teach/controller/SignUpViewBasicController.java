@@ -142,7 +142,7 @@ public class SignUpViewBasicController {
                 messageLabel.setText("Students must select at least one subject.");
                 return;
             }
-            if (subjectIds.size() > 4) {
+            if (subjectIds.size() != 4) {
                 messageLabel.setText("You must select 4 up to subjects");
                 return;
             }
