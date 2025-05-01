@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 public class ProfilePageController {
 
@@ -40,5 +41,16 @@ public class ProfilePageController {
         viewAttendanceButton.setOnAction(e ->
                 System.out.println("Viewing attendance for: " + studentDropdown.getValue())
         );
+
     }
+    @FXML
+    private VBox drawer;
+
+    @FXML
+    private void toggleDrawer() {
+        boolean isVisible = drawer.isVisible();
+        drawer.setVisible(!isVisible);
+        drawer.setManaged(!isVisible);
+    }
+
 }
