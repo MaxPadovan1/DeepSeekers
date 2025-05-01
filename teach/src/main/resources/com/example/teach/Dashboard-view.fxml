@@ -66,7 +66,7 @@
             <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Profile" />
             <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Class Info" />
             <Label style="-fx-text-fill: white;-fx-cursor: hand;-fx-font-size: 18px;-fx-padding: 20px" text="Lesson Plan" fx:id="lessonPlanLabel" onMouseEntered="#handleMouseEnter" onMouseExited="#handleMouseExit" />
-            <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Home page" />
+<!--            <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Home page" />-->
         </VBox>
     </left>
 
@@ -98,19 +98,19 @@
 
             <GridPane alignment="CENTER" hgap="40" vgap="40" >
 
-                <VBox alignment="CENTER" prefHeight="150" prefWidth="298.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" GridPane.columnIndex="1">
+                <VBox fx:id="sub2box" onMouseClicked="#handleSubject2Click" alignment="CENTER"  prefHeight="150" prefWidth="298.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" GridPane.columnIndex="1">
                     <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Subject 2" />
                 </VBox>
 
-                <VBox alignment="CENTER" prefHeight="150" prefWidth="298.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" GridPane.rowIndex="1">
+                <VBox fx:id="sub3box" alignment="CENTER"  onMouseClicked="#handleSubject3Click" prefHeight="150" prefWidth="298.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" GridPane.rowIndex="1">
                     <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Subject 3" />
                 </VBox>
 
-                <VBox alignment="CENTER" prefHeight="150" prefWidth="298.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <VBox fx:id="sub4box" alignment="CENTER"  onMouseClicked="#handleSubject4Click" prefHeight="150" prefWidth="298.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Subject 4" />
                 </VBox>
 
-                   <VBox alignment="CENTER" prefHeight="150" prefWidth="298.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                   <VBox fx:id="sub1box" alignment="CENTER"  onMouseClicked="#handleSubject1Click" prefHeight="150" prefWidth="298.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
                     <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Subject 1" />
                 </VBox>
 
