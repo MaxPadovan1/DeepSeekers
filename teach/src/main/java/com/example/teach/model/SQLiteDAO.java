@@ -23,7 +23,7 @@ public class SQLiteDAO {
                             "  passwordHash TEXT NOT NULL,      " +
                             "  firstName    TEXT NOT NULL,      " +
                             "  lastName     TEXT NOT NULL,      " +
-                            "  role         TEXT NOT NULL,      " +
+                            "  role         TEXT NOT NULL CHECK(role IN ('S', 'T')),      " +
                             "  email        TEXT,               " +   // ← email column
                             "  subject_ids  TEXT                " +   // ← CSV list of subject IDs
                             ")";
@@ -104,6 +104,22 @@ public class SQLiteDAO {
             } catch (SQLException ignore) {
                 // already exists → safe to ignore
             }
+            // Pre-populate subjects if empty
+            try (Statement stmt2 = connection.createStatement()) {
+                var rs = stmt2.executeQuery("SELECT COUNT(*) AS count FROM Subjects");
+                if (rs.next() && rs.getInt("count") == 0) {
+                    stmt2.executeUpdate("INSERT INTO Subjects(id, name) VALUES" +
+                            "('MATH', 'Math')," +
+                            "('SCI', 'Science')," +
+                            "('ENG', 'English')," +
+                            "('HIST', 'History')," +
+                            "('GEO', 'Geography')," +
+                            "('ART', 'Art')," +
+                            "('MUS', 'Music')," +
+                            "('PE', 'Physical Education')");
+                }
+            }
+
         }
         catch (SQLException e) {
             e.printStackTrace();
