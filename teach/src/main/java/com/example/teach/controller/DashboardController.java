@@ -27,7 +27,7 @@ public class DashboardController {
 
     @FXML private VBox drawer;
     @FXML private Label lessonPlanLabel;
-
+    private Student student;
     private final VBox[] subjectBoxes = new VBox[4];
     private List<Subject> subjects;
 
@@ -41,6 +41,7 @@ public class DashboardController {
 
     public void setStudent(Student student) {
         this.subjects = student.getSubjects();
+        this.student = student;
 
         for (int i = 0; i < subjectBoxes.length; i++) {
             VBox box = subjectBoxes[i];
@@ -94,7 +95,8 @@ public class DashboardController {
             Parent root = loader.load();
 
             // Optionally pass subject to controller
-            // HomePageController controller = loader.getController();
+            HomePageController controller = loader.getController();
+            controller.setStudent(this.student);
             // controller.setSubject(subject);
 
             Stage stage = (Stage) ((VBox) event.getSource()).getScene().getWindow();
