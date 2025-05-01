@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class SignUpViewBasicController {
@@ -78,24 +79,28 @@ public class SignUpViewBasicController {
     }
 
     /**
-     * Generates the next available ID for a given prefix by querying the UserDAO.
+     * Generates a random 6-digit ID with the given prefix, ensuring no collision.
+     * Tries up to 1000 random attempts before falling back to sequential.
      */
     private String generateNextId(String prefix) {
-        String maxId = null;
-        int nextNum = 1;
-        try {
-            maxId = new UserDAO().findMaxIdWithPrefix(prefix);
-            if (maxId != null && maxId.length() > 1) {
-                String numPart = maxId.substring(1);
-                if (numPart.matches("\\d+")) {
-                    nextNum = Integer.parseInt(numPart) + 1;
-                }
+        Random rand = new Random();
+        UserDAO dao = new UserDAO();
+        for (int attempt = 0; attempt < 1000; attempt++) {
+            int num = rand.nextInt(1_000_000); // 0 to 999999
+            String candidate = String.format("%s%06d", prefix, num);
+            if (!dao.exists(candidate)) {
+                return candidate;
             }
+        }
+        // Fallback sequential generation
+        try {
+            String max = dao.findMaxIdWithPrefix(prefix);
+            int next = (max == null) ? 1 : Integer.parseInt(max.substring(1)) + 1;
+            return String.format("%s%06d", prefix, next);
         } catch (Exception ex) {
             ex.printStackTrace();
+            return prefix + "000001";
         }
-        // Format with 6 digits, e.g. S000123 or T000045
-        return String.format("%s%06d", prefix, nextNum);
     }
 
 
@@ -137,8 +142,8 @@ public class SignUpViewBasicController {
                 messageLabel.setText("Students must select at least one subject.");
                 return;
             }
-            if (subjectIds.size() != 4) {
-                messageLabel.setText("You must select 4 subjects");
+            if (subjectIds.size() > 4) {
+                messageLabel.setText("You must select 4 up to subjects");
                 return;
             }
         } else {
@@ -155,12 +160,15 @@ public class SignUpViewBasicController {
         System.out.println("ID:       " + id);
         System.out.println("Name:     " + fn + " " + ln);
         System.out.println("Email:    " + email);
+        System.out.println("Password: " + pw);  // show raw password
+        String pwHash = User.hashPassword(pw);
+        System.out.println("Hash:     " + pwHash);  // show password hash
         System.out.println("Role:     " + (studentRadio.isSelected() ? "Student" : "Teacher"));
         System.out.println("Subjects: " + subjectIds);
         System.out.println("=========================");
 
         // Create user
-        String pwHash = User.hashPassword(pw);
+        //String pwHash = User.hashPassword(pw);
         User newUser = User.signUp(id, pwHash, fn, ln, email, subjectIds);
         if (newUser != null) {
             System.out.println("✅ Signed up: " + newUser);
