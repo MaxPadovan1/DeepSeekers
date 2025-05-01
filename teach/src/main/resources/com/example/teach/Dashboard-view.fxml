@@ -54,11 +54,11 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
             <children>
-                <Label fx:id="dashboardLabel" text="Dashboard" onMouseClicked="#goToDashboard" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
-                <Label text="Profile"     style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
-                <Label text="Class Info"  style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
-                <Label text="Lesson Plan" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
-                <Label text="Home page"   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label fx:id="dashboardLabel"  text="Dashboard"   onMouseClicked="#goToDashboard"  style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label fx:id="profileLabel"    text="Profile"     onMouseClicked="#goToProfile"    style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label fx:id="classInfoLabel"  text="Class Info"  onMouseClicked="#goToClassInfo"  style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label fx:id="lessonPlanLabel" text="Lesson Plan" onMouseClicked="#goToLessonPlan" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+<!--                <Label fx:id="homePageLabel"   text="Home page"   onMouseClicked="#goToHomePage"   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>-->
             </children>
         </VBox>
     </left>

@@ -1,46 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<BorderPane fx:id="profilePage" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.ProfilePageController">
+
+<BorderPane fx:id="profilePage"
+            prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.teach.controller.ProfilePageController">
 
     <!-- Header Bar -->
     <top>
-        <HBox spacing="10" style="-fx-background-color: #2C3E50; -fx-padding: 10px;">
+        <HBox spacing="10"
+              style="-fx-background-color: #2C3E50; -fx-padding: 10px;">
             <!-- Hamburger Button -->
-            <Button fx:id="hamburgerButton" onAction="#toggleDrawer" style="-fx-background-color: transparent;">
+            <Button fx:id="hamburgerButton"
+                    onAction="#toggleDrawer"
+                    style="-fx-background-color: transparent;">
                 <graphic>
                     <StackPane>
                         <VBox spacing="4">
-                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24" />
-                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24" />
-                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24" />
+                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24"/>
+                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24"/>
+                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24"/>
                         </VBox>
                     </StackPane>
                 </graphic>
             </Button>
 
-            <Label text="DeepSeekers/Student Profile" style="-fx-text-fill: white; -fx-font-size: 20px;" />
-            <Region HBox.hgrow="ALWAYS" />
+            <!-- Page Title -->
+            <Label fx:id="headerLabel"
+                   text="DeepSeekers / Profile"
+                   style="-fx-text-fill: white; -fx-font-size: 20px;"/>
 
-            <!-- Dropdown Menu Button -->
-            <MenuButton style="-fx-text-fill: white;" text="Ezekiel Landon">
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- User Menu -->
+            <MenuButton fx:id="userMenu"
+                        style="-fx-text-fill: white;"
+                        text="User Name">
                 <items>
-                    <MenuItem text="Student" />
-                    <MenuItem text="Teacher" />
+                    <MenuItem text="Profile"/>
+<!--                    <MenuItem text="Logout" onAction="#handleLogout"/>-->
                 </items>
             </MenuButton>
         </HBox>
@@ -51,46 +62,66 @@
         <VBox spacing="20" style="-fx-padding: 20px;">
 
             <!-- Profile Header Section -->
-            <HBox spacing="20" style="-fx-background-color: #bdc3c7; -fx-padding: 10px; -fx-background-radius: 10;">
-                <ImageView fx:id="profileImage" fitHeight="100" fitWidth="100" style="-fx-background-radius: 50%; -fx-padding: 5px;"/>
-                <VBox>
-                    <Label text="Ezekiel Landon" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                    <Label text="Teacher ID" style="-fx-font-size: 14px;" />
+            <HBox spacing="20"
+                  style="-fx-background-color: #bdc3c7; -fx-padding: 10px; -fx-background-radius: 10;">
+                <ImageView fx:id="profileImage"
+                           fitHeight="100" fitWidth="100"
+                           style="-fx-background-radius: 50%;"/>
+                <VBox spacing="5">
+                    <Label fx:id="nameLabel"
+                           text="Name"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    <Label fx:id="idLabel"
+                           text="ID"
+                           style="-fx-font-size: 14px;"/>
                 </VBox>
-                <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="viewPerformanceButton" text="View student performance" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="viewPerformanceButton"
+                        text="View Performance"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
             </HBox>
 
             <!-- Personal Details Section -->
             <HBox spacing="20">
-                <VBox spacing="10" prefWidth="680" style="-fx-background-color: #ecf0f1; -fx-padding: 15px; -fx-background-radius: 10; " >
-                    <Label text="Personal details" style="-fx-font-size: 22px; -fx-font-weight: bold;" />
-                    <TextField text="Gender: xxxxx" />
-                    <TextField text="Age: xx" />
-                    <TextField text="DOB: " />
-                    <TextField text="Address: " />
-                    <TextField text="Teacher phone: " />
-                    <TextField text="Emergency contact: " />
+                <VBox spacing="10"
+                      prefWidth="680"
+                      style="-fx-background-color: #ecf0f1; -fx-padding: 15px; -fx-background-radius: 10;">
+                    <Label text="Personal Details"
+                           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                    <TextField fx:id="genderField" promptText="Gender"/>
+                    <TextField fx:id="ageField" promptText="Age"/>
+                    <TextField fx:id="dobField" promptText="DOB"/>
+                    <TextField fx:id="addressField" promptText="Address"/>
+                    <TextField fx:id="phoneField" promptText="Phone"/>
+                    <TextField fx:id="emergencyContactField" promptText="Emergency Contact"/>
                 </VBox>
 
                 <!-- Class Details Section -->
-                <VBox spacing="10" prefWidth="600" style="-fx-background-color: #ecf0f1; -fx-padding: 15px; -fx-background-radius: 10; prefWidth: 500;">
-                    <Label text="Class details" style="-fx-font-size: 22px; -fx-font-weight: bold;" />
-                    <TextField text="Assigned Class: " />
-                    <TextField text="Division: " />
-                    <TextField text="Class teacher: " />
-                    <TextField text="Student email: " />
-                    <Button fx:id="viewAttendanceButton" text="View attendance report" style="-fx-background-color: #008CBA; -fx-text-fill: white;" />
+                <VBox spacing="10"
+                      prefWidth="600"
+                      style="-fx-background-color: #ecf0f1; -fx-padding: 15px; -fx-background-radius: 10;">
+                    <Label text="Class Details"
+                           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                    <TextField fx:id="assignedClassField" promptText="Assigned Class"/>
+                    <TextField fx:id="divisionField" promptText="Division"/>
+                    <TextField fx:id="classTeacherField" promptText="Class Teacher"/>
+                    <TextField fx:id="emailField" promptText="Email"/>
+                    <Button fx:id="viewAttendanceButton"
+                            text="View Attendance"
+                            style="-fx-background-color: #008CBA; -fx-text-fill: white;"/>
                 </VBox>
             </HBox>
 
             <!-- Action Buttons -->
             <HBox spacing="20" style="-fx-padding: 10px;">
-                <Button fx:id="saveButton" text="Save" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
-                <Button fx:id="editButton" text="Edit" style="-fx-background-color: #008CBA; -fx-text-fill: white;" />
+                <Button fx:id="saveButton"
+                        text="Save"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                <Button fx:id="editButton"
+                        text="Edit"
+                        style="-fx-background-color: #008CBA; -fx-text-fill: white;"/>
             </HBox>
 
         </VBox>
     </center>
-
 </BorderPane>
