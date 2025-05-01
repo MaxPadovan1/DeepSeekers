@@ -72,7 +72,7 @@ public class LoginPageController {
             stage.setTitle(subject.getName() + " Home");
             stage.show();
 
-            // Optional: Pass subject to controller
+            // Optional: Pass subject to controlle
             // HomePageController controller = loader.getController();
             // controller.setSubject(subject);
 
