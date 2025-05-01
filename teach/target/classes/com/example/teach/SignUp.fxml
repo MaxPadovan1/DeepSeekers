@@ -1,53 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 
-<GridPane xmlns="http://javafx.com/javafx/23.0.1"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="com.example.teach.controller.SignUpController"
-          hgap="10" vgap="10" alignment="CENTER">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.teach.controller.SignUpController"
+            prefHeight="720.0" prefWidth="1280.0">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+    <VBox alignment="CENTER" spacing="15" AnchorPane.leftAnchor="100" AnchorPane.rightAnchor="100"
+          AnchorPane.topAnchor="30" AnchorPane.bottomAnchor="30">
 
-    <columnConstraints>
-        <ColumnConstraints percentWidth="30"/>
-        <ColumnConstraints percentWidth="70"/>
-    </columnConstraints>
+        <Label text="Sign Up" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
 
-    <!-- Title -->
-    <Label text="Sign Up Form" style="-fx-font-size: 20px; -fx-font-weight: bold;" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
+        <TextField fx:id="idField" promptText="User ID" maxWidth="300" />
+        <PasswordField fx:id="passwordField" promptText="Password" maxWidth="300" />
+        <TextField fx:id="firstNameField" promptText="First Name" maxWidth="300" />
+        <TextField fx:id="lastNameField" promptText="Last Name" maxWidth="300" />
+        <TextField fx:id="emailField" promptText="Email" maxWidth="300" />
+        <ComboBox fx:id="roleBox" promptText="Select Role" maxWidth="300" />
+        <TextField fx:id="subjectsField" promptText="Comma-separated subjects (for students)" maxWidth="300" />
 
-    <!-- Form fields -->
-    <Label text="User ID:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <TextField fx:id="idField" promptText="Enter User ID" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Button text="Sign Up" onAction="#handleSignUp" maxWidth="150" />
+        <Label fx:id="statusLabel" textFill="red" />
+    </VBox>
+</AnchorPane>
 
-    <Label text="Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-    <PasswordField fx:id="passwordField" promptText="Enter Password" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-    <Label text="First Name:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-    <TextField fx:id="firstNameField" promptText="First Name" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-    <Label text="Last Name:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-    <TextField fx:id="lastNameField" promptText="Last Name" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-    <Label text="Email:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-    <TextField fx:id="emailField" promptText="Email Address" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-    <Label text="Role:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-    <ComboBox fx:id="roleBox" promptText="Select Role" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-
-    <Label text="Subjects:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-    <TextField fx:id="subjectsField" promptText="Subjects (Student only)" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-    <!-- Button -->
-    <Button text="Sign Up" onAction="#handleSignUp" GridPane.rowIndex="8" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
-
-    <!-- Status Message -->
-    <Label fx:id="statusLabel" textFill="red" GridPane.rowIndex="9" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
-
-</GridPane>
