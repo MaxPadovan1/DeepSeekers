@@ -53,7 +53,7 @@ public class LoginPageController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/teach/SignUp-viewBasic.fxml"));
             Parent signUpRoot = fxmlLoader.load();
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene signUpScene = new Scene(signUpRoot);
+            Scene signUpScene = new Scene(signUpRoot, 1280, 720);
             currentStage.setScene(signUpScene);
             currentStage.show();
         }

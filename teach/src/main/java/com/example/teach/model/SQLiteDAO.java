@@ -52,6 +52,17 @@ public class SQLiteDAO {
                             ")";
             stmt.execute(createSubjects);
 
+            //4.1 Populate subjects table with basic subjects (used for signup)
+            String populateSubjects =
+                    "INSERT OR IGNORE INTO Subjects(id, name) VALUES " +
+                            "('MATH101', 'Calculus I')," +
+                            "('ENG202',  'English Literature')," +
+                            "('CS102',   'Intro to Programming')," +
+                            "('HIS215',  'World History')" +
+                            ";";
+            stmt.execute((populateSubjects));
+
+
             // 5) Join table for Student ↔ Subjects
             stmt.executeUpdate(
                     "CREATE TABLE IF NOT EXISTS StudentSubjects (" +

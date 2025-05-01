@@ -2,6 +2,7 @@ module com.example.teach {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.xerial.sqlitejdbc;
+    requires java.desktop;
 
 
     opens com.example.teach to javafx.fxml;
