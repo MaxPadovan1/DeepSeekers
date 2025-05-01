@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.teach.controller.ProfilePageController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <children>
+        <ComboBox fx:id="studentDropdown" layoutX="50" layoutY="50" prefWidth="200"/>
+
+        <Button fx:id="viewPerformanceButton" text="View Performance"
+                layoutX="270" layoutY="50" prefWidth="150"/>
+
+        <Button fx:id="viewAttendanceButton" text="View Attendance"
+                layoutX="270" layoutY="100" prefWidth="150"/>
+
+        <Label fx:id="studentNameLabel" text="Name:"
+               layoutX="50" layoutY="120"/>
+
+        <Label fx:id="studentIDLabel" text="ID:"
+               layoutX="50" layoutY="150"/>
+    </children>
+</AnchorPane>
