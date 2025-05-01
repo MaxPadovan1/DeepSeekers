@@ -4,8 +4,11 @@ import com.example.teach.model.Student;
 import com.example.teach.model.User;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DatabaseHandler {
+    private static final Logger logger = Logger.getLogger(DatabaseHandler.class.getName());
     private Connection conn;
 
     public DatabaseHandler() {
@@ -14,7 +17,7 @@ public class DatabaseHandler {
             Statement stmt = conn.createStatement();
             stmt.execute("CREATE TABLE IF NOT EXISTS Users (id TEXT PRIMARY KEY, passwordHash TEXT, firstName TEXT, lastName TEXT, role TEXT, email TEXT)");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error connecting to database or creating table", e);
         }
     }
 
@@ -25,7 +28,7 @@ public class DatabaseHandler {
             ResultSet rs = ps.executeQuery();
             return rs.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Error checking if user exists", e);
             return false;
         }
     }
@@ -48,9 +51,10 @@ public class DatabaseHandler {
             ps.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, "Error inserting user during sign-up", ex);
             return false;
         }
     }
 }
+
 

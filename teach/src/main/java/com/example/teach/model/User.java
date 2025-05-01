@@ -1,7 +1,11 @@
 package com.example.teach.model;
 
 public abstract class User {
-    private String id, password, firstName, lastName, email;
+    private final String id;
+    private final String password;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
 
     public User(String id, String password, String firstName, String lastName, String email) {
         this.id = id;
@@ -17,3 +21,4 @@ public abstract class User {
     public String getLastName() { return lastName; }
     public String getEmail() { return email; }
 }
+

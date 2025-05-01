@@ -24,15 +24,21 @@ public class ProfilePageController {
 
     @FXML
     public void initialize() {
-        studentDropdown.getItems().addAll("Micheala Brad", "Joe David", "Smith Joey");
-        studentDropdown.setValue("Micheala Brad");
+        studentDropdown.getItems().addAll("Michaela Brad", "Joe David", "Smith Joey");
+        studentDropdown.setValue("Michaela Brad");
 
-        viewPerformanceButton.setOnAction(e -> {
-            System.out.println("Viewing performance for: " + studentDropdown.getValue());
+        studentDropdown.setOnAction(e -> {
+            String selected = studentDropdown.getValue();
+            studentNameLabel.setText("Name: " + selected);
+            studentIDLabel.setText("ID: " + selected.hashCode());
         });
 
-        viewAttendanceButton.setOnAction(e -> {
-            System.out.println("Viewing attendance for: " + studentDropdown.getValue());
-        });
+        viewPerformanceButton.setOnAction(e ->
+                System.out.println("Viewing performance for: " + studentDropdown.getValue())
+        );
+
+        viewAttendanceButton.setOnAction(e ->
+                System.out.println("Viewing attendance for: " + studentDropdown.getValue())
+        );
     }
 }
