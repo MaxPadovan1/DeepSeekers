@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.teach.controller.SignUpController"
-      spacing="10" alignment="CENTER" padding="20">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.teach.controller.SignUpController"
+            prefHeight="400.0" prefWidth="600.0">
 
-    <Label text="Sign Up Form" style="-fx-font-size: 18px;"/>
+    <VBox alignment="CENTER" spacing="15" AnchorPane.leftAnchor="100" AnchorPane.rightAnchor="100"
+          AnchorPane.topAnchor="30" AnchorPane.bottomAnchor="30">
 
-    <TextField fx:id="idField" promptText="User ID"/>
-    <PasswordField fx:id="passwordField" promptText="Password"/>
-    <TextField fx:id="firstNameField" promptText="First Name"/>
-    <TextField fx:id="lastNameField" promptText="Last Name"/>
-    <TextField fx:id="emailField" promptText="Email"/>
+        <Label text="Sign Up" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
 
-    <ComboBox fx:id="roleBox" promptText="Select Role"/>
-    <TextField fx:id="subjectsField" promptText="Comma-separated subjects (Student only)"/>
+        <TextField fx:id="idField" promptText="User ID" maxWidth="300" />
+        <PasswordField fx:id="passwordField" promptText="Password" maxWidth="300" />
+        <TextField fx:id="firstNameField" promptText="First Name" maxWidth="300" />
+        <TextField fx:id="lastNameField" promptText="Last Name" maxWidth="300" />
+        <TextField fx:id="emailField" promptText="Email" maxWidth="300" />
+        <ComboBox fx:id="roleBox" promptText="Select Role" maxWidth="300" />
+        <TextField fx:id="subjectsField" promptText="Comma-separated subjects (for students)" maxWidth="300" />
 
-    <Button text="Sign Up" onAction="#handleSignUp"/>
-    <Label fx:id="statusLabel" textFill="red"/>
-
-</VBox>
+        <Button text="Sign Up" onAction="#handleSignUp" maxWidth="150" />
+        <Label fx:id="statusLabel" textFill="red" />
+    </VBox>
+</AnchorPane>
 
