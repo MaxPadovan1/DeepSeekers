@@ -14,6 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <BorderPane fx:id="profilePage" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.ProfilePageController">
 
     <!-- Header Bar -->
@@ -64,21 +65,21 @@
             <HBox spacing="20">
                 <VBox spacing="10" prefWidth="680" style="-fx-background-color: #ecf0f1; -fx-padding: 15px; -fx-background-radius: 10; " >
                     <Label text="Personal details" style="-fx-font-size: 22px; -fx-font-weight: bold;" />
-                    <Label text="Gender: xxxxx" />
-                    <Label text="Age: xx" />
-                    <Label text="DOB: " />
-                    <Label text="Address: " />
-                    <Label text="Teacher phone: " />
-                    <Label text="Emergency contact: " />
+                    <TextField text="Gender: xxxxx" />
+                    <TextField text="Age: xx" />
+                    <TextField text="DOB: " />
+                    <TextField text="Address: " />
+                    <TextField text="Teacher phone: " />
+                    <TextField text="Emergency contact: " />
                 </VBox>
 
                 <!-- Class Details Section -->
                 <VBox spacing="10" prefWidth="600" style="-fx-background-color: #ecf0f1; -fx-padding: 15px; -fx-background-radius: 10; prefWidth: 500;">
                     <Label text="Class details" style="-fx-font-size: 22px; -fx-font-weight: bold;" />
-                    <Label text="Assigned Class: " />
-                    <Label text="Division: " />
-                    <Label text="Class teacher: " />
-                    <Label text="Student email: " />
+                    <TextField text="Assigned Class: " />
+                    <TextField text="Division: " />
+                    <TextField text="Class teacher: " />
+                    <TextField text="Student email: " />
                     <Button fx:id="viewAttendanceButton" text="View attendance report" style="-fx-background-color: #008CBA; -fx-text-fill: white;" />
                 </VBox>
             </HBox>
