@@ -60,63 +60,63 @@ public class UserDAO {
     public boolean signUp(User u) {
         if (exists(u.getId())) return false;
 
-        // 👉 First, enforce business rules BEFORE inserting into database
-        if (u instanceof Student student) {
-            if (student.getSubjects() != null && student.getSubjects().size() > 4) {
-                return false;  // too many subjects
-            }
-        }
-
-        // 1) Insert into Users table
-        String insU = "INSERT INTO Users(id,passwordHash,firstName,lastName,role,email) VALUES(?,?,?,?,?,?)";
-        try (PreparedStatement ps = conn.prepareStatement(insU)) {
-            ps.setString(1, u.getId());
-            ps.setString(2, u.getPasswordHash());
-            ps.setString(3, u.getFirstName());
-            ps.setString(4, u.getLastName());
-            ps.setString(5, (u instanceof Student ? "S" : "T"));
-            ps.setString(6, u.getEmail());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-
-        // 2) Role-specific inserts
         try {
-            if (u instanceof Student) {
-                try (PreparedStatement ps = conn.prepareStatement(
-                        "INSERT INTO Students(id) VALUES(?)")) {
+            conn.setAutoCommit(false);  // 🔒 begin transaction
+
+            // Insert into Users table
+            String insU = "INSERT INTO Users(id,passwordHash,firstName,lastName,role,email) VALUES(?,?,?,?,?,?)";
+            try (PreparedStatement ps = conn.prepareStatement(insU)) {
+                ps.setString(1, u.getId());
+                ps.setString(2, u.getPasswordHash());
+                ps.setString(3, u.getFirstName());
+                ps.setString(4, u.getLastName());
+                ps.setString(5, (u instanceof Student ? "S" : "T"));
+                ps.setString(6, u.getEmail());
+                ps.executeUpdate();
+            }
+
+            if (u instanceof Student student) {
+                // Insert into Students table
+                try (PreparedStatement ps = conn.prepareStatement("INSERT INTO Students(id) VALUES(?)")) {
                     ps.setString(1, u.getId());
                     ps.executeUpdate();
                 }
-                List<Subject> subs = ((Student)u).getSubjects();
+
+                List<Subject> subs = student.getSubjects();
                 if (subs != null && !subs.isEmpty()) {
                     try (PreparedStatement ps = conn.prepareStatement(
                             "INSERT INTO StudentSubjects(student_id,subject_id) VALUES(?,?)")) {
                         for (Subject s : subs) {
-                            ps.setString(1, u.getId());
-                            ps.setString(2, s.getId());
-                            ps.addBatch();
+                            if (s != null && s.getId() != null) {
+                                ps.setString(1, u.getId());
+                                ps.setString(2, s.getId());
+                                ps.addBatch();
+                            }
                         }
                         ps.executeBatch();
                     }
                 }
-            } else {
-                Subject s = ((Teacher)u).getSubject();
-                try (PreparedStatement ps = conn.prepareStatement(
-                        "INSERT INTO Teachers(id,subject_id) VALUES(?,?)")) {
+
+            } else if (u instanceof Teacher t) {
+                Subject s = t.getSubject();
+                if (s == null || s.getId() == null) throw new SQLException("Teacher subject is missing.");
+                try (PreparedStatement ps = conn.prepareStatement("INSERT INTO Teachers(id,subject_id) VALUES(?,?)")) {
                     ps.setString(1, u.getId());
                     ps.setString(2, s.getId());
                     ps.executeUpdate();
                 }
             }
+
+            conn.commit();  // ✅ all good
+            return true;
+
         } catch (SQLException ex) {
             ex.printStackTrace();
+            try { conn.rollback(); } catch (SQLException e2) { e2.printStackTrace(); }
             return false;
+        } finally {
+            try { conn.setAutoCommit(true); } catch (SQLException ignore) {}
         }
-
-        return true;
     }
 
 

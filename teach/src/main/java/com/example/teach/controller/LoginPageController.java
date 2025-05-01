@@ -1,76 +1,96 @@
 package com.example.teach.controller;
+
+import com.example.teach.model.Student;
+import com.example.teach.model.Teacher;
+import com.example.teach.model.User;
+import com.example.teach.model.Subject;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import  javafx.scene.Node;
-import javafx.event.ActionEvent;
 
 import java.io.IOException;
 
-
 public class LoginPageController {
-    @FXML
-    private TextField userId;
 
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Label errorLabel;
-
-    @FXML
-    private Hyperlink fPassword;
-    @FXML
-    private Label welcomeText;
-    @FXML
-    private Label welcomeText1;
+    @FXML private TextField userId;
+    @FXML private PasswordField passwordField;
+    @FXML private Label errorLabel;
 
     @FXML
     private void handleLogin(ActionEvent event) {
-        String userID = userId.getText();
-        String password = passwordField.getText();
+        String id = userId.getText().trim();
+        String plainPassword = passwordField.getText().trim();
 
-        boolean loginSuccessful=true;
-
-        if(loginSuccessful)
-        {
-            openDashboard(event);
+        if (id.isEmpty() || plainPassword.isEmpty()) {
+            errorLabel.setText("Please enter both ID and password.");
+            return;
         }
-        else
-        {
-            errorLabel.setText("Invalid userID or password!");
+
+        String hashedPassword = User.hashPassword(plainPassword);
+        User user = User.login(id, hashedPassword);
+
+        if (user != null) {
+            if (user instanceof Student student) {
+                openStudentDashboard(event, student);
+            } else if (user instanceof Teacher teacher) {
+                openTeacherHome(event, teacher.getSubject());
+            }
+        } else {
+            errorLabel.setText("Invalid user ID or password.");
         }
     }
 
-    private void openDashboard(ActionEvent event)
-    {
-        try{
-            FXMLLoader fxmlLoader= new FXMLLoader(getClass().getResource("/com/example/teach/Dashboard-view.fxml"));
-            Parent dashboardRoot= fxmlLoader.load();
+    private void openStudentDashboard(ActionEvent event, Student student) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/Dashboard-view.fxml"));
+            Parent root = loader.load();
 
-            Stage currentstage=(Stage) ((Node) event.getSource()).getScene().getWindow();
-            //get the new scene
-            Scene dashboardScene=new Scene(dashboardRoot);
-            currentstage.setTitle("Dashboard");
-            currentstage.setScene(dashboardScene);
-            currentstage.show();
-        }
-        catch (IOException e)
-        {
+            // ✅ Inject student object
+            DashboardController controller = loader.getController();
+            controller.setStudent(student);
+
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Student Dashboard");
+            stage.show();
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    @FXML
-    private void handleSignUp() {
-        String userID = userId.getText();
-        String password = passwordField.getText();
+
+
+    private void openTeacherHome(ActionEvent event, Subject subject) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/HomePage-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle(subject.getName() + " Home");
+            stage.show();
+
+            // Optional: Pass subject to controller
+            // HomePageController controller = loader.getController();
+            // controller.setSubject(subject);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            errorLabel.setText("Failed to load subject home page.");
+        }
     }
 
-
+    @FXML
+    private void handleSignUp() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/Signup.fxml"));
+            Stage stage = (Stage) userId.getScene().getWindow();
+            stage.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            errorLabel.setText("Failed to load sign-up screen.");
+        }
+    }
 }
