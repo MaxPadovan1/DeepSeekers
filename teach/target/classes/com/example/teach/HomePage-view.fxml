@@ -48,7 +48,7 @@
                 <items>
 
                     <MenuItem text="Profile" />
-                    <MenuItem text="Logout" />
+                    <MenuItem fx:id="logoutMenuItem" text="Logout" onAction="#handleLogout"/>
                 </items>
             </MenuButton>
         </HBox>
@@ -57,8 +57,11 @@
     <!-- Side Drawer (Initially hidden or collapsed) -->
     <left>
         <VBox fx:id="drawer" managed="false" prefWidth="200.0" style="-fx-background-color: #34495E; -fx-padding: 10px;" visible="false">
-            <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 10px" text="Dashboard" />
-            <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Profile" />
+            <Label fx:id="dashboardLabel"
+                   text="Dashboard"
+                   onMouseClicked="#goToDashboard"
+                   style="-fx-text-fill: white;-fx-cursor: hand;-fx-font-size: 18px;-fx-padding: 10px" />
+            <Label text="Profile" style="-fx-text-fill: white;-fx-cursor: hand;-fx-font-size: 18px;-fx-padding: 20px" />
             <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Class Info" />
             <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Lesson Plan" />
 

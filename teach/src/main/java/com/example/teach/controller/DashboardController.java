@@ -5,12 +5,15 @@ import com.example.teach.model.Subject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +27,7 @@ public class DashboardController {
 
     @FXML private VBox drawer;
     @FXML private Label lessonPlanLabel;
-
+    private Student student;
     private final VBox[] subjectBoxes = new VBox[4];
     private List<Subject> subjects;
 
@@ -38,6 +41,7 @@ public class DashboardController {
 
     public void setStudent(Student student) {
         this.subjects = student.getSubjects();
+        this.student = student;
 
         for (int i = 0; i < subjectBoxes.length; i++) {
             VBox box = subjectBoxes[i];
@@ -91,7 +95,8 @@ public class DashboardController {
             Parent root = loader.load();
 
             // Optionally pass subject to controller
-            // HomePageController controller = loader.getController();
+            HomePageController controller = loader.getController();
+            controller.setStudent(this.student);
             // controller.setSubject(subject);
 
             Stage stage = (Stage) ((VBox) event.getSource()).getScene().getWindow();
@@ -106,9 +111,9 @@ public class DashboardController {
     @FXML
     private void handleLogout(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/LoginPage-view.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) sub1box.getScene().getWindow();
+            Stage stage = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Login");
             stage.show();
@@ -116,4 +121,18 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void goToDashboard(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/Dashboard-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Dashboard");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

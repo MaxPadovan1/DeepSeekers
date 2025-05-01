@@ -20,7 +20,7 @@
         <TextField fx:id="emailField" promptText="Email" maxWidth="300" />
         <ComboBox fx:id="roleBox" promptText="Select Role" maxWidth="300" />
 
-        <Label text="Select Subjects (Students only)" />
+        <Label text="Select Subject/s" />
         <ListView fx:id="subjectsList" prefHeight="100" maxWidth="300" />
 
         <Button text="Sign Up" onAction="#handleSignUp" maxWidth="150" />
