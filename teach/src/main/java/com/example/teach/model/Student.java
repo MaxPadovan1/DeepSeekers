@@ -26,6 +26,7 @@ public class Student extends User
             throw new IllegalArgumentException("Student ID must start with 'S'");
         }
     }
+
     public List<Subject> getSubjects() {
         return subjects;
     }

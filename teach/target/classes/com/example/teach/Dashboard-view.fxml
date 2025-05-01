@@ -36,7 +36,7 @@
                 </graphic>
             </Button>
             <Region HBox.hgrow="ALWAYS"/>
-            <MenuButton fx:id="userMenu" style="-fx-text-fill: white;">
+            <MenuButton fx:id="userMenu" text="User Name" style="-fx-text-fill: white;">
                 <items>
                     <MenuItem text="Profile"/>
                     <MenuItem text="Logout"/>
@@ -53,11 +53,11 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
             <children>
-                <Label text="Dashboard"   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
-                <Label text="Profile"     style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
-                <Label text="Class Info"  style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label text="Dashboard" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label text="Profile" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label text="Class Info" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
                 <Label text="Lesson Plan" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
-                <Label text="Home page"   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label text="Home page" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
             </children>
         </VBox>
     </left>
@@ -87,40 +87,31 @@
             <StackPane VBox.vgrow="ALWAYS">
                 <GridPane alignment="CENTER" hgap="40" vgap="40">
                     <children>
-                        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0"
+                        <VBox fx:id="subject1Tile" GridPane.columnIndex="0" GridPane.rowIndex="0"
                               alignment="CENTER" prefWidth="298" prefHeight="150"
-                              style="
-                                -fx-background-color: white;
-                                -fx-background-radius: 10;
-                                -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
-                              ">
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-cursor: hand;"
+                              onMouseClicked="#onSubject1Clicked">
                             <Label text="Subject 1" style="-fx-font-size:16; -fx-font-weight:bold;"/>
                         </VBox>
-                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0"
+
+                        <VBox fx:id="subject2Tile" GridPane.columnIndex="1" GridPane.rowIndex="0"
                               alignment="CENTER" prefWidth="298" prefHeight="150"
-                              style="
-                                -fx-background-color: white;
-                                -fx-background-radius: 10;
-                                -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
-                              ">
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-cursor: hand;"
+                              onMouseClicked="#onSubject2Clicked">
                             <Label text="Subject 2" style="-fx-font-size:16; -fx-font-weight:bold;"/>
                         </VBox>
-                        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1"
+
+                        <VBox fx:id="subject3Tile" GridPane.columnIndex="0" GridPane.rowIndex="1"
                               alignment="CENTER" prefWidth="298" prefHeight="150"
-                              style="
-                                -fx-background-color: white;
-                                -fx-background-radius: 10;
-                                -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
-                              ">
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-cursor: hand;"
+                              onMouseClicked="#onSubject3Clicked">
                             <Label text="Subject 3" style="-fx-font-size:16; -fx-font-weight:bold;"/>
                         </VBox>
-                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1"
+
+                        <VBox fx:id="subject4Tile" GridPane.columnIndex="1" GridPane.rowIndex="1"
                               alignment="CENTER" prefWidth="298" prefHeight="150"
-                              style="
-                                -fx-background-color: white;
-                                -fx-background-radius: 10;
-                                -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
-                              ">
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-cursor: hand;"
+                              onMouseClicked="#onSubject4Clicked">
                             <Label text="Subject 4" style="-fx-font-size:16; -fx-font-weight:bold;"/>
                         </VBox>
                     </children>

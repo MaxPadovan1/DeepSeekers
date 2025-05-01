@@ -178,13 +178,10 @@ public class SignUpViewBasicController {
 
         // Navigate back to Log in
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/example/teach/LoginPage-view.fxml")
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/LoginPage-view.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1280, 720));
-            stage.setTitle("Login");
         } catch (IOException e) {
             e.printStackTrace();
             messageLabel.setText("Unexpected error loading Login page.");

@@ -51,9 +51,7 @@ public class LoginPageController {
      */
     private void openDashboard(ActionEvent event, User loggedIn) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/example/teach/Dashboard-view.fxml")
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/Dashboard-view.fxml"));
             Parent dashboardRoot = loader.load();
 
             // 1) grab the DashboardController instance
