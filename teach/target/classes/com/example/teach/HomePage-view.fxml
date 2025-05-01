@@ -4,14 +4,21 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.TextArea?>
 <BorderPane fx:id="dashboard" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.HomePageController">
 
     <!-- Header Bar -->
@@ -64,50 +71,51 @@
         </VBox>
     </left>
 
-    <center>
-        <VBox  >
+    <!-- 🆕 Second Header Bar (Below) -->
+    <!--    <HBox style="-fx-background-color: #34495E; -fx-padding: 10px;"  spacing="10">-->
 
-        <!-- 📚 New Top VBox: Study | Assignment | Grade | Homework -->
-        <HBox spacing="120" style="-fx-background-color: #bdc3c7; -fx-padding: 10px; ">
-            <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <Label text="Study" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-            </VBox>
-            <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <Label text="Assignment" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-            </VBox>
-            <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <Label text="Grade" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-            </VBox>
-            <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <Label text="Homework" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-            </VBox>
-            <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <Label text="Test" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-            </VBox>
-        </HBox>
-
-        <HBox spacing="20" style="-fx-padding: 20px;">
-            <!-- Left Side: VBox containing two VBoxes vertically -->
-            <VBox spacing="20" prefWidth="800" HBox.hgrow="ALWAYS">
-                <VBox prefHeight="300" VBox.vgrow="ALWAYS" style="-fx-background-color: #ecf0f1; -fx-padding: 20px; -fx-background-radius: 10;">
-                    <Label text=" Class Info" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                </VBox>
-
-                <VBox prefHeight="300" VBox.vgrow="ALWAYS" style=" -fx-background-color:#d0d3d4; -fx-padding: 20px; -fx-background-radius: 10;">
-                    <Label text="Big Box 2 (Bottom)" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                </VBox>
-            </VBox>
-
-            <!-- Right Side: Single VBox -->
-            <VBox prefWidth="300" prefHeight="620" HBox.hgrow="ALWAYS" style="-fx-background-color: #bdc3c7; -fx-padding: 20px; -fx-background-radius: 10;">
-                <Label text="Small Box 3 (Right)" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-            </VBox>
-        </HBox>
-        </VBox>
-    </center>
+    <!-- Back Button (left) -->
 
 
 
+    <!--        <Pane HBox.hgrow="ALWAYS" />-->
 
+    <!--        &lt;!&ndash; Notification Button (right) &ndash;&gt;-->
+    <!--        <Button fx:id="notificationButton" onAction="#showNotifications" style="-fx-background-color: transparent;">-->
+    <!--            <graphic>-->
+    <!--                <ImageView fitWidth="24" fitHeight="24">-->
+    <!--                    <image>-->
+    <!--                        <Image url="@images/notification_bell.png" />-->
+    <!--                    </image>-->
+    <!--                </ImageView>-->
+    <!--            </graphic>-->
+    <!--        </Button>-->
+
+    <!--    </HBox>-->
+
+<center>
+    <VBox prefHeight="75.0" prefWidth="780.0" style="-fx-background-color: #A9A9A9;" alignment="CENTER_LEFT">
+        <children>
+
+            <TextArea prefHeight="120.0" prefWidth="100.0" text="Overview" style="-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight:bold;"/>
+
+        </children>
+    </VBox>
+    <VBox prefHeight="75.0" prefWidth="780.0" style="-fx-background-color: #A9A9A9;" alignment="CENTER_LEFT">
+        <children>
+            <Button text="Edit" style="-fx-font-size: 8px; -fx-font-weight: bold;"/>
+            <TextArea prefHeight="120.0" prefWidth="100.0" text="Overview" style="-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight:bold;"/>
+            <TextArea prefHeight="120.0" prefWidth="100.0" text="Details" style="-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight:bold;"/>
+        </children>
+    </VBox>
+    <VBox prefHeight="75.0" prefWidth="500.0" style="-fx-background-color: #A9A9A9;" alignment="CENTER_RIGHT">
+        <children>
+            <Button text="Edit" style="-fx-font-size: 8px; -fx-font-weight: bold;"/>
+            <TextArea prefHeight="120.0" prefWidth="100.0" text="Overview" style="-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight:bold;"/>
+            <TextArea prefHeight="120.0" prefWidth="100.0" text="Details" style="-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight:bold;"/>
+        </children>
+    </VBox>
+</center>
 
 </BorderPane>
+
