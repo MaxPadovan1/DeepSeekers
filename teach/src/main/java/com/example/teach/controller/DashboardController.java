@@ -79,40 +79,40 @@ public class DashboardController {
 
     @FXML
     private void onSubject1Clicked(MouseEvent ev) {
-        //openClassInfo(subjects.get(0));
+        openClassInfo(subjects.get(0));
     }
 
     @FXML
     private void onSubject2Clicked(MouseEvent ev) {
-        //openClassInfo(subjects.get(1));
+        openClassInfo(subjects.get(1));
     }
 
     @FXML
     private void onSubject3Clicked(MouseEvent ev) {
-        //openClassInfo(subjects.get(2));
+        openClassInfo(subjects.get(2));
     }
 
     @FXML
     private void onSubject4Clicked(MouseEvent ev) {
-        //openClassInfo(subjects.get(3));
+        openClassInfo(subjects.get(3));
     }
 
     /**
      * Loads the Class Info view into the center of the dashboard,
      * injecting both the current user and the selected subject.
      */
-//    private void openClassInfo(Subject subj) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(
-//                    getClass().getResource("/com/example/teach/ClassInfo-view.fxml")
-//            );
-//            Parent view = loader.load();
-//            ClassInfoController ctrl = loader.getController();
-//            ctrl.setUser(currentUser);
-//            ctrl.setSubject(subj);
-//            rootBorderPane.setCenter(view);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void openClassInfo(Subject subj) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/teach/HomePage-view.fxml")
+            );
+            Parent view = loader.load();
+            ClassHomePageController ctrl = loader.getController();
+            ctrl.setUser(currentUser);
+            ctrl.setSubject(subj);
+            rootBorderPane.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
