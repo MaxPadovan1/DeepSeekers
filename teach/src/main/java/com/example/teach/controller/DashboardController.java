@@ -1,136 +1,119 @@
 package com.example.teach.controller;
 
+import com.example.teach.model.Student;
+import com.example.teach.model.Subject;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.io.IOException;
 
+import java.io.IOException;
+import java.util.List;
 
 public class DashboardController {
-    @FXML
-    private VBox drawer;
-    @FXML
-    private VBox sub2box;  // This corresponds to the VBox with fx:id="sub2box"
-    @FXML
-    private VBox sub3box;  // This corresponds to the VBox with fx:id="sub3box"
-    @FXML
-    private VBox sub4box;  // This corresponds to the VBox with fx:id="sub4box"
-    @FXML
-    private VBox sub1box;  // This corresponds to the VBox with fx:id="sub1box"
-    @FXML
-    private void openSubjectHomePage(MouseEvent event) {
-        // Open home page, no subject name passed
-    }
-    @FXML
-    private void toggleDrawer() {
-        boolean isVisible = drawer.isVisible();
-        drawer.setVisible(!isVisible);
-        drawer.setManaged(!isVisible);
-    }
-    @FXML
-    private void goBack() {
-        System.out.println("Back button clicked!");
-    }
 
-    @FXML
-    private void showNotifications() {
-        System.out.println("Notification button clicked!");
-    }
+    @FXML private VBox sub1box;
+    @FXML private VBox sub2box;
+    @FXML private VBox sub3box;
+    @FXML private VBox sub4box;
 
-    @FXML
-    private Label lessonPlanLabel;
+    @FXML private VBox drawer;
+    @FXML private Label lessonPlanLabel;
+
+    private final VBox[] subjectBoxes = new VBox[4];
+    private List<Subject> subjects;
 
     @FXML
     public void initialize() {
-        lessonPlanLabel.setOnMouseClicked(event -> openLessonPlan());
-        sub1box.setOnMouseClicked(this::openSubjectHomePage);
-        sub2box.setOnMouseClicked(this::openSubjectHomePage);
-        sub3box.setOnMouseClicked(this::openSubjectHomePage);
-        sub4box.setOnMouseClicked(this::openSubjectHomePage);
+        subjectBoxes[0] = sub1box;
+        subjectBoxes[1] = sub2box;
+        subjectBoxes[2] = sub3box;
+        subjectBoxes[3] = sub4box;
     }
 
-    private void openLessonPlan() {
+    public void setStudent(Student student) {
+        this.subjects = student.getSubjects();
+
+        for (int i = 0; i < subjectBoxes.length; i++) {
+            VBox box = subjectBoxes[i];
+
+            if (i < subjects.size()) {
+                Subject s = subjects.get(i);
+                Label title = new Label(s.getName());
+                title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+                box.getChildren().clear();
+                box.getChildren().add(title);
+                box.setVisible(true);
+                box.setManaged(true);
+            } else {
+                box.setVisible(false);
+                box.setManaged(false);
+            }
+        }
+    }
+
+    @FXML
+    private void toggleDrawer(ActionEvent event) {
+        boolean showing = drawer.isVisible();
+        drawer.setVisible(!showing);
+        drawer.setManaged(!showing);
+    }
+
+    @FXML
+    private void handleMouseEnter(MouseEvent event) {
+        lessonPlanLabel.setStyle("-fx-text-fill: #00aced; -fx-font-size: 18px; -fx-padding: 20px;");
+    }
+
+    @FXML
+    private void handleMouseExit(MouseEvent event) {
+        lessonPlanLabel.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 20px;");
+    }
+
+    @FXML private void handleSubject1Click(MouseEvent event) { openSubjectIfPresent(0, event); }
+    @FXML private void handleSubject2Click(MouseEvent event) { openSubjectIfPresent(1, event); }
+    @FXML private void handleSubject3Click(MouseEvent event) { openSubjectIfPresent(2, event); }
+    @FXML private void handleSubject4Click(MouseEvent event) { openSubjectIfPresent(3, event); }
+
+    private void openSubjectIfPresent(int index, MouseEvent event) {
+        if (subjects != null && subjects.size() > index) {
+            openSubjectPage(subjects.get(index), event);
+        }
+    }
+
+    private void openSubjectPage(Subject subject, MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/LessonPlan-view.fxml"));
-            Parent lessonPlanRoot = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/HomePage-view.fxml"));
+            Parent root = loader.load();
 
-            // Get the current stage
-            Stage stage = (Stage) lessonPlanLabel.getScene().getWindow();
+            // Optionally pass subject to controller
+            // HomePageController controller = loader.getController();
+            // controller.setSubject(subject);
 
-            // Set the new scene
-            Scene scene = new Scene(lessonPlanRoot);
-            stage.setScene(scene);
+            Stage stage = (Stage) ((VBox) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle(subject.getName() + " - Home");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    @FXML
-    private void handleMouseEnter() {
-        lessonPlanLabel.setStyle("-fx-font-size: 23px; -fx-text-fill: yellow; -fx-cursor: hand;");
-    }
 
     @FXML
-    private void handleMouseExit() {
-        lessonPlanLabel.setStyle("-fx-font-size: 23px; -fx-text-fill: white; -fx-cursor: hand;");
-    }
-    @FXML
-    private void openSubjectHomePage(String subjectName) {
+    private void handleLogout(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/HomePage-view.fxml"));
-            Parent HomePageroot = loader.load();
-
-            // Get the controller and set the subject name
-            HomePageController controller = loader.getController();
-            controller.setSubjectName(subjectName);
-
-            // Get the current stage
-            Stage stage1 = (Stage) sub1box.getScene().getWindow();
-            Stage stage2 = (Stage) sub2box.getScene().getWindow();
-            Stage stage3= (Stage) sub3box.getScene().getWindow();
-            Stage stage4= (Stage) sub4box.getScene().getWindow();
-
-            // Set the new scene
-            Scene scene = new Scene(HomePageroot);
-            stage1.setScene(scene);
-            stage1.show();
-            stage2.setScene(scene);
-            stage2.show();
-            stage3.setScene(scene);
-            stage3.show();
-            stage4.setScene(scene);
-            stage4.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/Login.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) sub1box.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-    @FXML
-    private void handleSubject1Click() {
-        openSubjectHomePage("Subject 1");
-    }
-
-    @FXML
-    private void handleSubject2Click() {
-        openSubjectHomePage("Subject 2");
-    }
-
-    @FXML
-    private void handleSubject3Click() {
-        openSubjectHomePage("Subject 3");
-    }
-
-    @FXML
-    private void handleSubject4Click() {
-        openSubjectHomePage("Subject 4");
-    }
 }
-
-
-
