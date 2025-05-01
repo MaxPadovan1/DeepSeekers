@@ -57,6 +57,23 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Return the MAX(id) for entries starting with that prefix,
+     * e.g. highest “S” student ID. Null if none.
+     */
+    public String findMaxIdWithPrefix(String prefix) {
+        String sql = "SELECT id FROM Users WHERE id LIKE ? ORDER BY id DESC LIMIT 1";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, prefix + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getString("id") : null;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean signUp(User u) {
         if (exists(u.getId())) return false;
 

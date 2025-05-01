@@ -123,6 +123,26 @@ public abstract class User
         return sb.toString();
     }
 
+    @Override public String toString() {
+        String base = String.format("id=%s, name=%s %s, email=%s",
+                getId(), getFirstName(), getLastName(), getEmail());
 
-
+        if (this instanceof Student s) {
+            // List out all subject IDs for a student
+            List<String> ids = s.getSubjects().stream()
+                    .map(Subject::getId)
+                    .toList();
+            return "[Student " + base +
+                    ", subjects=" + ids + "]";
+        }
+        else if (this instanceof Teacher t) {
+            // Show the single subject for a teacher
+            String subj = t.getSubject() != null ? t.getSubject().getId() : "none";
+            return "[Teacher " + base +
+                    ", subject=" + subj + "]";
+        }
+        else {
+            return "[User " + base + "]";
+        }
+    }
 }
