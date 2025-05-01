@@ -1,25 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.teach.controller.SignUpController"
-      spacing="10" alignment="CENTER" padding="20">
+<GridPane xmlns="http://javafx.com/javafx/23.0.1"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.example.teach.controller.SignUpController"
+          hgap="10" vgap="10" alignment="CENTER">
 
-    <Label text="Sign Up Form" style="-fx-font-size: 18px;"/>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
-    <TextField fx:id="idField" promptText="User ID"/>
-    <PasswordField fx:id="passwordField" promptText="Password"/>
-    <TextField fx:id="firstNameField" promptText="First Name"/>
-    <TextField fx:id="lastNameField" promptText="Last Name"/>
-    <TextField fx:id="emailField" promptText="Email"/>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="30"/>
+        <ColumnConstraints percentWidth="70"/>
+    </columnConstraints>
 
-    <ComboBox fx:id="roleBox" promptText="Select Role"/>
-    <TextField fx:id="subjectsField" promptText="Comma-separated subjects (Student only)"/>
+    <!-- Title -->
+    <Label text="Sign Up Form" style="-fx-font-size: 20px; -fx-font-weight: bold;" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
 
-    <Button text="Sign Up" onAction="#handleSignUp"/>
-    <Label fx:id="statusLabel" textFill="red"/>
+    <!-- Form fields -->
+    <Label text="User ID:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="idField" promptText="Enter User ID" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-</VBox>
+    <Label text="Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <PasswordField fx:id="passwordField" promptText="Enter Password" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
+    <Label text="First Name:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="firstNameField" promptText="First Name" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <Label text="Last Name:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <TextField fx:id="lastNameField" promptText="Last Name" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    <Label text="Email:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    <TextField fx:id="emailField" promptText="Email Address" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+    <Label text="Role:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="roleBox" promptText="Select Role" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+    <Label text="Subjects:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+    <TextField fx:id="subjectsField" promptText="Subjects (Student only)" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+    <!-- Button -->
+    <Button text="Sign Up" onAction="#handleSignUp" GridPane.rowIndex="8" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+
+    <!-- Status Message -->
+    <Label fx:id="statusLabel" textFill="red" GridPane.rowIndex="9" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
+
+</GridPane>
