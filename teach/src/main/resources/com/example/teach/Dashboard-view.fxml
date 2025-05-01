@@ -54,7 +54,7 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
             <children>
-                <Label text="Dashboard"   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label fx:id="dashboardLabel" text="Dashboard" onMouseClicked="#goToDashboard" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
                 <Label text="Profile"     style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
                 <Label text="Class Info"  style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
                 <Label text="Lesson Plan" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
