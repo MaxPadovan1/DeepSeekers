@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.teach.controller.LoginPageController" style="-fx-background-color:">
+      fx:controller="com.example.teach.controller.LoginPageController" >
     <HBox spacing="10.00" alignment="BOTTOM_LEFT" >
         <padding>
             <Insets left="50.0" />
@@ -35,15 +35,16 @@
                 <padding>
                     <Insets  left="120.0" right="120.0" bottom="20.0" />
                 </padding>
-                <Hyperlink fx:id="fpassword" text="Forgot Password?" maxWidth="500.0" maxHeight="150.0" />
+                <Hyperlink fx:id="fPassword" text="Forgot Password?" maxWidth="500.0" maxHeight="150.0" />
             </VBox>
 
         <HBox alignment="CENTER_RIGHT" spacing="50.0">
             <padding>
                 <Insets   right="300.0" />
             </padding>
-            <Button text="Sign in" onAction="#handleLogin" style="" />
-            <Button text="Sign Up" onAction="#handleSignUp"/>
+            <Button text="Sign in" fx:id="loginButton" onAction="#handleLogin" style="" />
+            <Button text="Sign Up" fx:id="signUpButton" onAction="#handleSignUp"/>
         </HBox>
+        <Label fx:id="errorLabel" textFill="red"/>
     </VBox>
 </VBox>
