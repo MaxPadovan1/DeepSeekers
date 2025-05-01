@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ComboBox?>
+
+<BorderPane fx:id="dashboard" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.AssignmentController">
+
+    <!-- Header Bar -->
+    <top>
+        <HBox spacing="10" style="-fx-background-color: #2C3E50; -fx-padding: 10px;">
+            <!-- Hamburger Button -->
+            <Button fx:id="hamburgerButton" onAction="#toggleDrawer" style="-fx-background-color: transparent;">
+                <graphic>
+                    <StackPane>
+                        <VBox spacing="4">
+                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24" />
+                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24" />
+                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24" />
+                        </VBox>
+                    </StackPane>
+                </graphic>
+            </Button>
+
+            <Label text="DeepSeekers/Subject1" style="-fx-text-fill: white; -fx-font-size: 20px;" />
+            <Region HBox.hgrow="ALWAYS" />
+
+            <!-- Dropdown Menu Button -->
+            <MenuButton style="-fx-text-fill: white;" text="Ezekiel Landon">
+                <items>
+                    <MenuItem text="Profile" />
+                    <MenuItem text="Logout" />
+                </items>
+            </MenuButton>
+        </HBox>
+    </top>
+
+    <!-- Side Drawer (Initially hidden or collapsed) -->
+    <left>
+        <VBox fx:id="drawer" managed="false" prefWidth="200.0" style="-fx-background-color: #34495E; -fx-padding: 10px;" visible="false">
+            <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 10px" text="Dashboard" />
+            <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Profile" />
+            <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Class Info" />
+            <Label style="-fx-text-fill: white;-fx-font-size: 18px;-fx-padding: 20px" text="Lesson Plan" />
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <VBox>
+
+            <!-- 📚 New Top VBox: Study | Assignment | Grade | Homework -->
+            <HBox spacing="120" style="-fx-background-color: #bdc3c7; -fx-padding: 10px;">
+                <VBox alignment="CENTER" prefWidth="150" spacing="5" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="🏠" style="-fx-font-size: 25px;-fx-padding:20px" />
+                        <Label text="Study" style="-fx-font-size: 16px; -fx-font-weight: bold;" fx:id="studyLabel" onMouseClicked="#goToStudyPage" />
+                    </HBox>
+                </VBox>
+                <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Assignment" />
+                </VBox>
+                <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Grade" />
+                </VBox>
+                <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Homework" />
+                </VBox>
+                <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Test" />
+                </VBox>
+            </HBox>
+
+            <!-- Main Content Area -->
+            <VBox spacing="20" style="-fx-padding: 20px;">
+
+                <!-- Assignment Title and Dropdown -->
+                <HBox spacing="10">
+                    <Label text="Assignment 1-jxymdc" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                    <ComboBox fx:id="assignmentDropdown" style="-fx-background-color: #E5E5E5;" />
+                </HBox>
+
+                <!-- Assignment Details Section -->
+                <VBox spacing="10">
+                    <Label text="Details:" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                    <TextArea fx:id="assignmentDetailsText" wrapText="true" editable="false" prefHeight="200.0" text="Cletin ces esoolper olacabi remi rolad asere runun ahleucyu..." />
+                </VBox>
+
+                <!-- Instructions Section -->
+                <VBox spacing="10">
+                    <Label text="Instructions:" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                    <TextArea fx:id="instructionsText" wrapText="true" editable="false" prefHeight="200.0" text="Hepele nan bayohapo atola opefo elohwien vunehat potadcs sec pe..." />
+                </VBox>
+
+                <!-- File Upload Section -->
+                <VBox spacing="10">
+                    <Label text="Drag your file here (.pdf, .word)" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                    <Button fx:id="uploadButton" text="Upload" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+                </VBox>
+
+                <!-- Submit and Resubmit Section -->
+                <VBox spacing="10">
+                    <Button fx:id="submitButton" text="Submit/Resubmit" style="-fx-background-color: #008CBA; -fx-text-fill: white;" />
+                    <HBox spacing="10">
+                        <Label text="Lecture notes for reference:" />
+                        <Hyperlink text="https://yyyyyyyyyyyyyyyy.com" />
+                    </HBox>
+                </VBox>
+
+                <!-- Submission Status Section -->
+                <VBox spacing="10">
+                    <Label text="Ezekiel submitted a file named xyz on dd/mm/yy." />
+                    <Label text="Attempt 1 h:mm" />
+                </VBox>
+
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>
