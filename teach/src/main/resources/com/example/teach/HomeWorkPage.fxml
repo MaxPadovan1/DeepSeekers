@@ -104,69 +104,129 @@
 
        </children>
     </HBox>
-   <Accordion>
-     <panes>
-       <TitledPane animated="false" prefHeight="137.0" prefWidth="1280.0" text="Week 1">
+   <Accordion maxHeight="0.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="1280.0">
+      <panes>
+         <TitledPane animated="false" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1280.0" text="Week 1">
             <font>
-               <Font size="15.0" />
+               <Font size="18.0" />
             </font>
             <content>
-               <VBox prefHeight="75.0" prefWidth="1278.0" style="-fx-background-color: #A9A9A9;">
+               <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="1280.0" style="-fx-background-color: #A9A9A9;">
                   <children>
-                     <TextArea prefHeight="200.0" prefWidth="200.0" text="text.........." />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="............. Homework">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                        <HBox.margin>
+                           <Insets left="30.0" />
+                        </HBox.margin>
+                     </Text>
+                     <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1200.0" text="text...........................&#10;">
+                        <HBox.margin>
+                           <Insets left="-220.0" top="50.0" />
+                        </HBox.margin>
+                     </TextArea>
                   </children>
-               </VBox>
+               </HBox>
             </content>
          </TitledPane>
-         <TitledPane animated="false" layoutX="10.0" layoutY="10.0" prefHeight="137.0" prefWidth="1280.0" text="Week 2">
+         <TitledPane animated="false" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1280.0" text="Week 2">
             <font>
-               <Font size="15.0" />
+               <Font size="18.0" />
             </font>
             <content>
-               <VBox prefHeight="75.0" prefWidth="1278.0" style="-fx-background-color: #A9A9A9;">
+               <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="1280.0" style="-fx-background-color: #A9A9A9;">
                   <children>
-                     <TextArea prefHeight="200.0" prefWidth="200.0" text="text.........." />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="............. Homework">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                        <HBox.margin>
+                           <Insets left="30.0" />
+                        </HBox.margin>
+                     </Text>
+                     <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1200.0" text="text...........................&#10;">
+                        <HBox.margin>
+                           <Insets left="-220.0" top="50.0" />
+                        </HBox.margin>
+                     </TextArea>
                   </children>
-               </VBox>
+               </HBox>
             </content>
          </TitledPane>
-         <TitledPane animated="false" layoutX="10.0" layoutY="147.0" prefHeight="137.0" prefWidth="1280.0" text="Week 3">
+         <TitledPane animated="false" layoutX="10.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1280.0" text="Week 3">
             <font>
-               <Font size="15.0" />
+               <Font size="18.0" />
             </font>
             <content>
-               <VBox prefHeight="75.0" prefWidth="1278.0" style="-fx-background-color: #A9A9A9;">
+               <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="1280.0" style="-fx-background-color: #A9A9A9;">
                   <children>
-                     <TextArea prefHeight="200.0" prefWidth="200.0" text="text.........." />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="............. Homework">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                        <HBox.margin>
+                           <Insets left="30.0" />
+                        </HBox.margin>
+                     </Text>
+                     <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1200.0" text="text...........................&#10;">
+                        <HBox.margin>
+                           <Insets left="-220.0" top="50.0" />
+                        </HBox.margin>
+                     </TextArea>
                   </children>
-               </VBox>
+               </HBox>
             </content>
          </TitledPane>
-         <TitledPane animated="false" layoutX="10.0" layoutY="178.0" prefHeight="137.0" prefWidth="1280.0" text="Week 4">
+         <TitledPane animated="false" layoutX="10.0" layoutY="263.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1280.0" text="Week 4">
             <font>
-               <Font size="15.0" />
+               <Font size="18.0" />
             </font>
             <content>
-               <VBox prefHeight="75.0" prefWidth="1278.0" style="-fx-background-color: #A9A9A9;">
+               <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="1280.0" style="-fx-background-color: #A9A9A9;">
                   <children>
-                     <TextArea prefHeight="200.0" prefWidth="200.0" text="text.........." />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="............. Homework">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                        <HBox.margin>
+                           <Insets left="30.0" />
+                        </HBox.margin>
+                     </Text>
+                     <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1200.0" text="text...........................&#10;">
+                        <HBox.margin>
+                           <Insets left="-220.0" top="50.0" />
+                        </HBox.margin>
+                     </TextArea>
                   </children>
-               </VBox>
+               </HBox>
             </content>
          </TitledPane>
-         <TitledPane animated="false" layoutX="10.0" layoutY="209.0" prefHeight="137.0" prefWidth="1280.0" text="Week 5">
+         <TitledPane animated="false" layoutX="10.0" layoutY="118.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1280.0" text="Week 5">
             <font>
-               <Font size="15.0" />
+               <Font size="18.0" />
             </font>
             <content>
-               <VBox prefHeight="75.0" prefWidth="1278.0" style="-fx-background-color: #A9A9A9;">
+               <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="1280.0" style="-fx-background-color: #A9A9A9;">
                   <children>
-                     <TextArea prefHeight="200.0" prefWidth="200.0" text="text.........." />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="............. Homework">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                        <HBox.margin>
+                           <Insets left="30.0" />
+                        </HBox.margin>
+                     </Text>
+                     <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1200.0" text="text...........................&#10;">
+                        <HBox.margin>
+                           <Insets left="-220.0" top="50.0" />
+                        </HBox.margin>
+                     </TextArea>
                   </children>
-               </VBox>
+               </HBox>
             </content>
          </TitledPane>
-     </panes>
+      </panes>
    </Accordion>
 
 </VBox>
