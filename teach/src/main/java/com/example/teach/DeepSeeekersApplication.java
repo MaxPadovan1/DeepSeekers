@@ -12,9 +12,10 @@ public class DeepSeeekersApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // make sure all your tables (including Subjects) exist
+        // 1️⃣ Ensure DB & tables exist
         new SQLiteDAO();    // ← runs createSchema()
 
+        // 2️⃣ Show login screen
         FXMLLoader fxmlLoader = new FXMLLoader(DeepSeeekersApplication.class.getResource("LoginPage-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setTitle("DeepSeekers");

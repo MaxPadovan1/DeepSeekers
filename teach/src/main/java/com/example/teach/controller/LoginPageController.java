@@ -34,7 +34,6 @@ public class LoginPageController {
         // 2) Hash & attempt login
         String hash = User.hashPassword(pw);
         User loggedIn = User.login(id, hash);
-
         if (loggedIn == null) {
             // 3a) Failure
             errorLabel.setText("Invalid username or password.");

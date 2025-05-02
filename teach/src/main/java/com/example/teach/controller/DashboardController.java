@@ -23,9 +23,9 @@ import java.util.function.Consumer;
 
 public class DashboardController implements Initializable {
 
-    private User currentUser;
-    private List<Subject> subjects;
-    private Node originalCenter;
+    private User currentUser; //Current logged in user
+    private List<Subject> subjects; //List of units the user is doing
+    private Node originalCenter; //Place to save the dashboard center pane to load when we return to dashboard
 
     @FXML private BorderPane rootBorderPane;
     @FXML private VBox drawer;
@@ -36,18 +36,18 @@ public class DashboardController implements Initializable {
     @FXML private VBox subject3Tile;
     @FXML private VBox subject4Tile;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // stash the original center so we can restore it later
+    @Override public void initialize(URL location, ResourceBundle resources) {
+        // Save the dashboard center pane
         originalCenter = rootBorderPane.getCenter();
     }
 
     /** Called by LoginPageController right after load(). */
     public void setUser(User user) {
         this.currentUser = user;
-        userMenu.setText(user.getFirstName() + " " + user.getLastName());
-        pageLabel.setText("Dashboard");
+        userMenu.setText(user.getFirstName() + " " + user.getLastName()); //Update the top right dropdown with the users name
+        pageLabel.setText("Dashboard"); //Set current page title
 
+        //Build subject list depending on student or teacher
         if (user instanceof Student s) {
             subjects = s.getSubjects();
         } else if (user instanceof Teacher t) {
@@ -72,16 +72,14 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public BorderPane getRootBorderPane() {
-        return rootBorderPane;
-    }
-
+    //Show or hide the hamburger menu
     @FXML public void toggleDrawer() {
         boolean open = drawer.isVisible();
         drawer.setVisible(!open);
         drawer.setManaged(!open);
     }
 
+    //Return to original dashboard grid view
     @FXML public void goToDashboard(MouseEvent ev) {
         drawer.setVisible(false);
         drawer.setManaged(false);
@@ -89,6 +87,8 @@ public class DashboardController implements Initializable {
         pageLabel.setText("Dashboard");
     }
 
+    /** VVV ---- Buttons Within The Hamburger Menu ---- VVV */
+    //Load the profile pane into the center
     @FXML public void goToProfile(MouseEvent ev) {
         drawer.setVisible(false);
         drawer.setManaged(false);
@@ -101,18 +101,21 @@ public class DashboardController implements Initializable {
         });
     }
 
+    //Load the class info pane into the center
     @FXML public void goToClassInfo(MouseEvent ev) {
         drawer.setVisible(false);
         drawer.setManaged(false);
         pageLabel.setText("Dashboard / Class Info");
-        loadCenter("/com/example/teach/SubjectHomePage-view.fxml", ctrl -> {
-            // if you have a dedicated controller for generic ClassInfo
-            if (ctrl instanceof SubjectHomePageController s) {
-                // optionally set user/subject if needed
+        loadCenter("/com/example/teach/ClassInfo-view.fxml", ctrl -> {
+            if (ctrl instanceof ClassInfoController c) {
+                c.setDashboardController(this);
+                c.setUser(currentUser);
+                c.setSubjects(subjects);
             }
         });
     }
 
+    //Load the lesson plan into the center
     @FXML public void goToLessonPlan(MouseEvent ev) {
         drawer.setVisible(false);
         drawer.setManaged(false);
@@ -131,13 +134,13 @@ public class DashboardController implements Initializable {
     private void goToSubject(int index) {
         drawer.setVisible(false);
         drawer.setManaged(false);
-        String name = subjects.get(index).getName();
-        pageLabel.setText("Dashboard / " + name);
+        Subject subj = subjects.get(index);
+        pageLabel.setText("Dashboard / " + subj.getName());
         loadCenter("/com/example/teach/SubjectHomePage-view.fxml", ctrl -> {
-            if (ctrl instanceof SubjectHomePageController s) {
-                s.setDashboardController(this);
-                s.setUser(currentUser);
-                s.setSubject(subjects.get(index));
+            if (ctrl instanceof SubjectHomePageController sh) {
+                sh.setDashboardController(this);
+                sh.setUser(currentUser);
+                sh.setSubject(subj);
             }
         });
     }
@@ -147,7 +150,7 @@ public class DashboardController implements Initializable {
         loadCenter(fxmlPath, ctrl -> { /* no-op */ });
     }
 
-    /** Core helper: loads FXML, runs your injector, then swaps in the center pane. */
+    /** Core helper: loads FXML, lets you initialize its controller, then swaps it in. */
     private void loadCenter(String fxmlPath, Consumer<Object> initController) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
