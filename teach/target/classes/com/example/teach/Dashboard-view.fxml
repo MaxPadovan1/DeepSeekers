@@ -36,6 +36,10 @@
                     </VBox>
                 </graphic>
             </Button>
+
+            <!-- NEW: page title -->
+            <Label fx:id="pageLabel" text="Dashboard" style="-fx-text-fill: white; -fx-font-size: 16;" />
+
             <Region HBox.hgrow="ALWAYS"/>
             <MenuButton fx:id="userMenu" text="User Name" style="-fx-text-fill: white;">
                 <items>
