@@ -61,7 +61,14 @@ public class UserDAO {
         if (exists(u.getId())) return false;
 
         try {
-            conn.setAutoCommit(false);  // 🔒 begin transaction
+            conn.setAutoCommit(false);// 🔒 begin transaction
+            // ✅ Enforce subject limit rule before inserting
+            if (u instanceof Student student) {
+                List<Subject> subjects = student.getSubjects();
+                if (subjects != null && subjects.size() > 4) {
+                    return false; // Exceeds subject limit
+                }
+            }
 
             // Insert into Users table
             String insU = "INSERT INTO Users(id,passwordHash,firstName,lastName,role,email) VALUES(?,?,?,?,?,?)";
