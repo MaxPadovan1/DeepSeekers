@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.teach.controller.AssignmentPageController"
+      spacing="20"
+      style="-fx-padding:20;">
+
+    <!-- Assignment selector -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Assignment:" style="-fx-font-size:18; -fx-font-weight:bold;"/>
+        <ComboBox fx:id="assignmentDropdown" prefWidth="200" promptText="Choose assignment"/>
+    </HBox>
+
+    <!-- Details -->
+    <VBox spacing="5">
+        <Label text="Details:" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+        <TextArea fx:id="assignmentDetailsText"
+                  wrapText="true"
+                  prefRowCount="6"
+                  promptText="Assignment details go here…"/>
+    </VBox>
+
+    <!-- Instructions -->
+    <VBox spacing="5">
+        <Label text="Instructions:" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+        <TextArea fx:id="instructionsText"
+                  wrapText="true"
+                  prefRowCount="4"
+                  promptText="Any instructions…"/>
+    </VBox>
+
+    <!-- File upload -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Upload your work:" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+        <Button fx:id="uploadButton" text="Upload" style="-fx-background-color:#4CAF50; -fx-text-fill:white;"/>
+    </HBox>
+
+    <!-- Submit / Resubmit -->
+    <HBox spacing="10">
+        <Button fx:id="submitButton"
+                text="Submit/Resubmit"
+                style="-fx-background-color:#008CBA; -fx-text-fill:white;"/>
+        <Hyperlink text="View lecture notes" fx:id="notesLink"/>
+    </HBox>
+
+    <!-- Status -->
+    <VBox spacing="5">
+        <Label fx:id="submissionStatusLabel" text="No submission yet."/>
+    </VBox>
+
+</VBox>
