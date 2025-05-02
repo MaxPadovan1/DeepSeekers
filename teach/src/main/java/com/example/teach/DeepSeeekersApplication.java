@@ -1,5 +1,6 @@
 package com.example.teach;
 
+import com.example.teach.model.AdminDAO;
 import com.example.teach.model.SQLiteDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class DeepSeeekersApplication extends Application {
 
@@ -14,6 +16,9 @@ public class DeepSeeekersApplication extends Application {
     public void start(Stage stage) throws IOException {
         // 1️⃣ Ensure DB & tables exist
         new SQLiteDAO();    // ← runs createSchema()
+        AdminDAO admin = new AdminDAO();
+
+        // ARE YOU SURE?? -> //admin.CLEAN_DB(); //Read AdminDAO before use
 
         // 2️⃣ Show login screen
         FXMLLoader fxmlLoader = new FXMLLoader(DeepSeeekersApplication.class.getResource("LoginPage-view.fxml"));
