@@ -45,7 +45,7 @@ public class SubjectHomePageController implements Initializable {
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Study");
     }
     @FXML private void onHomework() {
-        loadSection("Homework-view.fxml");
+        loadSection("HomeworkPage.fxml");
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Homework");
     }
     @FXML private void onTest() {

@@ -9,470 +9,434 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Label?>
-<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.StudyPageController">
+<VBox prefHeight="720.0" prefWidth="1280.0"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.teach.controller.StudyPageController">
+
 
    <VBox prefHeight="553.0" prefWidth="1280.0">
       <Accordion>
          <panes>
             <TitledPane text="Week 1" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
             <TitledPane text="Week 2" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
             <TitledPane text="Week 3" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
             <TitledPane text="Week 4" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
             <TitledPane text="Week 5" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
             <TitledPane text="Week 6" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
             <TitledPane text="Week 7" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
             <TitledPane text="Week 8" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
             <TitledPane text="Week 9" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
             <TitledPane text="Week 10" animated="false">
-               <content>
-                  <AnchorPane prefWidth="1280" prefHeight="260">
-                     <children>
-                        <!-- All your content rows -->
-                        <VBox spacing="10"
-                              AnchorPane.topAnchor="10"
-                              AnchorPane.leftAnchor="10"
-                              AnchorPane.rightAnchor="10">
+               <AnchorPane prefWidth="1280" prefHeight="260">
+                  <!-- All your content rows -->
+                  <VBox spacing="10"
+                        AnchorPane.topAnchor="10"
+                        AnchorPane.leftAnchor="10"
+                        AnchorPane.rightAnchor="10">
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/lecture-notes"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/lecture-notes"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/pre-lecture"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Pre-lecture notes:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/pre-lecture"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Flashcard:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/flashcard"/>
-                           </HBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Flashcard:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/flashcard"/>
+                     </HBox>
 
-                           <HBox spacing="10" alignment="CENTER_LEFT">
-                              <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
-                              <Hyperlink text="https://example.com/quiz"/>
-                           </HBox>
-                        </VBox>
+                     <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Practice quiz link:" style="-fx-font-size:18px;"/>
+                        <Hyperlink text="https://example.com/quiz"/>
+                     </HBox>
+                  </VBox>
 
-                        <!-- Button row anchored to bottom-right -->
-                        <HBox spacing="10"
-                              AnchorPane.bottomAnchor="10"
-                              AnchorPane.rightAnchor="10">
-                           <Button text="Upload"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
-                           <Button text="Edit"
-                                   prefWidth="100" prefHeight="30"
-                                   style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
+                  <!-- Button row anchored to bottom-right -->
+                  <HBox spacing="10"
+                        AnchorPane.bottomAnchor="10"
+                        AnchorPane.rightAnchor="10">
+                     <Button text="Upload"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:5;"/>
+                     <Button text="Edit"
+                             prefWidth="100" prefHeight="30"
+                             style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-background-radius:5;"/>
+                  </HBox>
+               </AnchorPane>
             </TitledPane>
          </panes>
       </Accordion>
