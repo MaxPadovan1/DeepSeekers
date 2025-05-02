@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 public class SignUpViewBasicController {
 
+    private final SubjectDAO subjectDAO = new SubjectDAO();
     @FXML private RadioButton studentRadio;
     @FXML private RadioButton teacherRadio;
     @FXML private ToggleGroup roleGroup;
@@ -150,6 +151,16 @@ public class SignUpViewBasicController {
             Subject sel = subjectComboBox.getValue();
             if (sel == null) {
                 messageLabel.setText("Teachers must select exactly one subject.");
+                return;
+            }
+
+            try {
+                if (subjectDAO.findTeacherBySubject(sel.getId()) != null) {
+                    messageLabel.setText("That class already has a teacher.");
+                    return;
+                }
+            } catch (SQLException ex) {
+                messageLabel.setText("Error checking existing teacher:\n" + ex.getMessage());
                 return;
             }
             subjectIds = List.of(sel.getId());

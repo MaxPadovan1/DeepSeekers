@@ -73,8 +73,21 @@ public abstract class User
             }
             else if (p == 'T') {
                 if (subjectIds.size() != 1) return null;
-                Subject s = new SubjectDAO().findById(subjectIds.get(0));
+                String subjectId = subjectIds.get(0);
+
+                // 2a) ensure the subject exists
+                Subject s = new SubjectDAO().findById(subjectId);
                 if (s == null) return null;
+
+                // 2b) enforce one‐teacher‐per‐subject
+                SubjectDAO subjDao = new SubjectDAO();
+                Teacher existing = subjDao.findTeacherBySubject(subjectId);
+                if (existing != null) {
+                    // already have a teacher for this subject!
+                    return null;  // or throw your own “SubjectAlreadyHasTeacher” exception
+                }
+
+                // 2c) ok to sign up
                 Teacher tch = new Teacher(id, passwordHash, firstName, lastName, email, s);
                 return new UserDAO().signUp(tch) ? tch : null;
             }

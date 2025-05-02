@@ -59,7 +59,8 @@ public class SQLiteDAO {
             String createTeachers =
                     "CREATE TABLE IF NOT EXISTS Teachers (" +
                             "  id TEXT PRIMARY KEY REFERENCES Users(id)," +
-                            "  subject_id TEXT REFERENCES Subjects(id)" +
+                            "  subject_id TEXT REFERENCES Subjects(id)," +
+                            "  UNIQUE(subject_id)" +
                             ")";
             stmt.execute(createTeachers);
 
