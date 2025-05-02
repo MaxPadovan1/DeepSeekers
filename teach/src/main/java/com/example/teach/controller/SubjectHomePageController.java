@@ -1,54 +1,70 @@
 package com.example.teach.controller;
 
+import com.example.teach.controller.SectionControllerBase;
 import com.example.teach.model.Subject;
 import com.example.teach.model.User;
 import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
+import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
-/**
- * Controller for the “subject home” panel that lives in the Dashboard's center.
- * All navigation is handed back to DashboardController.
- */
-public class SubjectHomePageController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SubjectHomePageController implements Initializable {
     private User currentUser;
     private Subject currentSubject;
-    private DashboardController dashboard;
+    private DashboardController dashboardController;
 
-    /** Inject the logged‐in user. */
-    public void setUser(User user) {
-        this.currentUser = user;
-        // TODO: populate any user‐specific UI here if needed
+    @FXML private BorderPane subjectRoot;
+    @FXML private VBox      defaultContent;  // our stashed “home” pane
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Nothing here yet — defaultContent is injected automatically
     }
 
-    /** Inject the current subject. */
-    public void setSubject(Subject subject) {
-        this.currentSubject = subject;
-        // TODO: update your UI labels based on subject.getName(), etc.
+    /** Called by DashboardController right after loading this view. */
+    public void setUser(User u)        { currentUser = u; }
+    public void setSubject(Subject s)  { currentSubject = s; }
+    public void setDashboardController(DashboardController d) {
+        dashboardController = d;
     }
 
-    /** Give us back‐pointer to the dashboard so we can ask it to swap views. */
-    public void setDashboardController(DashboardController dash) {
-        this.dashboard = dash;
+    /** Restore the original “home” view. */
+    @FXML private void onGoHome() {
+        subjectRoot.setCenter(defaultContent);
     }
 
-    /** “Study” tab: reload this same view. */
-    @FXML private void goToStudyPage(MouseEvent ev) {
-        dashboard.goToClassInfo(ev);   // re‐loads this page
-    }
+    /** Each of these will load a new FXML into the center. */
+    @FXML private void onStudy()      { loadSection("Study-view.fxml"); }
+    @FXML private void onAssignment() { loadSection("Assignment-view.fxml"); }
+    @FXML private void onGrade()      { loadSection("Grade-view.fxml"); }
+    @FXML private void onHomework()   { loadSection("Homework-view.fxml"); }
+    @FXML private void onTest()       { loadSection("Test-view.fxml"); }
 
-    @FXML private void goToAssignmentPage(MouseEvent ev) {
-        dashboard.goToLessonPlan(ev);   // or your real assignment‐page method
-    }
+    private void loadSection(String fxmlName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/teach/" + fxmlName)
+            );
+            Node section = loader.load();
 
-    @FXML private void goToGradePage(MouseEvent ev) {
-        dashboard.goToLessonPlan(ev);   // swap in your “grade” view instead
-    }
+            // If you have controllers for these sections and need to inject user/subject:
+            Object ctrl = loader.getController();
+            if (ctrl instanceof SectionControllerBase base) {
+                base.setUser(currentUser);
+                base.setSubject(currentSubject);
+                base.setDashboardController(dashboardController);
+            }
 
-    @FXML private void goToHomeworkPage(MouseEvent ev) {
-        dashboard.goToLessonPlan(ev);   // swap in your “homework” view instead
-    }
-
-    @FXML private void goToTestPage(MouseEvent ev) {
-        dashboard.goToLessonPlan(ev);   // swap in your “test” view instead
+            subjectRoot.setCenter(section);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // you might show an Alert here
+        }
     }
 }
