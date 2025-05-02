@@ -19,7 +19,9 @@ public class ProfilePageController {
     @FXML private Button viewPerformanceButton;
 
     // Personal details
-    @FXML private TextField genderField;
+    @FXML private TextField firstNameField;
+    @FXML private TextField lastNameField;
+    @FXML private TextField emailField;
     @FXML private TextField ageField;
     @FXML private TextField dobField;
     @FXML private TextField addressField;
@@ -27,10 +29,10 @@ public class ProfilePageController {
     @FXML private TextField emergencyContactField;
 
     // Class details
-    @FXML private TextField assignedClassField;
+    @FXML private TextField teacherFirstNameField;
+    @FXML private TextField teacherLastNameField;
     @FXML private TextField divisionField;
-    @FXML private TextField classTeacherField;
-    @FXML private TextField emailField;
+    @FXML private TextField teacherEmailField;
     @FXML private Button viewAttendanceButton;
 
     // Action buttons
@@ -41,64 +43,74 @@ public class ProfilePageController {
     public void setUser(User user) {
         this.currentUser = user;
 
-        // Header labels
+        // Header
         nameLabel.setText(user.getFirstName() + " " + user.getLastName());
         idLabel.setText("ID: " + user.getId());
 
-        // Always populate email
-        emailField.setText(user.getEmail());
+        // Personal
+        firstNameField.setText(user.getFirstName());
+        lastNameField .setText(user.getLastName());
+        emailField    .setText(user.getEmail());
+        // clear the rest for now
+        ageField.clear(); dobField.clear();
+        addressField.clear(); phoneField.clear(); emergencyContactField.clear();
 
-        // Clear & disable all optional fields
-        for (TextField tf : new TextField[]{
-                genderField, ageField, dobField, addressField,
-                phoneField, emergencyContactField,
-                assignedClassField, divisionField, classTeacherField
-        }) {
-            tf.clear();
-            tf.setDisable(true);
-        }
+        // Class details: only teachers know their division, etc.
+        teacherFirstNameField.clear();
+        teacherLastNameField .clear();
+        divisionField        .clear();
+        teacherEmailField    .clear();
 
-        // Show/hide student vs teacher bits
+        // Show/hide bits
         if (user instanceof Student s) {
-            // e.g. if Student has gender/age/dob:
-            // genderField.setText(s.getGender());   genderField.setDisable(false);
-            // ageField.setText(String.valueOf(s.getAge())); ageField.setDisable(false);
-            // dobField.setText(s.getDob().toString());        dobField.setDisable(false);
+            // no performance button for students
+            viewPerformanceButton.setVisible(false);
+            // class details for student come from their assigned teacher/division...
+            // fill teacherFirstNameField/teacherLastNameField/divisionField/teacherEmailField
+            // once you wire in your SubjectDAO.lookup for the student’s class.
         }
         else if (user instanceof Teacher t) {
-            // teacher-specific button
             viewPerformanceButton.setVisible(true);
+            // teacher sees their own class details:
+            teacherFirstNameField.setText(t.getFirstName());
+            teacherLastNameField .setText(t.getLastName());
+            teacherEmailField    .setText(t.getEmail());
+            // you might have t.getDivision() on your model:
+            // divisionField.setText(t.getDivision());
         }
+
+        // disable all editing initially
+        onEdit(null);
     }
 
-    /** DashboardController injects itself so we can toggle the drawer if needed. */
+    /** Inject DashboardController so we can toggle the drawer. */
     public void setDashboardController(DashboardController dashCtrl) {
         this.dashboardController = dashCtrl;
     }
 
-    /** Save changes (stub) and lock edits. */
+    /** Save (stub) then disable editing again. */
     @FXML private void onSave(ActionEvent ev) {
-        // TODO: persist currentUser changes via DAO...
+        // TODO: persist via DAO...
         onEdit(ev);
     }
 
     /** Toggle editability of all fields. */
     @FXML private void onEdit(ActionEvent ev) {
-        boolean editable = !genderField.isEditable();
+        boolean makeEditable = !firstNameField.isDisable();
         for (TextField tf : new TextField[]{
-                genderField, ageField, dobField, addressField,
-                phoneField, emergencyContactField,
-                assignedClassField, divisionField, classTeacherField, emailField
+                firstNameField, lastNameField, emailField,
+                ageField, dobField, addressField, phoneField, emergencyContactField,
+                teacherFirstNameField, teacherLastNameField, divisionField, teacherEmailField
         }) {
-            tf.setDisable(!editable);
+            tf.setDisable(makeEditable);
         }
     }
 
     @FXML private void onViewAttendance(ActionEvent ev) {
-        // TODO: hook up attendance view
+        // TODO: attendance view
     }
 
     @FXML private void onViewPerformance(ActionEvent ev) {
-        // TODO: hook up performance view
+        // TODO: performance view
     }
 }
