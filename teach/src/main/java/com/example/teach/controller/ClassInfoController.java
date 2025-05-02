@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -18,14 +19,7 @@ import java.util.List;
 public class ClassInfoController {
     private User currentUser;
     private DashboardController dashboardController;
-
-    // Your fx:id hooks into the student list container, etc.
-    @FXML private Label teacherNameLabel;
-    @FXML private Label teacherEmailLabel;
-    @FXML private Label teacherPhoneLabel;
-
-    @FXML private ScrollPane studentList;
-    @FXML private VBox     studentListContainer;  // fx:id on the inner VBox
+    @FXML private GridPane studentListContainer;
 
     /** Called by DashboardController.loadCenter(...) */
     public void setUser(User u) {
@@ -44,54 +38,64 @@ public class ClassInfoController {
      */
     public void setSubjects(List<Subject> subs) {
         studentListContainer.getChildren().clear();
-        for (Subject subj : subs) {
-            addClassBlock(subj);
+        for (int i = 0; i < subs.size(); i++) {
+            addClassBlock(subs.get(i), i);
         }
     }
 
-    private void addClassBlock(Subject subj) {
+    private void addClassBlock(Subject subj, int index) {
         VBox classBox = new VBox(10);
-        classBox.setStyle("-fx-padding:15; -fx-background-radius:10; -fx-background-color:#bdc3c7;");
+        classBox.setStyle(
+                "-fx-padding:15; -fx-background-radius:10; -fx-background-color:#bdc3c7;"
+        );
 
-        // 1) Teacher info
+        // Subject title + teacher info
         try {
-            Teacher t = new SubjectDAO().findTeacherBySubject(subj.getId());
             Label title = new Label("Subject: " + subj.getName());
             title.setStyle("-fx-font-size:18px; -fx-font-weight:bold;");
             classBox.getChildren().add(title);
 
+            Teacher t = new SubjectDAO().findTeacherBySubject(subj.getId());
             if (t != null) {
                 classBox.getChildren().add(new Label("Teacher: " + t.getFirstName() + " " + t.getLastName()));
-                classBox.getChildren().add(new Label("Email: "   + t.getEmail()));
+                classBox.getChildren().add(new Label("Email:   " + t.getEmail()));
             } else {
                 classBox.getChildren().add(new Label("Teacher: (none)"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Could not load teacher for " + subj.getName() + ":\n" + ex.getMessage())
+            new Alert(Alert.AlertType.ERROR,
+                    "Could not load teacher for " + subj.getName() + ":\n" + ex.getMessage())
                     .showAndWait();
         }
 
-        // 2) Student list
+        // Student list
         try {
-            List<Student> students = new SubjectDAO().findStudentsBySubject(subj.getId());
             VBox studentBlock = new VBox(5);
-            studentBlock.setStyle("-fx-padding:10; -fx-background-radius:5; -fx-background-color:white;");
+            studentBlock.setStyle(
+                    "-fx-padding:10; -fx-background-radius:5; -fx-background-color:white;"
+            );
             studentBlock.getChildren().add(new Label("Students:"));
+            List<Student> students = new SubjectDAO().findStudentsBySubject(subj.getId());
             for (Student s : students) {
                 HBox row = new HBox(20,
                         new Label(s.getFirstName() + " " + s.getLastName()),
-                        new Label(s.getEmail()));
+                        new Label(s.getEmail())
+                );
                 studentBlock.getChildren().add(row);
             }
             classBox.getChildren().add(studentBlock);
         } catch (SQLException ex) {
             ex.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Could not load students for " + subj.getName() + ":\n" + ex.getMessage())
+            new Alert(Alert.AlertType.ERROR,
+                    "Could not load students for " + subj.getName() + ":\n" + ex.getMessage())
                     .showAndWait();
         }
 
-        studentListContainer.getChildren().add(classBox);
+        // calculate column (0–3) and row
+        int col = index % 4;
+        int row = index / 4;
+        studentListContainer.add(classBox, col, row);
     }
 
 

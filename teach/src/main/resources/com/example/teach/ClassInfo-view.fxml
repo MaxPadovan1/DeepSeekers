@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/21"
@@ -9,14 +11,20 @@
       spacing="10"
       style="-fx-padding:20;">
 
-    <!-- Scrollable area; controller will populate the inner VBox -->
+    <!-- Scrollable area; controller will populate the grid -->
     <ScrollPane fitToWidth="true"
                 style="-fx-background-color:transparent; -fx-border-color:transparent;">
         <content>
-            <!-- Populated at runtime by ClassInfoController.setSubjects(...) -->
-            <VBox fx:id="studentListContainer"
-                  spacing="20"
-                  style="-fx-padding:10;"/>
+            <GridPane fx:id="studentListContainer"
+                      hgap="20" vgap="20"
+                      style="-fx-padding:10;">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                </columnConstraints>
+            </GridPane>
         </content>
     </ScrollPane>
 </VBox>
