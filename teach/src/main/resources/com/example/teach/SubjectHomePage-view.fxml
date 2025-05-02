@@ -19,17 +19,17 @@
             <StackPane HBox.hgrow="ALWAYS" alignment="CENTER" onMouseClicked="#onStudy">
                 <Label text="Study" style="-fx-font-size:16; -fx-font-weight:bold;"/>
             </StackPane>
-            <StackPane HBox.hgrow="ALWAYS" alignment="CENTER" onMouseClicked="#onAssignment">
-                <Label text="Assignment" style="-fx-font-size:16; -fx-font-weight:bold;"/>
-            </StackPane>
-            <StackPane HBox.hgrow="ALWAYS" alignment="CENTER" onMouseClicked="#onGrade">
-                <Label text="Grade" style="-fx-font-size:16; -fx-font-weight:bold;"/>
-            </StackPane>
             <StackPane HBox.hgrow="ALWAYS" alignment="CENTER" onMouseClicked="#onHomework">
                 <Label text="Homework" style="-fx-font-size:16; -fx-font-weight:bold;"/>
             </StackPane>
             <StackPane HBox.hgrow="ALWAYS" alignment="CENTER" onMouseClicked="#onTest">
                 <Label text="Test" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+            </StackPane>
+            <StackPane HBox.hgrow="ALWAYS" alignment="CENTER" onMouseClicked="#onAssignment">
+                <Label text="Assignment" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+            </StackPane>
+            <StackPane HBox.hgrow="ALWAYS" alignment="CENTER" onMouseClicked="#onGrade">
+                <Label text="Grade" style="-fx-font-size:16; -fx-font-weight:bold;"/>
             </StackPane>
         </HBox>
     </top>
@@ -83,5 +83,4 @@
             </HBox>
         </VBox>
     </center>
-
 </BorderPane>

@@ -20,10 +20,9 @@ public class SubjectHomePageController implements Initializable {
     private DashboardController dashboardController;
 
     @FXML private BorderPane subjectRoot;
-    @FXML private VBox      defaultContent;  // our stashed “home” pane
+    @FXML private VBox defaultContent;  // our stashed “home” pane
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @Override public void initialize(URL location, ResourceBundle resources) {
         // Nothing here yet — defaultContent is injected automatically
     }
 
@@ -37,20 +36,33 @@ public class SubjectHomePageController implements Initializable {
     /** Restore the original “home” view. */
     @FXML private void onGoHome() {
         subjectRoot.setCenter(defaultContent);
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName());
     }
 
     /** Each of these will load a new FXML into the center. */
-    @FXML private void onStudy()      { loadSection("Study-view.fxml"); }
-    @FXML private void onAssignment() { loadSection("Assignment-view.fxml"); }
-    @FXML private void onGrade()      { loadSection("Grade-view.fxml"); }
-    @FXML private void onHomework()   { loadSection("Homework-view.fxml"); }
-    @FXML private void onTest()       { loadSection("Test-view.fxml"); }
+    @FXML private void onStudy() {
+        loadSection("StudyPage.fxml");
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Study");
+    }
+    @FXML private void onHomework() {
+        loadSection("Homework-view.fxml");
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Homework");
+    }
+    @FXML private void onTest() {
+        loadSection("Test-view.fxml");
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Test");
+    }
+    @FXML private void onAssignment() {
+        loadSection("Assignment-view.fxml");
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Assignment");
+    }
+    @FXML private void onGrade() { loadSection("Grade-view.fxml");
+        //TODO: add grade
+    }
 
     private void loadSection(String fxmlName) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/example/teach/" + fxmlName)
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/" + fxmlName));
             Node section = loader.load();
 
             // If you have controllers for these sections and need to inject user/subject:

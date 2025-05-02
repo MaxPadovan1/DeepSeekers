@@ -72,6 +72,10 @@ public class DashboardController implements Initializable {
         }
     }
 
+    public void setPageLabel(String text) {
+        pageLabel.setText(text);
+    }
+
     //Show or hide the hamburger menu
     @FXML public void toggleDrawer() {
         boolean open = drawer.isVisible();
@@ -84,7 +88,7 @@ public class DashboardController implements Initializable {
         drawer.setVisible(false);
         drawer.setManaged(false);
         rootBorderPane.setCenter(originalCenter);
-        pageLabel.setText("Dashboard");
+        setPageLabel("Dashboard");
     }
 
     /** VVV ---- Buttons Within The Hamburger Menu ---- VVV */
@@ -92,7 +96,7 @@ public class DashboardController implements Initializable {
     @FXML public void goToProfile(MouseEvent ev) {
         drawer.setVisible(false);
         drawer.setManaged(false);
-        pageLabel.setText("Dashboard / Profile");
+        setPageLabel("Dashboard / Profile");
         loadCenter("/com/example/teach/ProfilePage.fxml", ctrl -> {
             if (ctrl instanceof ProfilePageController p) {
                 p.setDashboardController(this);
@@ -105,7 +109,7 @@ public class DashboardController implements Initializable {
     @FXML public void goToClassInfo(MouseEvent ev) {
         drawer.setVisible(false);
         drawer.setManaged(false);
-        pageLabel.setText("Dashboard / Class Info");
+        setPageLabel("Dashboard / Class Info");
         loadCenter("/com/example/teach/ClassInfo-view.fxml", ctrl -> {
             if (ctrl instanceof ClassInfoController c) {
                 c.setDashboardController(this);
@@ -119,7 +123,7 @@ public class DashboardController implements Initializable {
     @FXML public void goToLessonPlan(MouseEvent ev) {
         drawer.setVisible(false);
         drawer.setManaged(false);
-        pageLabel.setText("Dashboard / Lesson Plan");
+        setPageLabel("Dashboard / Lesson Plan");
         loadCenter("/com/example/teach/LessonPlan-view.fxml");
     }
 
@@ -135,7 +139,7 @@ public class DashboardController implements Initializable {
         drawer.setVisible(false);
         drawer.setManaged(false);
         Subject subj = subjects.get(index);
-        pageLabel.setText("Dashboard / " + subj.getName());
+        setPageLabel("Dashboard / " + subj.getName());
         loadCenter("/com/example/teach/SubjectHomePage-view.fxml", ctrl -> {
             if (ctrl instanceof SubjectHomePageController sh) {
                 sh.setDashboardController(this);
