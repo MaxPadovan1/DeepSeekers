@@ -15,12 +15,26 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller for the LoginPage view.
+ * <p>
+ * Handles user authentication and navigation to dashboard or sign-up screens.
+ */
 public class LoginPageController {
+
     @FXML private TextField userId;
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
     @FXML private Hyperlink fPassword;
 
+    /**
+     * Invoked when the Sign In button is clicked.
+     * <p>
+     * Validates input fields, attempts login, displays errors on failure,
+     * and opens the dashboard on successful authentication.
+     *
+     * @param event the ActionEvent triggered by clicking the Sign In button
+     */
     @FXML private void handleLogin(ActionEvent event) {
         String id  = userId.getText().trim();
         String pw  = passwordField.getText();
@@ -45,20 +59,24 @@ public class LoginPageController {
     }
 
     /**
-     * Loads the dashboard, injects the logged-in User into its controller,
-     * and then shows it in the same window.
+     * Loads the dashboard view, injects the authenticated User into its controller,
+     * and swaps the current scene to the dashboard.
+     *
+     * @param event     the ActionEvent that triggered navigation
+     * @param loggedIn  the authenticated User object
      */
     private void openDashboard(ActionEvent event, User loggedIn) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/Dashboard-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/teach/Dashboard-view.fxml")
+            );
             Parent dashboardRoot = loader.load();
 
-            // 1) grab the DashboardController instance
+            // Obtain controller and pass the authenticated user
             DashboardController dashCtrl = loader.getController();
-            // 2) inject our User
             dashCtrl.setUser(loggedIn);
 
-            // 3) swap scenes
+            // Switch scenes on the same stage
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(dashboardRoot, 1280, 720);
             stage.setScene(scene);
@@ -70,11 +88,20 @@ public class LoginPageController {
         }
     }
 
+    /**
+     * Invoked when the Sign Up button or hyperlink is clicked.
+     * <p>
+     * Loads the sign-up view and replaces the current scene.
+     *
+     * @param event the ActionEvent triggered by clicking Sign Up
+     */
     @FXML private void handleSignUp(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/SignUp-viewBasic.fxml")
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/teach/SignUp-viewBasic.fxml")
             );
             Parent signUpRoot = loader.load();
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(signUpRoot, 1280, 720);
             stage.setScene(scene);

@@ -1,75 +1,129 @@
 package com.example.teach.controller;
 
-import com.example.teach.controller.SectionControllerBase;
 import com.example.teach.model.Subject;
 import com.example.teach.model.User;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class SubjectHomePageController implements Initializable {
+/**
+ * Controller for the Subject Home Page within the Dashboard.
+ * <p>
+ * Manages the display of the default home pane and navigation
+ * to various subject-specific sections (Study, Homework, Test, etc.).
+ * Relies on {@link SectionControllerBase} for section controllers.
+ */
+public class SubjectHomePageController {
+
+    /** The authenticated user for this session. */
     private User currentUser;
+    /** The subject currently being viewed. */
     private Subject currentSubject;
+    /** Reference to the DashboardController for navigation and UI updates. */
     private DashboardController dashboardController;
-
+    /** Root layout for this subject page, with a center region for content. */
     @FXML private BorderPane subjectRoot;
-    @FXML private VBox defaultContent;  // our stashed “home” pane
+    /** The default "home" content pane, shown when returning home. */
+    @FXML private VBox defaultContent;
 
-    @Override public void initialize(URL location, ResourceBundle resources) {
-        // Nothing here yet — defaultContent is injected automatically
+    /**
+     * Injects the authenticated user into this controller.
+     * Called by DashboardController immediately after loading this view.
+     *
+     * @param u the logged-in {@link User}
+     */
+    public void setUser(User u) {
+        this.currentUser = u;
     }
 
-    /** Called by DashboardController right after loading this view. */
-    public void setUser(User u)        { currentUser = u; }
-    public void setSubject(Subject s)  { currentSubject = s; }
+    /**
+     * Injects the current subject into this controller.
+     * Called by DashboardController immediately after loading this view.
+     *
+     * @param s the {@link Subject} to display
+     */
+    public void setSubject(Subject s) {
+        this.currentSubject = s;
+    }
+
+    /**
+     * Injects the DashboardController for cross-controller navigation.
+     * Called by DashboardController immediately after loading this view.
+     *
+     * @param d the parent {@link DashboardController}
+     */
     public void setDashboardController(DashboardController d) {
-        dashboardController = d;
+        this.dashboardController = d;
     }
 
-    /** Restore the original “home” view. */
+    /**
+     * Restores the original home view in the center pane.
+     * Updates the dashboard title accordingly.
+     */
     @FXML private void onGoHome() {
         subjectRoot.setCenter(defaultContent);
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName());
     }
 
-    /** Each of these will load a new FXML into the center. */
+    /**
+     * Loads the Study section into the center pane.
+     * Updates the dashboard title accordingly.
+     */
     @FXML private void onStudy() {
         loadSection("StudyPage.fxml");
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Study");
     }
+
+    /**
+     * Loads the Homework section into the center pane.
+     * Updates the dashboard title accordingly.
+     */
     @FXML private void onHomework() {
         loadSection("HomeworkPage.fxml");
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Homework");
     }
+
+    /**
+     * Placeholder for Test section: currently logs a click event.
+     */
     @FXML private void onTest() {
-        //loadSection("Test-view.fxml");
-        //dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Test");
         System.out.println("Clicked on Test");
     }
+
+    /**
+     * Loads the Assignment section into the center pane.
+     * Updates the dashboard title accordingly.
+     */
     @FXML private void onAssignment() {
-        //loadSection("AssignmentPage.fxml");
-        //dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Assignment");
-        System.out.println("Clicked on Assignment");
+        loadSection("AssignmentPage.fxml");
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Assignment");
     }
+
+    /**
+     * Placeholder for Grade section: currently logs a click event.
+     */
     @FXML private void onGrade() {
-        //loadSection("Grade-view.fxml");
-        //dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Grade");
         System.out.println("Clicked on Grade");
     }
 
+    /**
+     * Helper to load a section FXML into the center pane, performing
+     * dependency injection for its controller if it extends SectionControllerBase.
+     *
+     * @param fxmlName name of the FXML file in the com/example/teach package
+     */
     private void loadSection(String fxmlName) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/" + fxmlName));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/com/example/teach/" + fxmlName
+                    )
+            );
             Node section = loader.load();
 
-            // If you have controllers for these sections and need to inject user/subject:
             Object ctrl = loader.getController();
             if (ctrl instanceof SectionControllerBase base) {
                 base.setUser(currentUser);
@@ -80,7 +134,7 @@ public class SubjectHomePageController implements Initializable {
             subjectRoot.setCenter(section);
         } catch (IOException e) {
             e.printStackTrace();
-            // you might show an Alert here
+            // Consider showing an Alert in production code
         }
     }
 }

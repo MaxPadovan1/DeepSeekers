@@ -11,13 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -27,9 +20,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for the basic Sign Up view.
+ * <p>
+ * Manages role selection (student vs. teacher), loading subjects,
+ * generating unique user IDs, validating input, creating new users,
+ * and navigation back to the login page.
+ */
 public class SignUpViewBasicController {
 
+    /** DAO for accessing subjects in the database. */
     private final SubjectDAO subjectDAO = new SubjectDAO();
+
     @FXML private RadioButton studentRadio;
     @FXML private RadioButton teacherRadio;
     @FXML private ToggleGroup roleGroup;
@@ -44,10 +46,16 @@ public class SignUpViewBasicController {
     @FXML private VBox teacherPane;
     @FXML private Label messageLabel;
 
+    /**
+     * Initializes the Sign Up view.
+     * <p>
+     * Loads subjects from the database into the checkbox container and combo box,
+     * sets up role toggle behavior (show/hide relevant panes and generate IDs),
+     * and defaults the selection to student.
+     */
     @FXML public void initialize() {
         try {
-            // Load subjects and populate UI
-            List<Subject> subjects = new SubjectDAO().getAll();
+            List<Subject> subjects = subjectDAO.getAll();
             subjectCheckboxContainer.getChildren().clear();
             for (Subject s : subjects) {
                 CheckBox cb = new CheckBox(s.getName());
@@ -59,7 +67,6 @@ public class SignUpViewBasicController {
             messageLabel.setText("Error loading subjects: " + ex.getMessage());
         }
 
-        // Toggle between student/teacher
         roleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
             if (newToggle == studentRadio) {
                 studentPane.setVisible(true);
@@ -73,27 +80,29 @@ public class SignUpViewBasicController {
             messageLabel.setText("");
         });
 
-        // Default to student
         if (roleGroup.getSelectedToggle() == null) {
             studentRadio.setSelected(true);
         }
     }
 
     /**
-     * Generates a random 6-digit ID with the given prefix, ensuring no collision.
-     * Tries up to 1000 random attempts before falling back to sequential.
+     * Generates a unique 6-digit user ID with the given prefix.
+     * <p>
+     * Attempts up to 1000 random IDs before falling back to sequential generation.
+     *
+     * @param prefix the letter prefix for the ID (e.g., "S" or "T")
+     * @return a unique ID string in the format PREFIX######
      */
     private String generateNextId(String prefix) {
         Random rand = new Random();
         UserDAO dao = new UserDAO();
         for (int attempt = 0; attempt < 1000; attempt++) {
-            int num = rand.nextInt(1_000_000); // 0 to 999999
+            int num = rand.nextInt(1_000_000);
             String candidate = String.format("%s%06d", prefix, num);
             if (!dao.exists(candidate)) {
                 return candidate;
             }
         }
-        // Fallback sequential generation
         try {
             String max = dao.findMaxIdWithPrefix(prefix);
             int next = (max == null) ? 1 : Integer.parseInt(max.substring(1)) + 1;
@@ -104,10 +113,14 @@ public class SignUpViewBasicController {
         }
     }
 
-
     /**
-     * Processes the Sign-Up button click: validates inputs, creates the user,
-     * and navigates back to the Login page.
+     * Handles the Sign-Up button click.
+     * <p>
+     * Validates user input (fields, email format, subject selection),
+     * collects chosen subjects, outputs debug dump, creates the new user
+     * via {@link User#signUp}, and navigates back to login.
+     *
+     * @param event the ActionEvent triggered by clicking the Sign-Up button
      */
     @FXML private void handleSignUp(ActionEvent event) {
         String id    = idField.getText();
@@ -123,10 +136,6 @@ public class SignUpViewBasicController {
         }
 
         // Validate email format
-        // Regex: "\S+@\S+\.\S+"
-        // In English: one or more non-whitespace characters, followed by '@',
-        // then one or more non-whitespace characters, followed by '.',
-        // then one or more non-whitespace characters.
         if (!email.matches("\\S+@\\S+\\.\\S+")) {
             messageLabel.setText("Invalid email format.");
             return;
@@ -153,7 +162,6 @@ public class SignUpViewBasicController {
                 messageLabel.setText("Teachers must select exactly one subject.");
                 return;
             }
-
             try {
                 if (subjectDAO.findTeacherBySubject(sel.getId()) != null) {
                     messageLabel.setText("That class already has a teacher.");
@@ -166,7 +174,7 @@ public class SignUpViewBasicController {
             subjectIds = List.of(sel.getId());
         }
 
-        // **DEBUG DUMP**
+        // **DEBUG SIGNUP DUMP**
         System.out.println("=== DEBUG SIGNUP DUMP ===");
         System.out.println("ID:       " + id);
         System.out.println("Name:     " + fn + " " + ln);
@@ -179,7 +187,6 @@ public class SignUpViewBasicController {
         System.out.println("=========================");
 
         // Create user
-        //String pwHash = User.hashPassword(pw);
         User newUser = User.signUp(id, pwHash, fn, ln, email, subjectIds);
         if (newUser != null) {
             System.out.println("✅ Signed up: " + newUser);
@@ -187,9 +194,11 @@ public class SignUpViewBasicController {
             System.out.println("❌ Sign-up failed for id=" + id);
         }
 
-        // Navigate back to Log in
+        // Navigate back to Login
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/LoginPage-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/teach/LoginPage-view.fxml")
+            );
             Parent root = loader.load();
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1280, 720));
@@ -200,7 +209,9 @@ public class SignUpViewBasicController {
     }
 
     /**
-     * Handles the Cancel button by returning to the Login page.
+     * Handles the Cancel button click by returning to the login page.
+     *
+     * @param event the ActionEvent triggered by clicking the Cancel button
      */
     @FXML private void handleCancel(ActionEvent event) {
         try {

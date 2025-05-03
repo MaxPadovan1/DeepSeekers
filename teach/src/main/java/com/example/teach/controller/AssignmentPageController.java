@@ -9,40 +9,89 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-/** Minimal stub so your FXML loads without errors. */
+/**
+ * Controller for the "Assignment" section of a subject.
+ * <p>
+ * Implements {@link SectionControllerBase} for dependency injection of
+ * the current user, subject, and dashboard controller. Manages UI
+ * components related to assignments, including selection, details,
+ * submission, and notes.
+ */
 public class AssignmentPageController implements SectionControllerBase {
+
+    /** The authenticated user viewing this section. */
     private User currentUser;
+    /** The subject context for this Assignment page. */
     private Subject currentSubject;
+    /** Reference to the DashboardController for navigation and UI updates. */
     private DashboardController dashboardController;
 
-    // these must match your fx:id’s in FXML (even if you don’t use them yet)
-    @FXML private ComboBox<?>    assignmentDropdown;
-    @FXML private TextArea       assignmentDetailsText;
-    @FXML private TextArea       instructionsText;
-    @FXML private Button         uploadButton;
-    @FXML private Button         submitButton;
-    @FXML private Hyperlink      notesLink;
-    @FXML private Label          submissionStatusLabel;
+    // UI components
+    @FXML private ComboBox<?> assignmentDropdown;
+    @FXML private TextArea assignmentDetailsText;
+    @FXML private TextArea instructionsText;
+    @FXML private Button uploadButton;
+    @FXML private Button submitButton;
+    @FXML private Hyperlink notesLink;
+    @FXML private Label submissionStatusLabel;
 
-    @Override
-    public void setUser(User u) {
+    /**
+     * Injects the authenticated User into this controller.
+     *
+     * @param u the current {@link User}
+     */
+    @Override public void setUser(User u) {
         this.currentUser = u;
     }
 
-    @Override
-    public void setSubject(Subject s) {
+    /**
+     * Injects the current Subject into this controller.
+     *
+     * @param s the current {@link Subject}
+     */
+    @Override public void setSubject(Subject s) {
         this.currentSubject = s;
-        // no DAO calls here yet
+        // TODO: use SubjectDAO to load assignment data if needed
     }
 
-    @Override
-    public void setDashboardController(DashboardController dash) {
+    /**
+     * Injects the DashboardController for navigation actions.
+     *
+     * @param dash the parent {@link DashboardController}
+     */
+    @Override public void setDashboardController(DashboardController dash) {
         this.dashboardController = dash;
     }
 
-    // stub handlers so FXML onAction / onMouseClicked references compile:
-    @FXML private void onAssignmentSelected() { /* no-op */ }
-    @FXML private void onUpload()            { /* no-op */ }
-    @FXML private void onSubmit()            { /* no-op */ }
-    @FXML private void onNotesLink()         { /* no-op */ }
+    /**
+     * Handler for when an assignment is selected from the dropdown.
+     * Currently a no-op stub for FXML reference.
+     */
+    @FXML private void onAssignmentSelected() {
+        // TODO: load assignment details into assignmentDetailsText and instructionsText
+    }
+
+    /**
+     * Handler for the Upload button click.
+     * Currently a no-op stub for FXML reference.
+     */
+    @FXML private void onUpload() {
+        // TODO: implement file upload dialog and set submissionStatusLabel
+    }
+
+    /**
+     * Handler for the Submit button click.
+     * Currently a no-op stub for FXML reference.
+     */
+    @FXML private void onSubmit() {
+        // TODO: implement assignment submission logic and update submissionStatusLabel
+    }
+
+    /**
+     * Handler for the Notes hyperlink click.
+     * Currently a no-op stub for FXML reference.
+     */
+    @FXML private void onNotesLink() {
+        // TODO: open student notes URL or dialog
+    }
 }

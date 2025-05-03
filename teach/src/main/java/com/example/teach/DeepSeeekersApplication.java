@@ -8,26 +8,51 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
+/**
+ * Main entry point for the DeepSeekers JavaFX application.
+ * <p>
+ * This class initializes the database schema (via {@link SQLiteDAO}),
+ * optionally allows a full reset (via {@link AdminDAO#CLEAN_DB}),
+ * and then loads the login screen from FXML.
+ */
 public class DeepSeeekersApplication extends Application {
 
+    /**
+     * Called when the JavaFX application is launched.
+     * <p>
+     * This method ensures the database schema exists, constructs any
+     * necessary DAOs, and displays the login UI.
+     *
+     * @param stage the primary window provided by the JavaFX runtime
+     * @throws IOException if the FXML resource cannot be loaded
+     */
     @Override
     public void start(Stage stage) throws IOException {
-        // 1️⃣ Ensure DB & tables exist
-        new SQLiteDAO();    // ← runs createSchema()
+        // 1️. Ensure the database and required tables exist
+        new SQLiteDAO();   // triggers createSchema()
+
+        // 2. Construct AdminDAO for potential maintenance operations
         AdminDAO admin = new AdminDAO();
+        // admin.CLEAN_DB(); // use with caution: drops & recreates all tables
 
-        // ARE YOU SURE?? -> //admin.CLEAN_DB(); //Read AdminDAO before use
-
-        // 2️⃣ Show login screen
-        FXMLLoader fxmlLoader = new FXMLLoader(DeepSeeekersApplication.class.getResource("LoginPage-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        // 3️. Load and display the login screen from FXML
+        FXMLLoader loader = new FXMLLoader(
+                DeepSeeekersApplication.class.getResource("LoginPage-view.fxml")
+        );
+        Scene scene = new Scene(loader.load(), 1280, 720);
         stage.setTitle("DeepSeekers");
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Standard Java launcher.
+     * <p>
+     * Delegates to {@link #start(Stage)} internally.
+     *
+     * @param args command-line arguments (ignored)
+     */
     public static void main(String[] args) {
         launch();
     }

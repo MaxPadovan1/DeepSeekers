@@ -9,8 +9,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for the Profile page fragment within the Dashboard.
+ * <p>
+ * Displays and manages editing of personal and class-related details
+ * for the currently authenticated {@link User} (Student or Teacher).
+ */
 public class ProfilePageController {
+
+    /** The logged-in user whose profile is being displayed. */
     private User currentUser;
+    /** Reference to the DashboardController for navigation and UI control. */
     private DashboardController dashboardController;
 
     // Profile header
@@ -39,7 +48,12 @@ public class ProfilePageController {
     @FXML private Button saveButton;
     @FXML private Button editButton;
 
-    /** Called by DashboardController when loading this page fragment. */
+    /**
+     * Initializes the profile view with the given user.
+     * Populates header and form fields, and configures visibility based on role.
+     *
+     * @param user the authenticated User (Student or Teacher)
+     */
     public void setUser(User user) {
         this.currentUser = user;
 
@@ -49,68 +63,86 @@ public class ProfilePageController {
 
         // Personal
         firstNameField.setText(user.getFirstName());
-        lastNameField .setText(user.getLastName());
-        emailField    .setText(user.getEmail());
-        // clear the rest for now
-        ageField.clear(); dobField.clear();
-        addressField.clear(); phoneField.clear(); emergencyContactField.clear();
+        lastNameField.setText(user.getLastName());
+        emailField.setText(user.getEmail());
+        ageField.clear();
+        dobField.clear();
+        addressField.clear();
+        phoneField.clear();
+        emergencyContactField.clear();
 
-        // Class details: only teachers know their division, etc.
+        // Class details for teachers or placeholder for students
         teacherFirstNameField.clear();
-        teacherLastNameField .clear();
-        divisionField        .clear();
-        teacherEmailField    .clear();
+        teacherLastNameField.clear();
+        divisionField.clear();
+        teacherEmailField.clear();
 
-        // Show/hide bits
-        if (user instanceof Student s) {
-            // no performance button for students
+        if (user instanceof Student) {
             viewPerformanceButton.setVisible(false);
-            // class details for student come from their assigned teacher/division...
-            // fill teacherFirstNameField/teacherLastNameField/divisionField/teacherEmailField
-            // once you wire in your SubjectDAO.lookup for the student’s class.
-        }
-        else if (user instanceof Teacher t) {
+            // student-specific data loading (e.g. assigned teacher)
+        } else if (user instanceof Teacher t) {
             viewPerformanceButton.setVisible(true);
-            // teacher sees their own class details:
             teacherFirstNameField.setText(t.getFirstName());
-            teacherLastNameField .setText(t.getLastName());
-            teacherEmailField    .setText(t.getEmail());
-            // you might have t.getDivision() on your model:
+            teacherLastNameField.setText(t.getLastName());
+            teacherEmailField.setText(t.getEmail());
             // divisionField.setText(t.getDivision());
         }
 
-        // disable all editing initially
+        // disable editing by default
         onEdit(null);
     }
 
-    /** Inject DashboardController so we can toggle the drawer. */
+    /**
+     * Injects the DashboardController so this controller can invoke navigation.
+     *
+     * @param dashCtrl the DashboardController instance
+     */
     public void setDashboardController(DashboardController dashCtrl) {
         this.dashboardController = dashCtrl;
     }
 
-    /** Save (stub) then disable editing again. */
+    /**
+     * Saves any changes (stub) and toggles edit mode off.
+     *
+     * @param ev the ActionEvent from the Save button
+     */
     @FXML private void onSave(ActionEvent ev) {
-        // TODO: persist via DAO...
+        // TODO: persist changes via appropriate DAO
         onEdit(ev);
     }
 
-    /** Toggle editability of all fields. */
+    /**
+     * Toggles the editability of all form fields.
+     *
+     * @param ev the ActionEvent from the Edit or Save button (may be null)
+     */
     @FXML private void onEdit(ActionEvent ev) {
-        boolean makeEditable = !firstNameField.isDisable();
-        for (TextField tf : new TextField[]{
+        boolean editable = firstNameField.isDisable();
+        TextField[] fields = {
                 firstNameField, lastNameField, emailField,
                 ageField, dobField, addressField, phoneField, emergencyContactField,
                 teacherFirstNameField, teacherLastNameField, divisionField, teacherEmailField
-        }) {
-            tf.setDisable(makeEditable);
+        };
+        for (TextField tf : fields) {
+            tf.setDisable(!editable);
         }
     }
 
+    /**
+     * Handles the View Attendance button click. (Not yet implemented)
+     *
+     * @param ev the ActionEvent from the View Attendance button
+     */
     @FXML private void onViewAttendance(ActionEvent ev) {
-        // TODO: attendance view
+        // TODO: load attendance view
     }
 
+    /**
+     * Handles the View Performance button click. (Not yet implemented)
+     *
+     * @param ev the ActionEvent from the View Performance button
+     */
     @FXML private void onViewPerformance(ActionEvent ev) {
-        // TODO: performance view
+        // TODO: load performance view
     }
 }
