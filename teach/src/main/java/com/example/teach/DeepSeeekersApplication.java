@@ -34,7 +34,7 @@ public class DeepSeeekersApplication extends Application {
 
         // 2. Construct AdminDAO for potential maintenance operations
         AdminDAO admin = new AdminDAO();
-        // admin.CLEAN_DB(); // use with caution: drops & recreates all tables
+        // admin.CLEAN_DB(); // use with caution: deletes entries from multiple tables - check adminDAO
 
         // 3️. Load and display the login screen from FXML
         FXMLLoader loader = new FXMLLoader(
