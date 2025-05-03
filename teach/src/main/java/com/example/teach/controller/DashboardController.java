@@ -123,8 +123,9 @@ public class DashboardController implements Initializable {
     @FXML public void goToLessonPlan(MouseEvent ev) {
         drawer.setVisible(false);
         drawer.setManaged(false);
-        setPageLabel("Dashboard / Lesson Plan");
-        loadCenter("/com/example/teach/LessonPlan-view.fxml");
+        //setPageLabel("Dashboard / Lesson Plan");
+        //loadCenter("/com/example/teach/LessonPlan-view.fxml");
+        System.out.println("Clicked on Lesson plan");
     }
 
     @FXML private void showNotifications() { /* … */ }

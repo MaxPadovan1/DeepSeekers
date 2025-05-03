@@ -49,15 +49,19 @@ public class SubjectHomePageController implements Initializable {
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Homework");
     }
     @FXML private void onTest() {
-        loadSection("Test-view.fxml");
-        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Test");
+        //loadSection("Test-view.fxml");
+        //dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Test");
+        System.out.println("Clicked on Test");
     }
     @FXML private void onAssignment() {
-        loadSection("AssignmentPage.fxml");
-        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Assignment");
+        //loadSection("AssignmentPage.fxml");
+        //dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Assignment");
+        System.out.println("Clicked on Assignment");
     }
-    @FXML private void onGrade() { loadSection("Grade-view.fxml");
-        //TODO: add grade
+    @FXML private void onGrade() {
+        //loadSection("Grade-view.fxml");
+        //dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Grade");
+        System.out.println("Clicked on Grade");
     }
 
     private void loadSection(String fxmlName) {
