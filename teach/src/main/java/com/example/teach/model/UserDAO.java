@@ -1,15 +1,33 @@
-// UserDAO.java
 package com.example.teach.model;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object for managing User persistence and retrieval.
+ * <p>
+ * Provides methods for user authentication, registration, profile updates,
+ * password management, and lookup of users by credentials or ID patterns.
+ */
 public class UserDAO {
+
+    /** Shared JDBC Connection to the SQLite database. */
     private final Connection conn = SQliteConnection.getInstance();
+
+    /** DAO for retrieving Subject entities when constructing Users. */
     private final SubjectDAO subjectDao = new SubjectDAO();
 
-    /** LOGIN: loads Student (with all subjects) or Teacher (with one). */
+    /**
+     * Authenticates a user by ID and password hash.
+     * <p>
+     * If credentials match a student, returns a {@link Student} with enrolled subjects;
+     * if a teacher, returns a {@link Teacher} with their assigned subject.
+     *
+     * @param id           the user ID to authenticate
+     * @param passwordHash the SHA-256 hash of the user's password
+     * @return a {@link User} (Student or Teacher) on success, or null if authentication fails
+     */
     public User findByCredentials(String id, String passwordHash) {
         String sql = "SELECT firstName,lastName,role,email FROM Users WHERE id=? AND passwordHash=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -20,13 +38,13 @@ public class UserDAO {
                 String fn = rs.getString("firstName");
                 String ln = rs.getString("lastName");
                 String em = rs.getString("email");
-                char   role = rs.getString("role").charAt(0);
+                char role = rs.getString("role").charAt(0);
 
                 if (role == 'S') {
-                    // load up to 4 subjects
+                    // Load student subjects
                     List<Subject> subs = new ArrayList<>();
-                    try (PreparedStatement ps2 = conn.prepareStatement(
-                            "SELECT subject_id FROM StudentSubjects WHERE student_id=?")) {
+                    String subSql = "SELECT subject_id FROM StudentSubjects WHERE student_id=?";
+                    try (PreparedStatement ps2 = conn.prepareStatement(subSql)) {
                         ps2.setString(1, id);
                         try (ResultSet rs2 = ps2.executeQuery()) {
                             while (rs2.next()) {
@@ -37,10 +55,10 @@ public class UserDAO {
                     }
                     return new Student(id, passwordHash, fn, ln, em, subs);
                 } else {
-                    // load single teacher subject
+                    // Load teacher subject
                     Subject subj = null;
-                    try (PreparedStatement ps3 = conn.prepareStatement(
-                            "SELECT subject_id FROM Teachers WHERE id=?")) {
+                    String teachSql = "SELECT subject_id FROM Teachers WHERE id=?";
+                    try (PreparedStatement ps3 = conn.prepareStatement(teachSql)) {
                         ps3.setString(1, id);
                         try (ResultSet rs3 = ps3.executeQuery()) {
                             if (rs3.next()) {
@@ -58,8 +76,10 @@ public class UserDAO {
     }
 
     /**
-     * Return the MAX(id) for entries starting with that prefix,
-     * e.g. highest “S” student ID. Null if none.
+     * Finds the maximum user ID matching a given prefix, e.g. highest student or teacher ID.
+     *
+     * @param prefix the character prefix to filter IDs (e.g., "S" or "T")
+     * @return the maximum ID string, or null if none found
      */
     public String findMaxIdWithPrefix(String prefix) {
         String sql = "SELECT id FROM Users WHERE id LIKE ? ORDER BY id DESC LIMIT 1";
@@ -74,17 +94,24 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Registers a new user (Student or Teacher) in the database.
+     * <p>
+     * Enforces unique ID, subject count constraints for students (<=4),
+     * and single-teacher-per-subject for teachers.
+     *
+     * @param u the {@link User} instance to persist
+     * @return true if registration succeeds; false otherwise
+     */
     public boolean signUp(User u) {
         if (exists(u.getId())) return false;
 
-        // 👉 First, enforce business rules BEFORE inserting into database
-        if (u instanceof Student student) {
-            if (student.getSubjects() != null && student.getSubjects().size() > 4) {
-                return false;  // too many subjects
-            }
+        // Pre-insert business rules
+        if (u instanceof Student student && student.getSubjects() != null && student.getSubjects().size() > 4) {
+            return false;
         }
 
-        // 1) Insert into Users table
+        // Insert into Users table
         String insU = "INSERT INTO Users(id,passwordHash,firstName,lastName,role,email) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(insU)) {
             ps.setString(1, u.getId());
@@ -99,16 +126,15 @@ public class UserDAO {
             return false;
         }
 
-        // 2) Role-specific inserts
+        // Role-specific inserts
         try {
             if (u instanceof Student) {
-                try (PreparedStatement ps = conn.prepareStatement(
-                        "INSERT INTO Students(id) VALUES(?)")) {
+                try (PreparedStatement ps = conn.prepareStatement("INSERT INTO Students(id) VALUES(?)")) {
                     ps.setString(1, u.getId());
                     ps.executeUpdate();
                 }
-                List<Subject> subs = ((Student)u).getSubjects();
-                if (subs != null && !subs.isEmpty()) {
+                List<Subject> subs = ((Student) u).getSubjects();
+                if (subs != null) {
                     try (PreparedStatement ps = conn.prepareStatement(
                             "INSERT INTO StudentSubjects(student_id,subject_id) VALUES(?,?)")) {
                         for (Subject s : subs) {
@@ -120,7 +146,7 @@ public class UserDAO {
                     }
                 }
             } else {
-                Subject s = ((Teacher)u).getSubject();
+                Subject s = ((Teacher) u).getSubject();
                 try (PreparedStatement ps = conn.prepareStatement(
                         "INSERT INTO Teachers(id,subject_id) VALUES(?,?)")) {
                     ps.setString(1, u.getId());
@@ -136,10 +162,15 @@ public class UserDAO {
         return true;
     }
 
-
-    /** Helper to check for duplicate IDs */
+    /**
+     * Checks whether a user ID already exists in the database.
+     *
+     * @param id the user ID to check
+     * @return true if the ID exists; false otherwise
+     */
     public boolean exists(String id) {
-        try (PreparedStatement ps = conn.prepareStatement("SELECT 1 FROM Users WHERE id=?")) {
+        String sql = "SELECT 1 FROM Users WHERE id=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
@@ -149,7 +180,14 @@ public class UserDAO {
             return false;
         }
     }
-    /** Update firstName, lastName, email for a given user. ID is immutable. */
+
+    /**
+     * Updates a user's profile information (first name, last name, email).
+     * ID and password remain unchanged.
+     *
+     * @param u the {@link User} with updated profile fields
+     * @return true if the update affected exactly one record; false otherwise
+     */
     public boolean updateProfile(User u) {
         String sql = "UPDATE Users SET firstName=?, lastName=?, email=? WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -164,7 +202,14 @@ public class UserDAO {
         }
     }
 
-    /** Change password when user knows their old password. */
+    /**
+     * Changes a user's password given the old hash and new hash.
+     *
+     * @param id      the user ID
+     * @param oldHash the current stored password hash
+     * @param newHash the new password hash to set
+     * @return true if the password was updated; false otherwise
+     */
     public boolean changePassword(String id, String oldHash, String newHash) {
         String sql = "UPDATE Users SET passwordHash=? WHERE id=? AND passwordHash=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -178,7 +223,14 @@ public class UserDAO {
         }
     }
 
-    /** Reset password via “forgot password” flow (verify by email). */
+    /**
+     * Resets a user's password using email verification.
+     *
+     * @param id      the user ID
+     * @param email   the user's registered email
+     * @param newHash the new password hash
+     * @return true if the password was updated; false otherwise
+     */
     public boolean resetPassword(String id, String email, String newHash) {
         String sql = "UPDATE Users SET passwordHash=? WHERE id=? AND email=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {

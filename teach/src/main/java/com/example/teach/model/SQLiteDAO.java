@@ -4,124 +4,140 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Data Access Object that ensures the database schema exists and is up-to-date.
+ * <p>
+ * On instantiation, this class retrieves a shared JDBC connection
+ * via {@link SQliteConnection} and invokes {@link #createSchema()}
+ * to create tables, indexes, and seed initial data if necessary.
+ */
 public class SQLiteDAO {
+
+    /** Shared JDBC connection to the SQLite database. */
     private final Connection connection;
 
+    /**
+     * Constructs the DAO, retrieves a connection, and ensures the schema is created.
+     */
     public SQLiteDAO() {
-        // grab the shared JDBC connection
         this.connection = SQliteConnection.getInstance();
-        // ensure all of our tables and columns exist
         createSchema();
     }
 
+    /**
+     * Creates all required tables and seeds initial data if not present.
+     * <p>
+     * Executes DDL statements to create subjects, users, students, teachers,
+     * join tables, assignments, homework, and study tables. Also attempts to
+     * alter the Users table to add missing columns for backward compatibility.
+     * Errors during execution are printed but not rethrown, as schema setup
+     * should not block application startup if it fails repeatedly.
+     */
     private void createSchema() {
         try (Statement stmt = connection.createStatement()) {
             // 4) Subjects master list
-            String createSubjects =
+            stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Subjects (" +
                             "  id   TEXT PRIMARY KEY, " +
                             "  name TEXT NOT NULL     " +
-                            ")";
-            stmt.execute(createSubjects);
+                            ")"
+            );
 
-            //4.1 Populate subjects table with basic subjects (used for signup)
-            String populateSubjects =
+            // 4.1) Populate subjects table with initial data
+            stmt.execute(
                     "INSERT OR IGNORE INTO Subjects(id, name) VALUES " +
-                            "('MATH101', 'Calculus I')," +
-                            "('ENG202',  'English Literature')," +
-                            "('CS102',   'Intro to Programming')," +
-                            "('HIS215',  'World History')," +
-                            "('TESTSUBJECT',  'To see if you can select 5 subjects')" +
-                            ";";
-            stmt.execute((populateSubjects));
+                            "('MATH101','Calculus I')," +
+                            "('ENG202','English Literature')," +
+                            "('CS102','Intro to Programming')," +
+                            "('HIS215','World History')," +
+                            "('TESTSUBJECT','To see if you can select 5 subjects')"
+            );
 
             // 1) Users table
-            String createUsers =
+            stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Users (" +
                             "  id           TEXT PRIMARY KEY, " +
                             "  passwordHash TEXT NOT NULL,      " +
                             "  firstName    TEXT NOT NULL,      " +
                             "  lastName     TEXT NOT NULL,      " +
                             "  role         TEXT NOT NULL,      " +
-                            "  email        TEXT,               " +   // ← email column
-                            "  subject_ids  TEXT                " +   // ← CSV list of subject IDs
-                            ")";
-            stmt.execute(createUsers);
+                            "  email        TEXT,               " +
+                            "  subject_ids  TEXT                " +
+                            ")"
+            );
 
             // 2) Students table
-            String createStudents =
+            stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Students (" +
                             "  id TEXT PRIMARY KEY REFERENCES Users(id)" +
-                            ")";
-            stmt.execute(createStudents);
+                            ")"
+            );
 
             // 3) Teachers table
-            String createTeachers =
+            stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Teachers (" +
-                            "  id TEXT PRIMARY KEY REFERENCES Users(id)," +
+                            "  id         TEXT PRIMARY KEY REFERENCES Users(id)," +
                             "  subject_id TEXT REFERENCES Subjects(id)," +
                             "  UNIQUE(subject_id)" +
-                            ")";
-            stmt.execute(createTeachers);
+                            ")"
+            );
 
-
-
-
-            // 5) Join table for Student ↔ Subjects
-            stmt.executeUpdate(
+            // 5) Student ↔ Subject join table
+            stmt.execute(
                     "CREATE TABLE IF NOT EXISTS StudentSubjects (" +
                             "  student_id TEXT NOT NULL REFERENCES Users(id)," +
                             "  subject_id TEXT NOT NULL REFERENCES Subjects(id)," +
                             "  PRIMARY KEY (student_id, subject_id)" +
                             ")"
             );
-            // 5) Assignments
-            stmt.executeUpdate(
+
+            // Assignments table
+            stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Assignments (" +
-                            "  id         TEXT PRIMARY KEY,               " +
+                            "  id         TEXT PRIMARY KEY," +
                             "  subject_id TEXT NOT NULL REFERENCES Subjects(id)," +
-                            "  title      TEXT NOT NULL,                  " +
-                            "  description TEXT,                          " +
-                            "  due_date   TEXT                            " +
+                            "  title      TEXT NOT NULL," +
+                            "  description TEXT," +
+                            "  due_date   TEXT" +
                             ")"
             );
 
-            // 6) Homeworks
-            stmt.executeUpdate(
+            // Homework table
+            stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Homeworks (" +
-                            "  id         TEXT PRIMARY KEY,               " +
+                            "  id         TEXT PRIMARY KEY," +
                             "  subject_id TEXT NOT NULL REFERENCES Subjects(id)," +
-                            "  title      TEXT NOT NULL,                  " +
-                            "  description TEXT,                          " +
-                            "  due_date   TEXT                            " +
+                            "  title      TEXT NOT NULL," +
+                            "  description TEXT," +
+                            "  due_date   TEXT" +
                             ")"
             );
 
-            // 7) Study
-            stmt.executeUpdate(
+            // Study table
+            stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Study (" +
-                            "  id         TEXT PRIMARY KEY,               " +
+                            "  id         TEXT PRIMARY KEY," +
                             "  subject_id TEXT NOT NULL REFERENCES Subjects(id)," +
-                            "  title      TEXT NOT NULL,                  " +
-                            "  content    TEXT NOT NULL                   " +
+                            "  title      TEXT NOT NULL," +
+                            "  content    TEXT NOT NULL" +
                             ")"
-
             );
 
-            // 6) In case we're upgrading an old DB, attempt to add missing columns
+            // 6) Add missing columns to Users table for existing schemas
             try {
-                stmt.executeUpdate("ALTER TABLE Users ADD COLUMN email TEXT");
+                stmt.execute("ALTER TABLE Users ADD COLUMN email TEXT");
             } catch (SQLException ignore) {
-                // already exists → safe to ignore
+                // column already exists
             }
             try {
-                stmt.executeUpdate("ALTER TABLE Users ADD COLUMN subject_ids TEXT");
+                stmt.execute("ALTER TABLE Users ADD COLUMN subject_ids TEXT");
             } catch (SQLException ignore) {
-                // already exists → safe to ignore
+                // column already exists
             }
-        }
-        catch (SQLException e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
+            // In production, consider logging to a file or system logger
         }
     }
 }
