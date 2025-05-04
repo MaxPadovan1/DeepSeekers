@@ -70,3 +70,8 @@
 - Discussed about the work going to be done by front end and back end.
 - Also discussed about About how to create the video presentation and ideas
 #### Glen, Kai, Nav, Angela, Max attended the meeting on the 29th April.
+
+### May 1
+- scrum meeting.
+- Discussed about submitting and combining the work project.
+- #### Glen, Kai, Nav, Angela, Max(video call) attended the meeting on the 29th April.
