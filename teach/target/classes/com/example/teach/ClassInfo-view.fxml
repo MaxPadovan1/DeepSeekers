@@ -1,91 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<BorderPane fx:id="dashboard" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.ClassInfoController">
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.teach.controller.ClassInfoController"
+      spacing="10"
+      style="-fx-padding:20;">
 
-    <!-- Header Bar -->
-    <top>
-        <HBox spacing="10" style="-fx-background-color: #2C3E50; -fx-padding: 10px;">
-            <!-- Hamburger Button -->
-            <Button fx:id="hamburgerButton" onAction="#toggleDrawer" style="-fx-background-color: transparent;">
-                <graphic>
-                    <StackPane>
-                        <VBox spacing="4">
-                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24" />
-                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24" />
-                            <Rectangle arcHeight="2" arcWidth="2" fill="white" height="3" width="24" />
-                        </VBox>
-                    </StackPane>
-                </graphic>
-            </Button>
-
-            <Label text="DeepSeekers/Class Info" style="-fx-text-fill: white; -fx-font-size: 20px;" />
-            <Region HBox.hgrow="ALWAYS" />
-
-            <!-- Dropdown Menu Button -->
-            <MenuButton style="-fx-text-fill: white;" text="Ezekiel Landon">
-                <items>
-                    <MenuItem text="Profile" />
-                    <MenuItem text="Logout" />
-                </items>
-            </MenuButton>
-        </HBox>
-    </top>
-
-    <!-- Main Content -->
-    <center>
-        <VBox style="-fx-padding: 20px;" spacing="20">
-
-            <!-- Teacher Info Section -->
-            <VBox spacing="10" style="-fx-background-color: #bdc3c7; -fx-padding: 15px; -fx-background-radius: 10;">
-                <Label text="Teacher Info" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-                <Label text="Mrs Teacher" style="-fx-font-size: 16px;" />
-                <Label text="mrs.teacher@email.com" style="-fx-font-size: 14px;" />
-                <Label text="Ph: 1234567890" style="-fx-font-size: 14px;" />
-            </VBox>
-
-            <!-- Student Info Section -->
-            <VBox spacing="10" style="-fx-padding: 15px; -fx-background-color: #bdc3c7; -fx-background-radius: 10; margin-top: 20px;">
-                <Label text="Student Info" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-
-                <!-- Scrollable List of Students -->
-                <ScrollPane fx:id="studentList" style="-fx-background-color: transparent; -fx-border-color: transparent;">
-                    <VBox spacing="10" style="-fx-padding: 10px;">
-                        <!-- Repeat the following Label for each student -->
-                        <HBox spacing="200" style="-fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 5;">
-                            <Label text="Name Surname" style="-fx-font-size: 16px; " />
-                            <Label text="name.surname@email.com" style="-fx-font-size: 14px;" />
-                        </HBox>
-                        <HBox spacing="200" style="-fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 5;">
-                            <Label text="Name Surname" style="-fx-font-size: 16px;" />
-                            <Label text="name.surname@email.com" style="-fx-font-size: 14px;" />
-                        </HBox>
-                        <HBox spacing="200" style="-fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 5;">
-                            <Label text="Name Surname" style="-fx-font-size: 16px;" />
-                            <Label text="name.surname@email.com" style="-fx-font-size: 14px;" />
-                        </HBox>
-                        <HBox spacing="200" style="-fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 5;">
-                            <Label text="Name Surname" style="-fx-font-size: 16px;" />
-                            <Label text="name.surname@email.com" style="-fx-font-size: 14px;" />
-                        </HBox>
-                        <HBox spacing="200" style="-fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 5;">
-                            <Label text="Name Surname" style="-fx-font-size: 16px;" />
-                            <Label text="name.surname@email.com" style="-fx-font-size: 14px;" />
-                        </HBox>
-                    </VBox>
-                </ScrollPane>
-            </VBox>
-        </VBox>
-    </center>
-</BorderPane>
+    <!-- Scrollable area; controller will populate the grid -->
+    <ScrollPane fitToWidth="true"
+                style="-fx-background-color:transparent; -fx-border-color:transparent;">
+        <content>
+            <GridPane fx:id="studentListContainer"
+                      hgap="20" vgap="20"
+                      style="-fx-padding:10;">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                </columnConstraints>
+            </GridPane>
+        </content>
+    </ScrollPane>
+</VBox>
