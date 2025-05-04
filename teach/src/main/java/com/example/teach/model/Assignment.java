@@ -1,23 +1,90 @@
 package com.example.teach.model;
-import java.util.List;
 
-public class Assignment
-{
-    private final String id, subjectId, title, description, dueDate;
+/**
+ * Represents an academic assignment belonging to a specific subject.
+ * <p>
+ * Contains identifying information, descriptive details, and a due date.
+ */
+public class Assignment {
 
-    public Assignment(String id, String subjectId,
-                      String title, String description,
+    /** Unique identifier for this assignment. */
+    private final String id;
+
+    /** Identifier of the subject to which this assignment belongs. */
+    private final String subjectId;
+
+    /** Short title of the assignment. */
+    private final String title;
+
+    /** Detailed description or instructions for the assignment. */
+    private final String description;
+
+    /** Due date for the assignment, formatted as YYYY-MM-DD or similar. */
+    private final String dueDate;
+
+    /**
+     * Constructs a new Assignment instance.
+     *
+     * @param id           unique assignment ID
+     * @param subjectId    ID of the associated subject
+     * @param title        human-readable title of the assignment
+     * @param description  detailed description or instructions
+     * @param dueDate      due date string (e.g., "2025-05-10")
+     */
+    public Assignment(String id,
+                      String subjectId,
+                      String title,
+                      String description,
                       String dueDate) {
-        this.id         = id;
-        this.subjectId  = subjectId;
-        this.title      = title;
+        this.id = id;
+        this.subjectId = subjectId;
+        this.title = title;
         this.description = description;
-        this.dueDate    = dueDate;
+        this.dueDate = dueDate;
     }
 
-    public String getId()          { return id; }
-    public String getSubjectId()   { return subjectId; }
-    public String getTitle()       { return title; }
-    public String getDescription() { return description; }
-    public String getDueDate()     { return dueDate; }
+    /**
+     * Returns the unique assignment ID.
+     *
+     * @return assignment ID
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Returns the subject ID associated with this assignment.
+     *
+     * @return subject ID
+     */
+    public String getSubjectId() {
+        return subjectId;
+    }
+
+    /**
+     * Returns the title of the assignment.
+     *
+     * @return assignment title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Returns the detailed description or instructions for the assignment.
+     *
+     * @return assignment description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Returns the due date for the assignment.
+     *
+     * @return due date string
+     */
+    public String getDueDate() {
+        return dueDate;
+    }
 }

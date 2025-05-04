@@ -2,137 +2,230 @@ package com.example.teach.controller;
 
 import com.example.teach.model.Student;
 import com.example.teach.model.Subject;
-import javafx.event.ActionEvent;
+import com.example.teach.model.Teacher;
+import com.example.teach.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.MenuButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
-public class DashboardController {
+/**
+ * Controller for the main Dashboard view.
+ * <p>
+ * Manages the navigation drawer, user session, and dynamic loading of
+ * different center panes (Profile, Class Info, Subject pages, etc.).
+ * Implements {@link Initializable} to capture the original dashboard layout.
+ */
+public class DashboardController implements Initializable {
 
-    @FXML private VBox sub1box;
-    @FXML private VBox sub2box;
-    @FXML private VBox sub3box;
-    @FXML private VBox sub4box;
-
-    @FXML private VBox drawer;
-    @FXML private Label lessonPlanLabel;
-    private Student student;
-    private final VBox[] subjectBoxes = new VBox[4];
+    /** The authenticated user for this session. */
+    private User currentUser;
+    /** The list of subjects associated with the current user. */
     private List<Subject> subjects;
+    /** Saved reference to the original dashboard center pane. */
+    private Node originalCenter;
 
-    @FXML
-    public void initialize() {
-        subjectBoxes[0] = sub1box;
-        subjectBoxes[1] = sub2box;
-        subjectBoxes[2] = sub3box;
-        subjectBoxes[3] = sub4box;
+    @FXML private BorderPane rootBorderPane;
+    @FXML private VBox drawer;
+    @FXML private MenuButton userMenu;
+    @FXML private Label pageLabel;
+    @FXML private VBox subject1Tile;
+    @FXML private VBox subject2Tile;
+    @FXML private VBox subject3Tile;
+    @FXML private VBox subject4Tile;
+
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * Saves the default center pane for later restoring when returning to the dashboard.
+     *
+     * @param location  URL of the FXML file
+     * @param resources resource bundle for localization (unused)
+     */
+    @Override public void initialize(URL location, ResourceBundle resources) {
+        this.originalCenter = rootBorderPane.getCenter();
     }
 
-    public void setStudent(Student student) {
-        this.subjects = student.getSubjects();
-        this.student = student;
+    /**
+     * Injects the authenticated user into the dashboard.
+     * Updates the user menu label and populates subject tiles based on role.
+     * <p>
+     * Called by {@code LoginPageController} immediately after loading.
+     *
+     * @param user the logged-in {@link User}
+     */
+    public void setUser(User user) {
+        this.currentUser = user;
+        userMenu.setText(user.getFirstName() + " " + user.getLastName());
+        pageLabel.setText("Dashboard");
 
-        for (int i = 0; i < subjectBoxes.length; i++) {
-            VBox box = subjectBoxes[i];
+        if (user instanceof Student s) {
+            subjects = s.getSubjects();
+        } else if (user instanceof Teacher t) {
+            subjects = List.of(t.getSubject());
+        } else {
+            subjects = List.of();
+        }
 
+        List<VBox> tiles = List.of(subject1Tile, subject2Tile, subject3Tile, subject4Tile);
+        for (int i = 0; i < tiles.size(); i++) {
+            VBox tile = tiles.get(i);
             if (i < subjects.size()) {
-                Subject s = subjects.get(i);
-                Label title = new Label(s.getName());
-                title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-                box.getChildren().clear();
-                box.getChildren().add(title);
-                box.setVisible(true);
-                box.setManaged(true);
+                Subject subj = subjects.get(i);
+                ((Label) tile.getChildren().get(0)).setText(subj.getName());
+                tile.setVisible(true);
+                tile.setManaged(true);
             } else {
-                box.setVisible(false);
-                box.setManaged(false);
+                tile.setVisible(false);
+                tile.setManaged(false);
             }
         }
     }
 
+    /**
+     * Updates the page title label.
+     *
+     * @param text new title text
+     */
+    public void setPageLabel(String text) {
+        pageLabel.setText(text);
+    }
+
+    /**
+     * Toggles visibility of the side drawer (hamburger menu).
+     */
+    @FXML public void toggleDrawer() {
+        boolean open = drawer.isVisible();
+        drawer.setVisible(!open);
+        drawer.setManaged(!open);
+    }
+
+    /**
+     * Returns the user to the original dashboard center pane.
+     *
+     * @param ev mouse event from clicking the Dashboard button
+     */
+    @FXML public void goToDashboard(MouseEvent ev) {
+        drawer.setVisible(false);
+        drawer.setManaged(false);
+        rootBorderPane.setCenter(originalCenter);
+        setPageLabel("Dashboard");
+    }
+
+    /**
+     * Loads the Profile page into the center pane and injects dependencies.
+     *
+     * @param ev mouse event from clicking the Profile menu item
+     */
+    @FXML public void goToProfile(MouseEvent ev) {
+        navigateTo("/com/example/teach/ProfilePage.fxml", "Dashboard / Profile",
+                ctrl -> {
+                    if (ctrl instanceof ProfilePageController p) {
+                        p.setDashboardController(this);
+                        p.setUser(currentUser);
+                    }
+                });
+    }
+
+    /**
+     * Loads the Class Info view into the center pane and injects dependencies.
+     *
+     * @param ev mouse event from clicking the Class Info menu item
+     */
+    @FXML public void goToClassInfo(MouseEvent ev) {
+        navigateTo("/com/example/teach/ClassInfo-view.fxml", "Dashboard / Class Info",
+                ctrl -> {
+                    if (ctrl instanceof ClassInfoController c) {
+                        c.setDashboardController(this);
+                        c.setUser(currentUser);
+                        c.setSubjects(subjects);
+                    }
+                });
+    }
+
+    /**
+     * Placeholder for Lesson Plan action; currently logs a click event.
+     *
+     * @param ev mouse event from clicking the Lesson Plan menu item
+     */
     @FXML
-    private void toggleDrawer(ActionEvent event) {
-        boolean showing = drawer.isVisible();
-        drawer.setVisible(!showing);
-        drawer.setManaged(!showing);
+    public void goToLessonPlan(MouseEvent ev) {
+        System.out.println("Clicked on Lesson plan");
     }
 
+    /**
+     * Stub for showing notifications (implementation omitted).
+     */
     @FXML
-    private void handleMouseEnter(MouseEvent event) {
-        lessonPlanLabel.setStyle("-fx-text-fill: #00aced; -fx-font-size: 18px; -fx-padding: 20px;");
+    private void showNotifications() {
+        // TODO: implement notifications view
     }
 
-    @FXML
-    private void handleMouseExit(MouseEvent event) {
-        lessonPlanLabel.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 20px;");
+    /**
+     * Handles clicks on subject tiles by index.
+     *
+     * @param ev mouse event from clicking a subject tile
+     */
+    @FXML private void onSubject1Clicked(MouseEvent ev) { goToSubject(0); }
+    @FXML private void onSubject2Clicked(MouseEvent ev) { goToSubject(1); }
+    @FXML private void onSubject3Clicked(MouseEvent ev) { goToSubject(2); }
+    @FXML private void onSubject4Clicked(MouseEvent ev) { goToSubject(3); }
+
+    /**
+     * Loads the given subject view into center with controller injection.
+     *
+     * @param index position in subjects list
+     */
+    private void goToSubject(int index) {
+        Subject subj = subjects.get(index);
+        navigateTo("/com/example/teach/SubjectHomePage-view.fxml",
+                "Dashboard / " + subj.getName(), ctrl -> {
+                    if (ctrl instanceof SubjectHomePageController sh) {
+                        sh.setDashboardController(this);
+                        sh.setUser(currentUser);
+                        sh.setSubject(subj);
+                    }
+                });
     }
 
-    @FXML private void handleSubject1Click(MouseEvent event) { openSubjectIfPresent(0, event); }
-    @FXML private void handleSubject2Click(MouseEvent event) { openSubjectIfPresent(1, event); }
-    @FXML private void handleSubject3Click(MouseEvent event) { openSubjectIfPresent(2, event); }
-    @FXML private void handleSubject4Click(MouseEvent event) { openSubjectIfPresent(3, event); }
-
-    private void openSubjectIfPresent(int index, MouseEvent event) {
-        if (subjects != null && subjects.size() > index) {
-            openSubjectPage(subjects.get(index), event);
-        }
+    /**
+     * Helper to load an FXML into the center pane, set title, and initialize controller.
+     *
+     * @param fxmlPath         classpath to the FXML file
+     * @param pageTitle        title to set on the page label
+     * @param initController   consumer to perform additional controller setup
+     */
+    private void navigateTo(String fxmlPath, String pageTitle, Consumer<Object> initController) {
+        drawer.setVisible(false);
+        drawer.setManaged(false);
+        setPageLabel(pageTitle);
+        loadCenter(fxmlPath, initController);
     }
 
-    private void openSubjectPage(Subject subject, MouseEvent event) {
+    /**
+     * Loads the specified FXML into the center pane, then runs controller init.
+     *
+     * @param fxmlPath       classpath to the FXML file
+     * @param initController consumer that accepts the controller instance
+     */
+    private void loadCenter(String fxmlPath, Consumer<Object> initController) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/HomePage-view.fxml"));
-            Parent root = loader.load();
-
-            // Optionally pass subject to controller
-            HomePageController controller = loader.getController();
-            controller.setStudent(this.student);
-            // controller.setSubject(subject);
-
-            Stage stage = (Stage) ((VBox) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle(subject.getName() + " - Home");
-            stage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent view = loader.load();
+            initController.accept(loader.getController());
+            rootBorderPane.setCenter(view);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    private void handleLogout(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/LoginPage-view.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Login");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    private void goToDashboard(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/Dashboard-view.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Dashboard");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

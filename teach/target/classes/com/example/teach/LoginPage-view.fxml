@@ -1,50 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Button?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.teach.controller.LoginPageController" prefHeight="720.0" prefWidth="1280.0">
-    <HBox spacing="10.00" alignment="BOTTOM_LEFT" >
-        <padding>
-            <Insets left="50.0" />
-        </padding>
-            <Label fx:id="welcomeText" text="Welcome to DeepSeekers!&#10; In the deep,we seek." style="-fx-font-size:36px; -fx-font-weight: bold;" wrapText="true"/>
+<VBox alignment="CENTER" spacing="20"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.teach.controller.LoginPageController">
+
+    <!-- Header -->
+    <HBox alignment="CENTER">
+        <Label text="Welcome to DeepSeekers!&#10;In the deep, we seek."
+               wrapText="true"
+               style="-fx-font-size:36px; -fx-font-weight:bold;"/>
     </HBox>
 
-    <VBox alignment="CENTER_LEFT" spacing="20.00">
-        <padding>
-            <Insets bottom="40.0" left="20.0" right="20.0" />
-        </padding>
+    <!-- Login Form -->
+    <VBox alignment="CENTER" spacing="15">
+        <TextField fx:id="userId"
+                   promptText="User ID"
+                   maxWidth="300" prefHeight="30"/>
 
-        <VBox alignment="CENTER_RIGHT" >
-            <padding>
-                <Insets  left="120.0" right="120.0" />
-            </padding>
-            <TextField fx:id="userId" promptText="User ID" maxWidth="500.0" prefHeight="30"/>
-        </VBox>
+        <PasswordField fx:id="passwordField"
+                       promptText="Password"
+                       maxWidth="300" prefHeight="30"/>
 
-            <VBox alignment="CENTER_RIGHT">
-                <padding>
-                    <Insets  left="120.0" right="120.0" />
-                </padding>
-                <PasswordField fx:id="passwordField" promptText="Password" maxWidth="500.0" prefHeight="30"/>
-            </VBox>
+        <Hyperlink fx:id="fPassword"
+                   text="Forgot Password?"/>
 
-            <VBox alignment="CENTER_RIGHT">
-                <padding>
-                    <Insets  left="120.0" right="120.0" bottom="20.0" />
-                </padding>
-                <Hyperlink fx:id="fPassword" text="Forgot Password?" maxWidth="500.0" maxHeight="150.0" />
-            </VBox>
-
-        <HBox alignment="CENTER_RIGHT" spacing="50.0">
-            <padding>
-                <Insets   right="300.0" />
-            </padding>
-            <Button text="Sign in" fx:id="loginButton" onAction="#handleLogin" style="" />
-            <Button text="Sign Up" fx:id="signUpButton" onAction="#handleSignUp"/>
+        <HBox alignment="CENTER" spacing="20">
+            <Button text="Sign in"
+                    fx:id="loginButton"
+                    onAction="#handleLogin"/>
+            <Button text="Sign Up"
+                    fx:id="signUpButton"
+                    onAction="#handleSignUp"/>
         </HBox>
-        <Label fx:id="errorLabel" textFill="red"/>
+
+        <Label fx:id="errorLabel"
+               textFill="red"
+               wrapText="true"/>
     </VBox>
 </VBox>
