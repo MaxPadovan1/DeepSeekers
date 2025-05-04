@@ -4,16 +4,21 @@ import com.example.teach.model.Student;
 import com.example.teach.model.Subject;
 import com.example.teach.model.Teacher;
 import com.example.teach.model.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -224,6 +229,23 @@ public class DashboardController implements Initializable {
             Parent view = loader.load();
             initController.accept(loader.getController());
             rootBorderPane.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleLogout(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/LoginPage-view.fxml"));
+            Parent loginRoot = loader.load();
+
+            // Get current stage and scene
+            Stage stage = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+            Scene currentScene = stage.getScene();
+
+            // Replace the root of the current scene without changing size or stage
+            currentScene.setRoot(loginRoot);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

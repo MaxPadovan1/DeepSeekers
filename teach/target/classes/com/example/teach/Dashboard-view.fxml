@@ -44,7 +44,7 @@
             <MenuButton fx:id="userMenu" text="User Name" style="-fx-text-fill: white;">
                 <items>
                     <MenuItem text="Profile"/>
-                    <MenuItem text="Logout"/>
+                    <MenuItem fx:id="logoutMenuItem" text="Logout" onAction="#handleLogout"/>
                 </items>
             </MenuButton>
         </HBox>
