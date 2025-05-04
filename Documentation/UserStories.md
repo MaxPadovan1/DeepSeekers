@@ -74,3 +74,15 @@ UAC - Given that there is course content in the study section, when I want to cr
 ## User Story 25 - Teacher making lesson plan
 As a teacher, I want to make lesson plans for my classes, so that I can use it to prepare before my lectures.
 UAC - Given that there is a section for lesson plans, when I want to create lesson plans for my classes, then I can use the application to create them with the help of AI.
+## User Story 26 - Course content
+As a student, I want to see the course content of my enrolled courses, so that I can learn the content and keep up to date with my course.
+UAC - Given that there is a study section, when the teacher releases the course content in the study section, then the content can be accessed by the student in the study section.
+## User Story 27 - Subjects via Dashboard
+As a student, I want to go to the subject I enrolled by clicking the button in the dashboard, so that I can easily go to the subject's main page.
+UAC- assume subject user enrolled exist, given a button link to the subject main page showing in dashboard.
+## User Story 28 - Check teacher info and classmates info
+As a student, I want to check my teacher's information such as name, email and phone number. And also classmates' name and email in the class, so that I can contact them by these information.
+UAC- assume subject exist, teacher and students enrolled, given a list showing teacher's name, email and phone number, and every students' name with email.
+## User Story 29 - Checking each week's study material
+As a student, I want to check every weeks' study materials so that I can review what I learned or preview what will be learning and ensure I'm understanding the knowledge well.
+UAC- while user enroll the subject, given user links to every weeks' study material such as lecture notes, pre-lecture notes, flashcards and practice quiz.
