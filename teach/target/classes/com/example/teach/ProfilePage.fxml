@@ -66,9 +66,11 @@
     <HBox spacing="20" style="-fx-padding:10;">
         <Button fx:id="saveButton"
                 text="Save"
+                onAction="#onSave"
                 style="-fx-background-color:#4CAF50; -fx-text-fill:white;"/>
         <Button fx:id="editButton"
                 text="Edit"
+                onAction="#onEdit"
                 style="-fx-background-color:#008CBA; -fx-text-fill:white;"/>
     </HBox>
 
