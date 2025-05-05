@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane fx:id="rootBorderPane"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.teach.controller.DashboardController"
+            prefWidth="1280" prefHeight="720">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox spacing="10" style="-fx-background-color: #2C3E50;">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button fx:id="hamburgerButton" onAction="#toggleDrawer"
+                    style="-fx-background-color: transparent;">
+                <graphic>
+                    <VBox spacing="4">
+                        <Rectangle width="24" height="3" arcWidth="2" arcHeight="2" fill="white"/>
+                        <Rectangle width="24" height="3" arcWidth="2" arcHeight="2" fill="white"/>
+                        <Rectangle width="24" height="3" arcWidth="2" arcHeight="2" fill="white"/>
+                    </VBox>
+                </graphic>
+            </Button>
+
+            <!-- NEW: page title -->
+            <Label fx:id="pageLabel" text="Dashboard" style="-fx-text-fill: white; -fx-font-size: 16;" />
+
+            <Region HBox.hgrow="ALWAYS"/>
+            <MenuButton fx:id="userMenu" text="User Name" style="-fx-text-fill: white;">
+                <items>
+                    <MenuItem text="Profile"/>
+                    <MenuItem fx:id="logoutMenuItem" text="Logout" onAction="#handleLogout"/>
+                </items>
+            </MenuButton>
+        </HBox>
+    </top>
+
+    <!-- Side Drawer -->
+    <left>
+        <VBox fx:id="drawer" managed="false" visible="false" prefWidth="200"
+              style="-fx-background-color: #34495E;">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <children>
+                <Label fx:id="dashboardLabel"  text="Dashboard"   onMouseClicked="#goToDashboard"  style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label fx:id="profileLabel"    text="Profile"     onMouseClicked="#goToProfile"    style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label fx:id="classInfoLabel"  text="Class Info"  onMouseClicked="#goToClassInfo"  style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+                <Label fx:id="lessonPlanLabel" text="Lesson Plan" onMouseClicked="#goToLessonPlan" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>
+<!--                <Label fx:id="homePageLabel"   text="Home page"   onMouseClicked="#goToHomePage"   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10"/>-->
+            </children>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <VBox>
+            <!-- Secondary Bar -->
+            <HBox spacing="10" style="-fx-background-color: #34495E;">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="notificationButton" onAction="#showNotifications"
+                        style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitWidth="24" fitHeight="24">
+                            <image>
+                                <Image url="@images/notification_bell.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <!-- Centered Dashboard Tiles -->
+            <StackPane VBox.vgrow="ALWAYS">
+                <GridPane alignment="CENTER" hgap="40" vgap="40">
+                    <children>
+                        <VBox fx:id="subject1Tile" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                              alignment="CENTER" prefWidth="298" prefHeight="150"
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-cursor: hand;"
+                              onMouseClicked="#onSubject1Clicked">
+                            <Label text="Subject 1" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+                        </VBox>
+
+                        <VBox fx:id="subject2Tile" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                              alignment="CENTER" prefWidth="298" prefHeight="150"
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-cursor: hand;"
+                              onMouseClicked="#onSubject2Clicked">
+                            <Label text="Subject 2" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+                        </VBox>
+
+                        <VBox fx:id="subject3Tile" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                              alignment="CENTER" prefWidth="298" prefHeight="150"
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-cursor: hand;"
+                              onMouseClicked="#onSubject3Clicked">
+                            <Label text="Subject 3" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+                        </VBox>
+
+                        <VBox fx:id="subject4Tile" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                              alignment="CENTER" prefWidth="298" prefHeight="150"
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-cursor: hand;"
+                              onMouseClicked="#onSubject4Clicked">
+                            <Label text="Subject 4" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+                        </VBox>
+                    </children>
+                </GridPane>
+            </StackPane>
+        </VBox>
+    </center>
+</BorderPane>

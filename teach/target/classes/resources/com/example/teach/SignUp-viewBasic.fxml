@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.teach.controller.SignUpViewBasicController"
+      prefWidth="1280" prefHeight="720"
+      spacing="15" alignment="TOP_CENTER">
+    <!-- Define the ToggleGroup for role selection -->
+    <fx:define>
+        <ToggleGroup fx:id="roleGroup" />
+    </fx:define>
+
+    <!-- Role selection -->
+    <HBox spacing="20" alignment="CENTER">
+        <children>
+            <Label text="I am a:"/>
+            <RadioButton fx:id="studentRadio" text="Student" toggleGroup="$roleGroup" />
+            <RadioButton fx:id="teacherRadio" text="Teacher" toggleGroup="$roleGroup" />
+        </children>
+    </HBox>
+
+    <!-- Auto-generated ID -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <children>
+            <Label text="Your ID:" />
+            <TextField fx:id="idField" promptText="Auto-generated" editable="false" />
+        </children>
+    </HBox>
+
+    <!-- Name & Contact -->
+    <TextField fx:id="firstNameField" promptText="First Name" />
+    <TextField fx:id="lastNameField"  promptText="Last Name" />
+    <TextField fx:id="emailField"     promptText="Email" />
+    <PasswordField fx:id="passwordField" promptText="Password" />
+
+    <!-- Subjects for Students -->
+    <VBox fx:id="studentPane" spacing="5" visible="false">
+        <children>
+            <Label text="Select up to 4 subjects:" />
+            <ScrollPane prefHeight="150" prefWidth="320">
+                <content>
+                    <VBox fx:id="subjectCheckboxContainer" spacing="5">
+                        <padding>
+                            <Insets top="5" right="5" bottom="5" left="5" />
+                        </padding>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </children>
+    </VBox>
+
+    <!-- Subject for Teachers -->
+    <VBox fx:id="teacherPane" spacing="5" visible="false">
+        <children>
+            <Label text="Select your subject:" />
+            <ComboBox fx:id="subjectComboBox" prefWidth="320" />
+        </children>
+    </VBox>
+
+    <Label fx:id="messageLabel" textFill="red" />
+
+    <!-- Action Buttons -->
+    <HBox spacing="20" alignment="CENTER">
+        <children>
+            <Button text="Sign Up" onAction="#handleSignUp" />
+            <Button text="Cancel" onAction="#handleCancel" />
+        </children>
+    </HBox>
+</VBox>

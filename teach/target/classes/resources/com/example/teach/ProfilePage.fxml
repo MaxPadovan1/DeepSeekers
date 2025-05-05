@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.teach.controller.ProfilePageController"
+      spacing="20" style="-fx-padding:20;">
+
+    <!-- Profile Header -->
+    <HBox spacing="20"
+          style="-fx-background-color:#bdc3c7; -fx-padding:10; -fx-background-radius:10;">
+        <VBox spacing="5">
+            <Label fx:id="nameLabel"
+                   text="Name"
+                   style="-fx-font-size:18; -fx-font-weight:bold;"/>
+            <Label fx:id="idLabel"
+                   text="ID"
+                   style="-fx-font-size:14;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="viewPerformanceButton"
+                text="View Performance"
+                style="-fx-background-color:#4CAF50; -fx-text-fill:white;"/>
+    </HBox>
+
+    <!-- Side-by-Side Sections -->
+    <HBox spacing="20">
+        <!-- Personal Details Column -->
+        <VBox fx:id="personalDetailsBox"
+              spacing="10"
+              VBox.vgrow="ALWAYS"
+              HBox.hgrow="ALWAYS"
+              style="-fx-background-color:#ecf0f1; -fx-padding:15; -fx-background-radius:10;">
+            <Label text="Personal Details"
+                   style="-fx-font-size:22; -fx-font-weight:bold;"/>
+            <TextField fx:id="firstNameField"        promptText="First Name"/>
+            <TextField fx:id="lastNameField"         promptText="Last Name"/>
+            <TextField fx:id="emailField"            promptText="Email"/>
+            <TextField fx:id="ageField"              promptText="Age"/>
+            <TextField fx:id="dobField"              promptText="DOB"/>
+            <TextField fx:id="addressField"          promptText="Address"/>
+            <TextField fx:id="phoneField"            promptText="Phone"/>
+            <TextField fx:id="emergencyContactField" promptText="Emergency Contact"/>
+        </VBox>
+
+        <!-- Class Details Column -->
+        <VBox fx:id="classDetailsBox"
+              spacing="10"
+              VBox.vgrow="ALWAYS"
+              HBox.hgrow="ALWAYS"
+              style="-fx-background-color:#ecf0f1; -fx-padding:15; -fx-background-radius:10;">
+            <Label text="Class Details"
+                   style="-fx-font-size:22; -fx-font-weight:bold;"/>
+            <TextField fx:id="teacherFirstNameField" promptText="Teacher First Name"/>
+            <TextField fx:id="teacherLastNameField"  promptText="Teacher Last Name"/>
+            <TextField fx:id="divisionField"         promptText="Class Division"/>
+            <TextField fx:id="teacherEmailField"     promptText="Teacher Email"/>
+            <Button fx:id="viewAttendanceButton"
+                    text="View Attendance"
+                    style="-fx-background-color:#008CBA; -fx-text-fill:white;"/>
+        </VBox>
+    </HBox>
+
+    <!-- Save / Edit -->
+    <HBox spacing="20" style="-fx-padding:10;">
+        <Button fx:id="saveButton"
+                text="Save"
+                onAction="#onSave"
+                style="-fx-background-color:#4CAF50; -fx-text-fill:white;"/>
+        <Button fx:id="editButton"
+                text="Edit"
+                onAction="#onEdit"
+                style="-fx-background-color:#008CBA; -fx-text-fill:white;"/>
+    </HBox>
+
+</VBox>
