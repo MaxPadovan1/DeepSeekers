@@ -74,4 +74,9 @@
 ### May 1
 - scrum meeting.
 - Discussed about submitting and combining the work project.
-- #### Glen, Kai, Nav, Angela, Max(video call) attended the meeting on the 29th April.
+- #### Glen, Kai, Nav, Angela, Max(video call) attended the meeting on the 1st May.
+
+### May 6   
+- 8th weekly meeting.
+- Discussed about modifying UI and back end and working on the functionalities of some UI elements/
+- #### Glen, Kai, Nav, Angela, Max attended the meeting on the 6th of May.
