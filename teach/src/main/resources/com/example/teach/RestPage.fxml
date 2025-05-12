@@ -19,13 +19,13 @@
                style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-alignment: center;" />
         <!-- Instruction Text -->
     <TextFlow textAlignment="CENTER" lineSpacing="10.0" maxWidth="600">
-        <Text text="Please enter your student email address so that we can send you a reset link."
+        <Text text="Please enter your email address so that we can send you a reset link."
               style="-fx-font-size: 20px;" />
     </TextFlow>
 
     <!-- Email Input Field -->
-    <TextField fx:id="studentEmailField"
-               promptText="Student email address"
+    <TextField fx:id="emailField"
+               promptText="Email"
                maxWidth="400.0" prefHeight="35" />
 
     <!-- Submit Button -->
