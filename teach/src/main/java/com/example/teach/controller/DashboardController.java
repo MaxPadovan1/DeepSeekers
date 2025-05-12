@@ -49,6 +49,7 @@ public class DashboardController implements Initializable {
     @FXML private VBox subject2Tile;
     @FXML private VBox subject3Tile;
     @FXML private VBox subject4Tile;
+    @FXML private Label greetingLabel;
 
     /**
      * Initializes the controller after its root element has been completely processed.
@@ -72,6 +73,7 @@ public class DashboardController implements Initializable {
     public void setUser(User user) {
         this.currentUser = user;
         userMenu.setText(user.getFirstName() + " " + user.getLastName());
+        greetingLabel.setText(buildGreeting(user));
         pageLabel.setText("Dashboard");
 
         if (user instanceof Student s) {
@@ -96,7 +98,23 @@ public class DashboardController implements Initializable {
             }
         }
     }
+    private String buildGreeting(User user) {
+        String role = (user instanceof Teacher) ? "Teacher" :
+                (user instanceof Student) ? "Student" : "User";
+        String name = user.getFirstName();
 
+        int hour = java.time.LocalTime.now().getHour();
+        String timeGreeting;
+        if (hour < 12) {
+            timeGreeting = "Good morning";
+        } else if (hour < 18) {
+            timeGreeting = "Good afternoon";
+        } else {
+            timeGreeting = "Good evening";
+        }
+
+        return timeGreeting + ", " + role + " " + name + "!";
+    }
     /**
      * Updates the page title label.
      *
