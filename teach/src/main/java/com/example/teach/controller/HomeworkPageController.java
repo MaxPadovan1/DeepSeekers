@@ -90,9 +90,12 @@ public class HomeworkPageController implements SectionControllerBase {
         }
     }
 
+
+
+
     @FXML
-    private void handleAddHomework(ActionEvent event) {
-        // 获取当前点击的按钮
+    public void handleAddHomework(ActionEvent event) {
+
         Button button = (Button) event.getSource();
 
         // 向上查找按钮所属的 TitledPane
@@ -147,5 +150,4 @@ public class HomeworkPageController implements SectionControllerBase {
             System.out.println("❌ can't identity the week（TitledPane）");
         }
     }
-
 }

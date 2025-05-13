@@ -1,51 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="720.0" prefWidth="1280.0"
-      xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.teach.controller.HomeworkPageController">
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.HomeworkPageController">
 
-    <Accordion fx:id="accordion"
-               VBox.vgrow="ALWAYS"
-               style="-fx-padding: 0; -fx-background-color: transparent;">
+    <Accordion fx:id="accordion" style="-fx-padding: 0; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
         <panes>
-            <TitledPane text="Week 1" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
+            <TitledPane animated="false" text="Week 1">
+                <VBox spacing="5" style="-fx-background-color:#A9A9A9; -fx-padding:10;">
+                    <TextArea prefRowCount="3" promptText="Homework details..." wrapText="true" />
+                    <Button onAction="#handleAddHomework"
+                            mnemonicParsing="false"
+                            prefHeight="47.0"
+                            prefWidth="176.0"
+                            text="make homework">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </Button>
                 </VBox>
             </TitledPane>
-
-            <TitledPane text="Week 2" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
+            <TitledPane animated="false" layoutX="10.0" layoutY="10.0" text="Week 2">
+                <content>
+                    <VBox spacing="5" style="-fx-background-color:#A9A9A9; -fx-padding:10;">
+                        <children>
+                            <TextArea prefRowCount="3" promptText="Homework details..." wrapText="true" />
+                            <Button onAction="#handleAddHomework"
+                                    mnemonicParsing="false"
+                                    prefHeight="47.0"
+                                    prefWidth="176.0"
+                                    text="make homework">
+                                <font>
+                                    <Font size="18.0" />
+                                </font>
+                            </Button>
+                        </children>
+                    </VBox>
+                </content>
             </TitledPane>
-
-            <TitledPane text="Week 3" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
+            <TitledPane animated="false" layoutX="10.0" layoutY="33.0" text="Week 3">
+                <content>
+                    <VBox spacing="5" style="-fx-background-color:#A9A9A9; -fx-padding:10;">
+                        <children>
+                            <TextArea prefRowCount="3" promptText="Homework details..." wrapText="true" />
+                            <Button onAction="#handleAddHomework"
+                                    mnemonicParsing="false"
+                                    prefHeight="47.0"
+                                    prefWidth="176.0"
+                                    text="make homework">
+                                <font>
+                                    <Font size="18.0" />
+                                </font>
+                            </Button>
+                        </children>
+                    </VBox>
+                </content>
             </TitledPane>
-
-            <TitledPane text="Week 4" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
+            <TitledPane animated="false" layoutX="10.0" layoutY="707.0" text="Week 4">
+                <content>
+                    <VBox spacing="5" style="-fx-background-color:#A9A9A9; -fx-padding:10;">
+                        <children>
+                            <TextArea prefRowCount="3" promptText="Homework details..." wrapText="true" />
+                            <Button onAction="#handleAddHomework"
+                                    mnemonicParsing="false"
+                                    prefHeight="47.0"
+                                    prefWidth="176.0"
+                                    text="make homework">
+                                <font>
+                                    <Font size="18.0" />
+                                </font>
+                            </Button>
+                        </children>
+                    </VBox>
+                </content>
             </TitledPane>
-
-            <TitledPane text="Week 5" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
+            <TitledPane animated="false" layoutX="10.0" layoutY="707.0" text="Week 5">
+                <content>
+                    <VBox spacing="5" style="-fx-background-color:#A9A9A9; -fx-padding:10;">
+                        <children>
+                            <TextArea prefRowCount="3" promptText="Homework details..." wrapText="true" />
+                            <Button onAction="#handleAddHomework"
+                                    mnemonicParsing="false"
+                                    prefHeight="47.0"
+                                    prefWidth="176.0"
+                                    text="make homework">
+                                <font>
+                                    <Font size="18.0" />
+                                </font>
+                            </Button>
+                        </children>
+                    </VBox>
+                </content>
             </TitledPane>
         </panes>
     </Accordion>
