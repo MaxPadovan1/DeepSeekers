@@ -73,16 +73,24 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             VBox dayContent = new VBox(10);
             dayContent.setStyle("-fx-background-color: #A9A9A9;");
 
-            Button editBtn = new Button("Edit");
-            editBtn.setStyle("-fx-font-size: 8px; -fx-font-weight: bold;");
-
-            TextArea overview = new TextArea("Overview");
+            TextArea overview = new TextArea();
+            overview.setPromptText("Overview");
             overview.setPrefHeight(120);
             overview.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight: bold;");
 
-            TextArea details = new TextArea("Details");
+            TextArea details = new TextArea();
+            details.setPromptText("Details");
             details.setPrefHeight(120);
             details.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight: bold;");
+
+            Button editBtn = new Button("Edit");
+            editBtn.setStyle("-fx-font-size: 8px; -fx-font-weight: bold;");
+            editBtn.setOnAction(e -> {
+                boolean nowEditable = !overview.isEditable(); // Toggle state
+                overview.setEditable(nowEditable);
+                details.setEditable(nowEditable);
+                editBtn.setText(nowEditable ? "Done" : "Edit");
+            });
 
             dayContent.getChildren().addAll(editBtn, overview, details);
 
