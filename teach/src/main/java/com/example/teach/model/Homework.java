@@ -22,6 +22,11 @@ public class Homework {
     /** Due date for the homework, formatted as YYYY-MM-DD or similar. */
     private final String dueDate;
 
+    private final String releaseDate;
+
+    private final String openDate;
+
+
     /**
      * Constructs a new Homework instance.
      *
@@ -35,12 +40,16 @@ public class Homework {
                     String subjectId,
                     String title,
                     String description,
-                    String dueDate) {
+                    String dueDate,
+                    String releaseDate,
+                    String openDate) {
         this.id = id;
         this.subjectId = subjectId;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
+        this.releaseDate=releaseDate;
+        this.openDate=openDate;
     }
 
     /**
@@ -87,4 +96,8 @@ public class Homework {
     public String getDueDate() {
         return dueDate;
     }
+
+    public String getReleaseDate(){return releaseDate;}
+
+    public  String getOpenDate(){return openDate;}
 }

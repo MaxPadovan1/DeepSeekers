@@ -113,22 +113,41 @@ public class HomeworkPageController implements SectionControllerBase {
             }
             int week = Integer.parseInt(parts[1].trim());
 
-            // ===== 第一个弹窗：输入标题 =====
+            // ===== 弹窗 1：输入标题 =====
             TextInputDialog titleDialog = new TextInputDialog();
             titleDialog.setTitle("Create Homework");
             titleDialog.setHeaderText("Enter Homework Title for Week " + week);
-
             Optional<String> titleResult = titleDialog.showAndWait();
             if (titleResult.isEmpty()) return;
             String title = titleResult.get();
 
-            // ===== 第二个弹窗：输入描述 =====
+            // ===== 弹窗 2：输入描述 =====
             TextInputDialog descDialog = new TextInputDialog();
             descDialog.setTitle("Create Homework");
             descDialog.setHeaderText("Enter Homework Description");
-
             Optional<String> descResult = descDialog.showAndWait();
             String description = descResult.orElse("No description");
+
+            // ===== 弹窗 3：输入截止日期（due date）=====
+            TextInputDialog dueDialog = new TextInputDialog(LocalDate.now().plusDays(7).toString());
+            dueDialog.setTitle("Create Homework");
+            dueDialog.setHeaderText("Enter Due Date (yyyy-MM-dd)");
+            Optional<String> dueResult = dueDialog.showAndWait();
+            String dueDate = dueResult.orElse(LocalDate.now().plusDays(7).toString());
+
+            // ===== 弹窗 4：输入发布时间（release date）=====
+            TextInputDialog releaseDialog = new TextInputDialog(LocalDate.now().toString());
+            releaseDialog.setTitle("Create Homework");
+            releaseDialog.setHeaderText("Enter Release Date (yyyy-MM-dd)");
+            Optional<String> releaseResult = releaseDialog.showAndWait();
+            String releaseDate = releaseResult.orElse(LocalDate.now().toString());
+
+            // ===== 弹窗 5：输入开放时间（open date）=====
+            TextInputDialog openDialog = new TextInputDialog(LocalDate.now().toString());
+            openDialog.setTitle("Create Homework");
+            openDialog.setHeaderText("Enter Open Date for Students (yyyy-MM-dd)");
+            Optional<String> openResult = openDialog.showAndWait();
+            String openDate = openResult.orElse(LocalDate.now().toString());
 
             // ===== 创建并保存作业对象 =====
             Homework hw = new Homework(
@@ -136,7 +155,9 @@ public class HomeworkPageController implements SectionControllerBase {
                     String.valueOf(week),
                     title,
                     description,
-                    LocalDate.now().toString()
+                    dueDate,
+                    releaseDate,
+                    openDate
             );
 
             try {
