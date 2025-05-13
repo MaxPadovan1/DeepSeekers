@@ -62,8 +62,12 @@ public class StudyPageController implements SectionControllerBase, Initializable
      */
     @Override public void setUser(User u) {
         this.currentUser = u;
-    }
 
+        if (!(u instanceof com.example.teach.model.Teacher)) {
+            addWeekButton.setVisible(false);
+            removeWeekButton.setVisible(false);
+        }
+    }
     /**
      * Injects the current Subject being viewed.
      *
@@ -72,6 +76,7 @@ public class StudyPageController implements SectionControllerBase, Initializable
     @Override
     public void setSubject(Subject s) {
         this.currentSubject = s;
+
     }
     private int weekCount = 0;
 
