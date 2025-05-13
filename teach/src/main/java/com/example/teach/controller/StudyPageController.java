@@ -143,6 +143,13 @@ public class StudyPageController implements SectionControllerBase, Initializable
             System.out.println("No weeks to remove.");
         }
     }
+    @FXML
+    private void goBack() {
+        if (dashboardController != null) {
+            dashboardController.goToDashboard(null);
+        }
+    }
+
 
 
     // TODO: Add @FXML methods for handling Study page actions (e.g., resource loading, quizzes)

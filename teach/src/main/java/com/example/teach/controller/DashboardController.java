@@ -183,7 +183,15 @@ public class DashboardController implements Initializable {
      */
     @FXML
     public void goToLessonPlan(MouseEvent ev) {
-        System.out.println("Clicked on Lesson plan");
+        navigateTo("/com/example/teach/LessonPlan-view.fxml", "Dashboard / Lesson Plan",
+                ctrl -> {
+                    if (ctrl instanceof LessonPlanController lp) {
+                        lp.setDashboardController(this);
+                        lp.setUser(currentUser);
+                        //c.setSubjects(subjects);
+                    }
+                });
+        //System.out.println("Clicked on Lesson plan");
     }
 
     /**
