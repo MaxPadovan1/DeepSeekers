@@ -1,9 +1,18 @@
 package com.example.teach.controller;
 
-import com.example.teach.model.Subject;
-import com.example.teach.model.User;
+import com.example.teach.model.*;
+import com.example.teach.session.SessionManager;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.TitledPane;
+
+import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * Controller for the "Homework" section of a subject.
@@ -62,4 +71,81 @@ public class HomeworkPageController implements SectionControllerBase {
     @FXML private void onGoHome() {
         dashboardController.goToDashboard(null);
     }
+
+    @FXML
+    private Button teachermakehomework;
+
+    @FXML
+    public void initialize() {
+        // 获取当前用户
+        User user = SessionManager.getUser();
+
+        // 只有教师才显示按钮
+        if (user instanceof Teacher) {
+            teachermakehomework.setVisible(true);
+            teachermakehomework.setManaged(true);
+        } else {
+            teachermakehomework.setVisible(false);
+            teachermakehomework.setManaged(false);
+        }
+    }
+
+    @FXML
+    private void handleAddHomework(ActionEvent event) {
+        // 获取当前点击的按钮
+        Button button = (Button) event.getSource();
+
+        // 向上查找按钮所属的 TitledPane
+        Parent parent = button.getParent();
+        while (parent != null && !(parent instanceof TitledPane)) {
+            parent = parent.getParent();
+        }
+
+        if (parent instanceof TitledPane titledPane) {
+            String weekText = titledPane.getText(); // e.g., "Math / Week 1"
+            String[] parts = weekText.split("Week ");
+            if (parts.length < 2) {
+                System.out.println("❌ can't identity week number");
+                return;
+            }
+            int week = Integer.parseInt(parts[1].trim());
+
+            // ===== 第一个弹窗：输入标题 =====
+            TextInputDialog titleDialog = new TextInputDialog();
+            titleDialog.setTitle("Create Homework");
+            titleDialog.setHeaderText("Enter Homework Title for Week " + week);
+
+            Optional<String> titleResult = titleDialog.showAndWait();
+            if (titleResult.isEmpty()) return;
+            String title = titleResult.get();
+
+            // ===== 第二个弹窗：输入描述 =====
+            TextInputDialog descDialog = new TextInputDialog();
+            descDialog.setTitle("Create Homework");
+            descDialog.setHeaderText("Enter Homework Description");
+
+            Optional<String> descResult = descDialog.showAndWait();
+            String description = descResult.orElse("No description");
+
+            // ===== 创建并保存作业对象 =====
+            Homework hw = new Homework(
+                    currentSubject.getId(),
+                    String.valueOf(week),
+                    title,
+                    description,
+                    LocalDate.now().toString()
+            );
+
+            try {
+                new HomeworkDAO().add(hw);
+                System.out.println("✅ homework added to " + week + ": " + title);
+            } catch (SQLException e) {
+                System.err.println("❌ fale to add homework: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("❌ can't identity the week（TitledPane）");
+        }
+    }
+
 }
