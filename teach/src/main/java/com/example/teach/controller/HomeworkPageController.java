@@ -94,9 +94,9 @@ public class HomeworkPageController implements SectionControllerBase {
 
 
     @FXML
-    public void handleAddHomework(ActionEvent event) {
+    public void handleAddHomework(javafx.event.ActionEvent actionEvent) {
 
-        Button button = (Button) event.getSource();
+        Button button = (Button) actionEvent.getSource();
 
         // 向上查找按钮所属的 TitledPane
         Parent parent = button.getParent();
