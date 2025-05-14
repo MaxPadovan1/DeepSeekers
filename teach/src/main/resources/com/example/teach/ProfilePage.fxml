@@ -2,10 +2,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.teach.controller.ProfilePageController"
       spacing="20" style="-fx-padding:20;">
+    <!-- Back Arrow Header Row -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button onAction="#goBack" style="-fx-background-color: transparent;">
+            <graphic>
+                <ImageView fitWidth="24" fitHeight="24">
+                    <image>
+                        <Image url="@images/back_aarow.png" /> <!-- Replace with your image path -->
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Label  text="Profile Page" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    </HBox>
 
     <!-- Profile Header -->
     <HBox spacing="20"
