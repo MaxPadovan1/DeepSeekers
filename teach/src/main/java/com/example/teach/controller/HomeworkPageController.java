@@ -4,14 +4,13 @@ import com.example.teach.model.*;
 import com.example.teach.session.SessionManager;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -72,23 +71,9 @@ public class HomeworkPageController implements SectionControllerBase {
         dashboardController.goToDashboard(null);
     }
 
-    @FXML
-    private Button teachermakehomework;
 
-    @FXML
-    public void initialize() {
-        // 获取当前用户
-        User user = SessionManager.getUser();
 
-        // 只有教师才显示按钮
-        if (user instanceof Teacher) {
-            teachermakehomework.setVisible(true);
-            teachermakehomework.setManaged(true);
-        } else {
-            teachermakehomework.setVisible(false);
-            teachermakehomework.setManaged(false);
-        }
-    }
+
 
 
 
@@ -171,4 +156,30 @@ public class HomeworkPageController implements SectionControllerBase {
             System.out.println("❌ can't identity the week（TitledPane）");
         }
     }
+
+    private void displayHomeworkList() {
+        try {
+            List<Homework> homeworks = new HomeworkDAO().getBySubject(currentSubject.getId());
+            for (TitledPane pane : accordion.getPanes()) {
+                VBox vbox = (VBox) pane.getContent();
+                vbox.getChildren().removeIf(node -> node instanceof Label);
+
+                String weekText = pane.getText();
+                String[] parts = weekText.split("Week ");
+                if (parts.length < 2) continue;
+                String week = parts[1].trim();
+
+                for (Homework hw : homeworks) {
+                    if (hw.getWeek().equals(week)) {
+                        Label hwLabel = new Label("\u2022 " + hw.getTitle());
+                        hwLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
+                        vbox.getChildren().add(0, hwLabel);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Failed to load homework list: " + e.getMessage());
+        }
+    }
+
 }

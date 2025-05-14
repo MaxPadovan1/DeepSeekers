@@ -50,13 +50,15 @@ public class HomeworkDAO {
      * @throws SQLException if a database access error occurs
      */
     public void add(Homework h) throws SQLException {
-        String sql = "INSERT INTO Homeworks(id,subject_id,title,description,due_date) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Homework(subject_id, week, title, description, due_date, release_date, open_date) VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, h.getId());
-            ps.setString(2, h.getSubjectId());
+            ps.setString(1, h.getSubjectId());
+            ps.setString(2, h.getWeek());
             ps.setString(3, h.getTitle());
             ps.setString(4, h.getDescription());
             ps.setString(5, h.getDueDate());
+            ps.setString(6, h.getReleaseDate());
+            ps.setString(7, h.getOpenDate());
             ps.executeUpdate();
         }
     }

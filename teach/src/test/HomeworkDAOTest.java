@@ -24,7 +24,7 @@ class HomeworkDAOTest extends DatabaseTestBase {
 
     @Test
     void addAndFetchHomeworkWorks() throws Exception {
-        Homework h1 = new Homework("H1", "ENG", "Essay", "Write about summer", "2025-06-01");
+        Homework h1 = new Homework("H1", "ENG", "Essay", "Write about summer", "2025-06-01","2025-05-01","2025-05-20");
         homeworkDao.add(h1);
 
         List<Homework> homeworks = homeworkDao.getBySubject("ENG");
@@ -37,6 +37,8 @@ class HomeworkDAOTest extends DatabaseTestBase {
         assertEquals("Essay", fetched.getTitle());
         assertEquals("Write about summer", fetched.getDescription());
         assertEquals("2025-06-01", fetched.getDueDate());
+        assertEquals("2025-05-01",fetched.getOpenDate());
+        assertEquals("2025-05-20",fetched.getOpenDate());
     }
 
     @Test
@@ -47,8 +49,8 @@ class HomeworkDAOTest extends DatabaseTestBase {
 
     @Test
     void addMultipleHomeworksAndFetch() throws Exception {
-        Homework h1 = new Homework("H2", "ENG", "Grammar", "Tenses exercise", "2025-06-10");
-        Homework h2 = new Homework("H3", "ENG", "Vocabulary", "Learn 50 new words", "2025-06-15");
+        Homework h1 = new Homework("H2", "ENG", "Grammar", "Tenses exercise", "2025-06-10","2025-05-01","2025-05-20");
+        Homework h2 = new Homework("H3", "ENG", "Vocabulary", "Learn 50 new words", "2025-06-15","2025-05-01","2025-05-20");
         homeworkDao.add(h1);
         homeworkDao.add(h2);
 

@@ -13,6 +13,8 @@ public class Homework {
     /** Identifier of the subject to which this homework belongs. */
     private final String subjectId;
 
+    private String week;
+
     /** Short title of the homework. */
     private final String title;
 
@@ -86,6 +88,10 @@ public class Homework {
      */
     public String getDescription() {
         return description;
+    }
+
+    public String getWeek() {
+        return week;
     }
 
     /**
