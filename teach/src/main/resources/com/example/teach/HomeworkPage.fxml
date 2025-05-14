@@ -4,49 +4,63 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
 <VBox prefHeight="720.0" prefWidth="1280.0"
       xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.teach.controller.HomeworkPageController">
 
-    <Accordion fx:id="accordion"
-               VBox.vgrow="ALWAYS"
-               style="-fx-padding: 0; -fx-background-color: transparent;">
-        <panes>
-            <TitledPane text="Week 1" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
+    <!-- Top controls for teacher -->
+    <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-padding: 10;">
+        <Button fx:id="addWeekButton" text="➕ Add Week" onAction="#onAddWeek"/>
+        <Button fx:id="removeWeekButton" text="➖ Remove Week" onAction="#onRemoveWeek"/>
+        <ToggleButton fx:id="toggleViewButton" text="👁️‍🗨️ Student View" />
+    </HBox>
 
-            <TitledPane text="Week 2" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
-
-            <TitledPane text="Week 3" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
-
-            <TitledPane text="Week 4" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
-
-            <TitledPane text="Week 5" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
-        </panes>
-    </Accordion>
+    <!-- Dynamic accordion for weekly homework entries -->
+    <Accordion fx:id="weekAccordion" VBox.vgrow="ALWAYS"/>
 </VBox>
+
+<!--    <Accordion fx:id="accordion"-->
+<!--               VBox.vgrow="ALWAYS"-->
+<!--               style="-fx-padding: 0; -fx-background-color: transparent;">-->
+<!--        <panes>-->
+<!--            <TitledPane text="Week 1" animated="false">-->
+<!--                <VBox spacing="5"-->
+<!--                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">-->
+<!--                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>-->
+<!--                </VBox>-->
+<!--            </TitledPane>-->
+
+<!--            <TitledPane text="Week 2" animated="false">-->
+<!--                <VBox spacing="5"-->
+<!--                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">-->
+<!--                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>-->
+<!--                </VBox>-->
+<!--            </TitledPane>-->
+
+<!--            <TitledPane text="Week 3" animated="false">-->
+<!--                <VBox spacing="5"-->
+<!--                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">-->
+<!--                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>-->
+<!--                </VBox>-->
+<!--            </TitledPane>-->
+
+<!--            <TitledPane text="Week 4" animated="false">-->
+<!--                <VBox spacing="5"-->
+<!--                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">-->
+<!--                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>-->
+<!--                </VBox>-->
+<!--            </TitledPane>-->
+
+<!--            <TitledPane text="Week 5" animated="false">-->
+<!--                <VBox spacing="5"-->
+<!--                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">-->
+<!--                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>-->
+<!--                </VBox>-->
+<!--            </TitledPane>-->
+<!--        </panes>-->
+<!--    </Accordion>-->
+<!--</VBox>-->

@@ -106,7 +106,8 @@ public class SubjectHomePageController {
      * Placeholder for Grade section: currently logs a click event.
      */
     @FXML private void onGrade() {
-        System.out.println("Clicked on Grade");
+        loadSection("HomeWorkGradePage.fxml");  // Assuming this is the actual Grades view
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Grade");
     }
 
     /**
