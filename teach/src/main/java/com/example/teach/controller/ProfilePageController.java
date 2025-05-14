@@ -23,6 +23,8 @@ public class ProfilePageController {
     private DashboardController dashboardController;
 
     // Profile header
+    @FXML
+    private Label profileLabel;
     @FXML private Label nameLabel;
     @FXML private Label idLabel;
     @FXML private Button viewPerformanceButton;
@@ -79,12 +81,14 @@ public class ProfilePageController {
 
         if (user instanceof Student) {
             viewPerformanceButton.setVisible(false);
+            profileLabel.setText("Student Profile");
             // student-specific data loading (e.g. assigned teacher)
         } else if (user instanceof Teacher t) {
             viewPerformanceButton.setVisible(true);
             teacherFirstNameField.setText(t.getFirstName());
             teacherLastNameField.setText(t.getLastName());
             teacherEmailField.setText(t.getEmail());
+            profileLabel.setText("Teacher Profile");
             // divisionField.setText(t.getDivision());
         }
 
@@ -144,5 +148,11 @@ public class ProfilePageController {
      */
     @FXML private void onViewPerformance(ActionEvent ev) {
         // TODO: load performance view
+    }
+    @FXML
+    private void goBack() {
+        if (dashboardController != null) {
+            dashboardController.goToDashboard(null); // or navigate to SubjectHomePage if appropriate
+        }
     }
 }
