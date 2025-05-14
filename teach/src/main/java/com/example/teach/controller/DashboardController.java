@@ -243,7 +243,7 @@ public class DashboardController implements Initializable {
      * @param pageTitle        title to set on the page label
      * @param initController   consumer to perform additional controller setup
      */
-    private void navigateTo(String fxmlPath, String pageTitle, Consumer<Object> initController) {
+    public void navigateTo(String fxmlPath, String pageTitle, Consumer<Object> initController) {
         drawer.setVisible(false);
         drawer.setManaged(false);
         setPageLabel(pageTitle);
