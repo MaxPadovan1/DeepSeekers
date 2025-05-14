@@ -19,7 +19,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Label fx:id="profileLabel" text="Profile Page" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <Label  text="Profile Page" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
     </HBox>
 
     <!-- Profile Header -->
