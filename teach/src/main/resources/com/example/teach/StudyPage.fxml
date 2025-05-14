@@ -20,16 +20,6 @@
 
    <!-- Control buttons visible only to teachers -->
    <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
-      <!-- Back Arrow Image Button -->
-      <Button onAction="#goBack" style="-fx-background-color: transparent;">
-         <graphic>
-            <ImageView fitWidth="24" fitHeight="24">
-               <image>
-                  <Image url="@images/back_aarow.png" /> <!-- Replace with your image path -->
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
 
       <Region HBox.hgrow="ALWAYS"/>
 

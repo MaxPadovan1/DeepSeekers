@@ -34,13 +34,18 @@
         <!-- Back Arrow Image Button -->
         <Button onAction="#goBack" style="-fx-background-color: transparent;">
             <graphic>
+                <HBox spacing="10" alignment="CENTER_LEFT">
                 <ImageView fitWidth="24" fitHeight="24">
                     <image>
                         <Image url="@images/back_aarow.png" /> <!-- Replace with your image path -->
                     </image>
                 </ImageView>
-            </graphic>
+
+            <Label text="Lesson Plan" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        </HBox>
+        </graphic>
         </Button>
+
 
         <Region HBox.hgrow="ALWAYS"/>
 

@@ -15,7 +15,7 @@
       fx:controller="com.example.teach.controller.ClassInfoController"
       spacing="10"
       style="-fx-padding:20;">
-    <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #bdc3c7;"">
+    <HBox spacing="10" alignment="CENTER_LEFT">
         <Button onAction="#goBack" style="-fx-background-color: transparent;">
             <graphic>
                 <ImageView fitWidth="24" fitHeight="24">
