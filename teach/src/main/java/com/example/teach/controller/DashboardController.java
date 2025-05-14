@@ -49,6 +49,8 @@ public class DashboardController implements Initializable {
     @FXML private VBox subject2Tile;
     @FXML private VBox subject3Tile;
     @FXML private VBox subject4Tile;
+    @FXML private Label greetingLabel;
+    @FXML private Label lessonPlanLabel;
 
     /**
      * Initializes the controller after its root element has been completely processed.
@@ -72,14 +74,21 @@ public class DashboardController implements Initializable {
     public void setUser(User user) {
         this.currentUser = user;
         userMenu.setText(user.getFirstName() + " " + user.getLastName());
+        greetingLabel.setText(buildGreeting(user));
         pageLabel.setText("Dashboard");
 
         if (user instanceof Student s) {
             subjects = s.getSubjects();
+            lessonPlanLabel.setVisible(false);   // hide from students
+            lessonPlanLabel.setManaged(false);
         } else if (user instanceof Teacher t) {
             subjects = List.of(t.getSubject());
+            lessonPlanLabel.setVisible(true);    // show for teachers
+            lessonPlanLabel.setManaged(true);
         } else {
             subjects = List.of();
+            lessonPlanLabel.setVisible(false);
+            lessonPlanLabel.setManaged(false);
         }
 
         List<VBox> tiles = List.of(subject1Tile, subject2Tile, subject3Tile, subject4Tile);
@@ -96,7 +105,23 @@ public class DashboardController implements Initializable {
             }
         }
     }
+    private String buildGreeting(User user) {
+        String role = (user instanceof Teacher) ? "Teacher" :
+                (user instanceof Student) ? "Student" : "User";
+        String name = user.getFirstName();
 
+        int hour = java.time.LocalTime.now().getHour();
+        String timeGreeting;
+        if (hour < 12) {
+            timeGreeting = "Good morning";
+        } else if (hour < 18) {
+            timeGreeting = "Good afternoon";
+        } else {
+            timeGreeting = "Good evening";
+        }
+
+        return timeGreeting + ", " + role + " " + name + "!";
+    }
     /**
      * Updates the page title label.
      *
@@ -165,7 +190,15 @@ public class DashboardController implements Initializable {
      */
     @FXML
     public void goToLessonPlan(MouseEvent ev) {
-        System.out.println("Clicked on Lesson plan");
+        navigateTo("/com/example/teach/LessonPlan-view.fxml", "Dashboard / Lesson Plan",
+                ctrl -> {
+            if (ctrl instanceof LessonPlanController lp) {
+                        lp.setDashboardController(this);
+                        lp.setUser(currentUser);
+                        //c.setSubjects(subjects);1
+                    }
+                });
+        //System.out.println("Clicked on Lesson plan");
     }
 
     /**
@@ -210,7 +243,7 @@ public class DashboardController implements Initializable {
      * @param pageTitle        title to set on the page label
      * @param initController   consumer to perform additional controller setup
      */
-    private void navigateTo(String fxmlPath, String pageTitle, Consumer<Object> initController) {
+    public void navigateTo(String fxmlPath, String pageTitle, Consumer<Object> initController) {
         drawer.setVisible(false);
         drawer.setManaged(false);
         setPageLabel(pageTitle);

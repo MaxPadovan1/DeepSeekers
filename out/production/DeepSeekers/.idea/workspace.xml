@@ -4,28 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74f33b9d-4f00-479e-ac88-35da9806d03c" name="Changes" comment="Glen-Main-Backend Branch created.">
-      <change afterPath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/controller/StudentGradeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/controller/TeacherGradeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/model/Grade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/model/GradeDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/StudentGradePage.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/TeacherGradePage.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach.db" beforeDir="false" afterPath="$PROJECT_DIR$/teach.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/DeepSeeekersApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/DeepSeeekersApplication.java" afterDir="false" />
+    <list default="true" id="74f33b9d-4f00-479e-ac88-35da9806d03c" name="Changes" comment="changed homeworkDAO, profile page">
       <change beforePath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/controller/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/controller/StudyPageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/teach/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/Dashboard-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/Dashboard-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/StudyPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/StudyPage.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/images/back_aarow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/images/notification_bell.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/target/classes/com/example/teach/Dashboard-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/teach/target/classes/com/example/teach/Dashboard-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/target/classes/com/example/teach/ProfilePage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/teach/target/classes/com/example/teach/ProfilePage.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/target/classes/com/example/teach/controller/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/teach/target/classes/com/example/teach/controller/DashboardController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/target/classes/com/example/teach/images/back_aarow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/target/classes/com/example/teach/images/notification_bell.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/teach/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/teach/target/classes/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/controller/HomeWorkGradePageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/controller/HomeWorkGradePageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/controller/HomeworkPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/teach/src/main/java/com/example/teach/controller/HomeworkPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/HomeWorkGradePage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/teach/src/main/resources/com/example/teach/HomeWorkGradePage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teach/target/classes/com/example/teach/controller/ClassInfoController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/teach/target/classes/com/example/teach/controller/DashboardController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/teach/target/classes/com/example/teach/controller/LessonPlanController.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,9 +27,22 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="Glen-Main-Backend" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="frontend-UI-Angela" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,22 +70,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.DeepSeeekersApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ProfilePageLauncher.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StudentTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Glen-Main-Backend&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.DeepSeeekersApplication.executor": "Run",
+    "Application.HelloApplication.executor": "Run",
+    "Application.ProfilePageLauncher.executor": "Run",
+    "JUnit.StudentTest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "glen-main-backend",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.JavaFX"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="DeepSeeekersApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.teach.DeepSeeekersApplication" />
@@ -103,6 +102,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.DeepSeeekersApplication" />
+        <item itemvalue="Application.DeepSeeekersApplication" />
+        <item itemvalue="Application.DeepSeeekersApplication" />
+        <item itemvalue="Application.DeepSeeekersApplication" />
         <item itemvalue="Application.DeepSeeekersApplication" />
       </list>
     </recent_temporary>
@@ -164,7 +167,39 @@
       <option name="project" value="LOCAL" />
       <updated>1747100557041</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="created grade.java, gradeDAO.java, studentGradeController.java,StudentGradePage.fxml, TeacherGradeController.java, TeacherGradePage.fxml and also made some few changes in some pages">
+      <option name="closed" value="true" />
+      <created>1747203168063</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1747203168063</updated>
+    </task>
+    <task id="LOCAL-00008" summary="some changes to files">
+      <option name="closed" value="true" />
+      <created>1747204351381</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1747204351381</updated>
+    </task>
+    <task id="LOCAL-00009" summary="changed dashboardcontroller.java">
+      <option name="closed" value="true" />
+      <created>1747205230873</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1747205230873</updated>
+    </task>
+    <task id="LOCAL-00010" summary="changed homeworkDAO, profile page">
+      <option name="closed" value="true" />
+      <created>1747206943900</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1747206943900</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -178,7 +213,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/kai-backend" />
+                        <option value="origin/frontend-UI-Angela" />
                       </list>
                     </value>
                   </entry>
@@ -195,6 +230,10 @@
     <MESSAGE value="SignUp.fxml, SignUpController, Student.java,Teacher.java,User.java, DatabaseHandler.java ProfilePageLauncher has been created." />
     <MESSAGE value="ProfilePage.fxml,ProfilePageLauncher.java has been updated" />
     <MESSAGE value="Glen-Backend Branch created." />
-    <option name="LAST_COMMIT_MESSAGE" value="Glen-Backend Branch created." />
+    <MESSAGE value="created grade.java, gradeDAO.java, studentGradeController.java,StudentGradePage.fxml, TeacherGradeController.java, TeacherGradePage.fxml and also made some few changes in some pages" />
+    <MESSAGE value="some changes to files" />
+    <MESSAGE value="changed dashboardcontroller.java" />
+    <MESSAGE value="changed homeworkDAO, profile page" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed homeworkDAO, profile page" />
   </component>
 </project>
