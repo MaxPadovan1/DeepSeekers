@@ -98,7 +98,8 @@ public class SQLiteDAO {
                             "  subject_id TEXT NOT NULL REFERENCES Subjects(id)," +
                             "  title      TEXT NOT NULL," +
                             "  description TEXT," +
-                            "  due_date   TEXT" +
+                            "  due_date   TEXT," +
+                            "is_released BOOLEAN DEFAULT 0"+
                             ")"
             );
 
@@ -122,6 +123,21 @@ public class SQLiteDAO {
                             "  content    TEXT NOT NULL" +
                             ")"
             );
+            // Submission table
+            stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS Submissions ("+
+                            "id TEXT PRIMARY KEY,"+
+                            "assignment_id TEXT NOT NULL REFERENCES Assignments(id),"+
+                            "student_id TEXT NOT NULL REFERENCES Students(id),"+
+                            "file_path TEXT,"+
+                            "timestamp TEXT"+
+                            ")"
+
+            );
+            stmt.execute(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS idx_submission_unique ON Submissions(assignment_id, student_id)"
+            );
+
 
             // 6) Add missing columns to Users table for existing schemas
             try {
@@ -133,6 +149,11 @@ public class SQLiteDAO {
                 stmt.execute("ALTER TABLE Users ADD COLUMN subject_ids TEXT");
             } catch (SQLException ignore) {
                 // column already exists
+            }
+            try{
+                stmt.execute("ALTER TABLE Assignments ADD COLUMN is_released BOOLEAN DEFAULT 0");
+            } catch (SQLException ignore){
+
             }
 
         } catch (SQLException e) {

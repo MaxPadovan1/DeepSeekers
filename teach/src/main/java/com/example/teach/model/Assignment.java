@@ -22,6 +22,8 @@ public class Assignment {
     /** Due date for the assignment, formatted as YYYY-MM-DD or similar. */
     private final String dueDate;
 
+    private final boolean isReleased;
+
     /**
      * Constructs a new Assignment instance.
      *
@@ -31,16 +33,13 @@ public class Assignment {
      * @param description  detailed description or instructions
      * @param dueDate      due date string (e.g., "2025-05-10")
      */
-    public Assignment(String id,
-                      String subjectId,
-                      String title,
-                      String description,
-                      String dueDate) {
+    public Assignment(String id, String subjectId, String title, String description, String dueDate, boolean isReleased) {
         this.id = id;
         this.subjectId = subjectId;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
+        this.isReleased = isReleased;
     }
 
     /**
@@ -87,4 +86,14 @@ public class Assignment {
     public String getDueDate() {
         return dueDate;
     }
+
+    public boolean isReleased() {
+        return isReleased;
+    }
+
+    @Override
+    public String toString() {
+        return title + " (Due: " + dueDate + ")";
+    }
+
 }
