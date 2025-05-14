@@ -1,0 +1,77 @@
+Index: teach/target/classes/main/resources/com/example/teach/LoginPage-view.fxml
+===================================================================
+diff --git a/teach/target/classes/main/resources/com/example/teach/LoginPage-view.fxml b/teach/target/classes/main/resources/com/example/teach/LoginPage-view.fxml
+deleted file mode 100644
+--- a/teach/target/classes/main/resources/com/example/teach/LoginPage-view.fxml	(revision 7907ad7f63141f14f51885c597d18b0eff38ceae)
++++ /dev/null	(revision 7907ad7f63141f14f51885c597d18b0eff38ceae)
+@@ -1,50 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<?import javafx.geometry.Insets?>
+-<?import javafx.scene.layout.*?>
+-<?import javafx.scene.control.*?>
+-
+-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+-      fx:controller="com.example.teach.controller.LoginPageController" >
+-    <HBox spacing="10.00" alignment="BOTTOM_LEFT" >
+-        <padding>
+-            <Insets left="50.0" />
+-        </padding>
+-            <Label fx:id="welcomeText" text="Welcome to DeepSeekers!&#10; In the deep,we seek." style="-fx-font-size:36px; -fx-font-weight: bold;" wrapText="true"/>
+-    </HBox>
+-
+-    <VBox alignment="CENTER_LEFT" spacing="20.00">
+-        <padding>
+-            <Insets bottom="40.0" left="20.0" right="20.0" />
+-        </padding>
+-
+-        <VBox alignment="CENTER_RIGHT" >
+-            <padding>
+-                <Insets  left="120.0" right="120.0" />
+-            </padding>
+-            <TextField fx:id="userId" promptText="User ID" maxWidth="500.0" prefHeight="30"/>
+-        </VBox>
+-
+-            <VBox alignment="CENTER_RIGHT">
+-                <padding>
+-                    <Insets  left="120.0" right="120.0" />
+-                </padding>
+-                <PasswordField fx:id="passwordField" promptText="Password" maxWidth="500.0" prefHeight="30"/>
+-            </VBox>
+-
+-            <VBox alignment="CENTER_RIGHT">
+-                <padding>
+-                    <Insets  left="120.0" right="120.0" bottom="20.0" />
+-                </padding>
+-                <Hyperlink fx:id="fPassword" text="Forgot Password?" maxWidth="500.0" maxHeight="150.0" />
+-            </VBox>
+-
+-        <HBox alignment="CENTER_RIGHT" spacing="50.0">
+-            <padding>
+-                <Insets   right="300.0" />
+-            </padding>
+-            <Button text="Sign in" fx:id="loginButton" onAction="#handleLogin" style="" />
+-            <Button text="Sign Up" fx:id="signUpButton" onAction="#handleSignUp"/>
+-        </HBox>
+-        <Label fx:id="errorLabel" textFill="red"/>
+-    </VBox>
+-</VBox>
+\ No newline at end of file
+Index: teach/src/main/java/com/example/teach/controller/ProfilePageController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.teach.controller;\n\nimport javafx.fxml.FXML;\nimport javafx.scene.control.Button;\nimport javafx.scene.control.ComboBox;\nimport javafx.scene.control.Label;\n\npublic class ProfilePageController {\n\n    @FXML\n    private ComboBox<String> studentDropdown;\n\n    @FXML\n    private Button viewPerformanceButton;\n\n    @FXML\n    private Button viewAttendanceButton;\n\n    @FXML\n    private Label studentNameLabel;\n\n    @FXML\n    private Label studentIDLabel;\n\n    @FXML\n    public void initialize() {\n        studentDropdown.getItems().addAll(\"Michaela Brad\", \"Joe David\", \"Smith Joey\");\n        studentDropdown.setValue(\"Michaela Brad\");\n\n        studentDropdown.setOnAction(e -> {\n            String selected = studentDropdown.getValue();\n            studentNameLabel.setText(\"Name: \" + selected);\n            studentIDLabel.setText(\"ID: \" + selected.hashCode());\n        });\n\n        viewPerformanceButton.setOnAction(e ->\n                System.out.println(\"Viewing performance for: \" + studentDropdown.getValue())\n        );\n\n        viewAttendanceButton.setOnAction(e ->\n                System.out.println(\"Viewing attendance for: \" + studentDropdown.getValue())\n        );\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/teach/src/main/java/com/example/teach/controller/ProfilePageController.java b/teach/src/main/java/com/example/teach/controller/ProfilePageController.java
+--- a/teach/src/main/java/com/example/teach/controller/ProfilePageController.java	(revision 7907ad7f63141f14f51885c597d18b0eff38ceae)
++++ b/teach/src/main/java/com/example/teach/controller/ProfilePageController.java	(date 1746079683311)
+@@ -26,7 +26,7 @@
+     public void initialize() {
+         studentDropdown.getItems().addAll("Michaela Brad", "Joe David", "Smith Joey");
+         studentDropdown.setValue("Michaela Brad");
+-
++        //This will give the dropdown menu
+         studentDropdown.setOnAction(e -> {
+             String selected = studentDropdown.getValue();
+             studentNameLabel.setText("Name: " + selected);
