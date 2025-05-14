@@ -50,6 +50,7 @@ public class DashboardController implements Initializable {
     @FXML private VBox subject3Tile;
     @FXML private VBox subject4Tile;
     @FXML private Label greetingLabel;
+    @FXML private Label lessonPlanLabel;
 
     /**
      * Initializes the controller after its root element has been completely processed.
@@ -78,10 +79,16 @@ public class DashboardController implements Initializable {
 
         if (user instanceof Student s) {
             subjects = s.getSubjects();
+            lessonPlanLabel.setVisible(false);   // hide from students
+            lessonPlanLabel.setManaged(false);
         } else if (user instanceof Teacher t) {
             subjects = List.of(t.getSubject());
+            lessonPlanLabel.setVisible(true);    // show for teachers
+            lessonPlanLabel.setManaged(true);
         } else {
             subjects = List.of();
+            lessonPlanLabel.setVisible(false);
+            lessonPlanLabel.setManaged(false);
         }
 
         List<VBox> tiles = List.of(subject1Tile, subject2Tile, subject3Tile, subject4Tile);
