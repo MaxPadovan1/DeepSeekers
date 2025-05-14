@@ -23,16 +23,7 @@
       style="-fx-background-color: #ecf0f1; -fx-padding: 20; -fx-spacing: 10;">
 
     <!-- Header Bar with Back and Title -->
-    <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-background-color: #bdc3c7;">
-        <Button onAction="#goBack" style="-fx-background-color: transparent;">
-            <graphic>
-                <ImageView fitWidth="24" fitHeight="24">
-                    <image>
-                        <Image url="@images/back_aarow.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
+    <HBox spacing="10" alignment="CENTER_LEFT" >
         <Label text="Grades" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
     </HBox>
 

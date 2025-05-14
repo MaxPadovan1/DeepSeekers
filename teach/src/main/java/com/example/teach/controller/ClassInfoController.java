@@ -123,4 +123,10 @@ public class ClassInfoController {
         int row = index / 4;
         studentListContainer.add(classBox, col, row);
     }
+    @FXML
+    private void goBack() {
+        if (dashboardController != null) {
+            dashboardController.goToDashboard(null); // or navigate to SubjectHomePage if appropriate
+        }
+    }
 }
