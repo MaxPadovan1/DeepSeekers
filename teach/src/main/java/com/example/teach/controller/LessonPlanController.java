@@ -77,11 +77,13 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             overview.setPromptText("Overview");
             overview.setPrefHeight(120);
             overview.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight: bold;");
+            overview.setEditable(false);
 
             TextArea details = new TextArea();
             details.setPromptText("Details");
             details.setPrefHeight(120);
             details.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight: bold;");
+            details.setEditable(false);
 
             Button editBtn = new Button("Edit");
             editBtn.setStyle("-fx-font-size: 8px; -fx-font-weight: bold;");
