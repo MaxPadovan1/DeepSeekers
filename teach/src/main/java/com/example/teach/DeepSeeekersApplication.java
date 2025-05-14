@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Main entry point for the DeepSeekers JavaFX application.
@@ -54,6 +56,14 @@ public class DeepSeeekersApplication extends Application {
      * @param args command-line arguments (ignored)
      */
     public static void main(String[] args) {
-        launch();
+        try {
+            // Delete the previous login user's session file (for development use)
+            Files.deleteIfExists(Paths.get(".session"));
+            System.out.println("🔁 Session cleared on startup.");
+        } catch (IOException e) {
+            System.err.println("⚠️ Failed to delete session file: " + e.getMessage());
+        }
+
+        launch(); // 启动 JavaFX 应用
     }
 }
