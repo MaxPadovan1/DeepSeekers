@@ -52,6 +52,7 @@ public class HomeworkPageController implements SectionControllerBase {
         accordion.getPanes().forEach(pane ->
                 pane.setText(currentSubject.getName() + " / " + pane.getText())
         );
+        displayHomeworkList();
     }
 
     /**
@@ -148,9 +149,11 @@ public class HomeworkPageController implements SectionControllerBase {
             try {
                 new HomeworkDAO().add(hw);
                 System.out.println("✅ homework added to " + week + ": " + title);
+
+                // ✅ 添加后立即刷新显示
+                displayHomeworkList();
             } catch (SQLException e) {
-                System.err.println("❌ fale to add homework: " + e.getMessage());
-                e.printStackTrace();
+                System.err.println("❌ failed to add homework: " + e.getMessage());
             }
         } else {
             System.out.println("❌ can't identity the week（TitledPane）");

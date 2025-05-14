@@ -138,9 +138,15 @@ public class SQLiteDAO {
                 // column already exists
             }
 
+            // 🧪 Development: reset tables to allow clean testing
+            stmt.execute("DELETE FROM Teachers");
+            stmt.execute("DELETE FROM Users");
+
         } catch (SQLException e) {
             e.printStackTrace();
             // In production, consider logging to a file or system logger
         }
+
+
     }
 }
