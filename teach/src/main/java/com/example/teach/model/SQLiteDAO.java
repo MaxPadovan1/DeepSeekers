@@ -103,14 +103,17 @@ public class SQLiteDAO {
                             ")"
             );
 
-            // Homework table
+            // Homework table (fixed)
             stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS Homeworks (" +
-                            "  id         TEXT PRIMARY KEY," +
-                            "  subject_id TEXT NOT NULL REFERENCES Subjects(id)," +
-                            "  title      TEXT NOT NULL," +
-                            "  description TEXT," +
-                            "  due_date   TEXT" +
+                    "CREATE TABLE IF NOT EXISTS Homework (" +
+                            "  id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                            "  subject_id TEXT NOT NULL REFERENCES Subjects(id), " +
+                            "  week TEXT NOT NULL, " +
+                            "  title TEXT NOT NULL, " +
+                            "  description TEXT, " +
+                            "  due_date TEXT, " +
+                            "  release_date TEXT, " +
+                            "  open_date TEXT " +
                             ")"
             );
 
@@ -156,9 +159,15 @@ public class SQLiteDAO {
 
             }
 
+            // 🧪 Development: reset tables to allow clean testing
+            stmt.execute("DELETE FROM Teachers");
+            stmt.execute("DELETE FROM Users");
+
         } catch (SQLException e) {
             e.printStackTrace();
             // In production, consider logging to a file or system logger
         }
+
+
     }
 }

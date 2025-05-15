@@ -23,17 +23,19 @@ public class HomeworkDAO {
      */
     public List<Homework> getBySubject(String subjectId) throws SQLException {
         List<Homework> out = new ArrayList<>();
-        String sql = "SELECT id,title,description,due_date FROM Homeworks WHERE subject_id=?";
+        String sql = "SELECT week, title, description, due_date, release_date, open_date FROM Homework WHERE subject_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, subjectId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     out.add(new Homework(
-                            rs.getString("id"),
                             subjectId,
+                            rs.getString("week"),
                             rs.getString("title"),
                             rs.getString("description"),
-                            rs.getString("due_date")
+                            rs.getString("due_date"),
+                            rs.getString("release_date"),
+                            rs.getString("open_date")
                     ));
                 }
             }
@@ -48,13 +50,15 @@ public class HomeworkDAO {
      * @throws SQLException if a database access error occurs
      */
     public void add(Homework h) throws SQLException {
-        String sql = "INSERT INTO Homeworks(id,subject_id,title,description,due_date) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Homework(subject_id, week, title, description, due_date, release_date, open_date) VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, h.getId());
-            ps.setString(2, h.getSubjectId());
+            ps.setString(1, h.getSubjectId());
+            ps.setString(2, h.getWeek());
             ps.setString(3, h.getTitle());
             ps.setString(4, h.getDescription());
             ps.setString(5, h.getDueDate());
+            ps.setString(6, h.getReleaseDate());
+            ps.setString(7, h.getOpenDate());
             ps.executeUpdate();
         }
     }
