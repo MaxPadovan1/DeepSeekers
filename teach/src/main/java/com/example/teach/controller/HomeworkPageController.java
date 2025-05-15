@@ -177,6 +177,13 @@ public class HomeworkPageController implements SectionControllerBase {
                         Label hwLabel = new Label("\u2022 " + hw.getTitle());
                         hwLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
                         vbox.getChildren().add(0, hwLabel);
+
+                        for (javafx.scene.Node node : vbox.getChildren()) {
+                            if (node instanceof TextArea ta) {
+                                ta.setText(hw.getDescription());
+                                break; // 设置一次即可
+                            }
+                        }
                     }
                 }
             }

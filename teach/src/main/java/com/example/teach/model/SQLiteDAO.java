@@ -141,6 +141,7 @@ public class SQLiteDAO {
             // 🧪 Development: reset tables to allow clean testing
             stmt.execute("DELETE FROM Teachers");
             stmt.execute("DELETE FROM Users");
+            stmt.execute("DELETE FROM Homework");
 
         } catch (SQLException e) {
             e.printStackTrace();
