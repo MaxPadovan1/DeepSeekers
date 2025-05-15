@@ -47,10 +47,12 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
         TextArea feedbackArea = new TextArea(feedback);
         feedbackArea.setPrefHeight(200);
         feedbackArea.setPrefWidth(800);
+        feedbackArea.setEditable(false); // ❗ prevent editing
 
         TextArea gradeArea = new TextArea(grade);
         gradeArea.setPrefHeight(100);
         gradeArea.setPrefWidth(240);
+        gradeArea.setEditable(false); // ❗ prevent editing
 
         Text gradeLabel = new Text("Grade");
         gradeLabel.setStyle("-fx-font-size: 22px;");
@@ -62,6 +64,7 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
         TextArea submittedArea = new TextArea(submittedTime);
         submittedArea.setPrefHeight(100);
         submittedArea.setPrefWidth(240);
+        submittedArea.setEditable(false); // ❗ prevent editing
 
         Text submittedLabel = new Text("Submitted");
         submittedLabel.setStyle("-fx-font-size: 22px;");
