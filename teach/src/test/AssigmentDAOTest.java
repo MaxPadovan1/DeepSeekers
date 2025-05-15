@@ -24,7 +24,7 @@ class AssignmentDAOTest extends DatabaseTestBase {
 
     @Test
     void addAndFetchAssignmentWorks() throws Exception {
-        Assignment a1 = new Assignment("A1", "CS", "Python", "Create program", "2025-05-10");
+        Assignment a1 = new Assignment("A1", "CS", "Python", "Create program", "2025-05-10", false);
         assignmentDao.add(a1);
 
         List<Assignment> assignments = assignmentDao.getBySubject("CS");
@@ -37,6 +37,7 @@ class AssignmentDAOTest extends DatabaseTestBase {
         assertEquals("Python", fetched.getTitle());
         assertEquals("Create program", fetched.getDescription());
         assertEquals("2025-05-10", fetched.getDueDate());
+        assertFalse(fetched.isReleased());
     }
 
     @Test
@@ -47,21 +48,39 @@ class AssignmentDAOTest extends DatabaseTestBase {
 
     @Test
     void addMultipleAssignmentsAndFetch() throws Exception {
-        Assignment a1 = new Assignment("A2", "CS", "C++", "Write tests", "2025-05-20");
-        Assignment a2 = new Assignment("A3", "CS", "C#", "Learn OOP", "2025-05-25");
+        Assignment a1 = new Assignment("A2", "CS", "C++", "Write tests", "2025-05-20", false);
+        Assignment a2 = new Assignment("A3", "CS", "C#", "Learn OOP", "2025-05-25", true);
         assignmentDao.add(a1);
         assignmentDao.add(a2);
 
         List<Assignment> assignments = assignmentDao.getBySubject("CS");
 
         assertEquals(2, assignments.size());
-        assertTrue(assignments.stream().anyMatch(a -> a.getTitle().equals("C++")));
-        assertTrue(assignments.stream().anyMatch(a -> a.getTitle().equals("C#")));
+        assertTrue(assignments.stream().anyMatch(a -> a.getTitle().equals("C++") && !a.isReleased()));
+        assertTrue(assignments.stream().anyMatch(a -> a.getTitle().equals("C#") && a.isReleased()));
     }
 
     @Test
     void getBySubjectReturnsEmptyForNonexistentSubject() throws Exception {
         List<Assignment> assignments = assignmentDao.getBySubject("NON_EXISTENT");
         assertTrue(assignments.isEmpty());
+    }
+
+    @Test
+    void releaseAssignmentUpdatesField() throws Exception {
+        Assignment a = new Assignment("A4", "CS", "Java", "Inheritance", "2025-05-30", false);
+        assignmentDao.add(a);
+
+        // Release it
+        assignmentDao.releaseAssignment("A4");
+
+        List<Assignment> assignments = assignmentDao.getBySubject("CS");
+        assertEquals(1, assignments.size());
+        assertTrue(assignments.get(0).isReleased());
+
+        // Should appear in getReleasedAssignments()
+        List<Assignment> released = assignmentDao.getReleasedAssignments("CS");
+        assertEquals(1, released.size());
+        assertEquals("A4", released.get(0).getId());
     }
 }
