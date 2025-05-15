@@ -7,7 +7,7 @@ class HomeworkTest {
     void constructorAndGetters() {
         Homework h = new Homework(
                 "SUB2",                 // subjectid
-                "2",                  // ✅ week（补上）
+                "2",                  // ✅ week
                 "Read Chapter",       // title
                 "Read chapters 3–5",  // description
                 "2025-06-01",         // dueDate
