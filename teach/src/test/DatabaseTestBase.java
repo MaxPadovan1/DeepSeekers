@@ -24,6 +24,7 @@ public abstract class DatabaseTestBase {
     public void cleanTables() throws Exception {
         try (Statement st = conn.createStatement()) {
             // Delete in correct order to avoid FK violations
+            st.executeUpdate("DELETE FROM Submissions");
             st.executeUpdate("DELETE FROM StudentSubjects");
             st.executeUpdate("DELETE FROM Teachers");
             st.executeUpdate("DELETE FROM Students");

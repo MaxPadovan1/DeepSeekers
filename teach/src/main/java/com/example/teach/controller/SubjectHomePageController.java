@@ -5,6 +5,7 @@ import com.example.teach.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
@@ -97,16 +98,20 @@ public class SubjectHomePageController {
      * Loads the Assignment section into the center pane.
      * Updates the dashboard title accordingly.
      */
-    @FXML private void onAssignment() {
+    @FXML
+    private void onAssignment() {
         loadSection("AssignmentPage.fxml");
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Assignment");
     }
+
+
 
     /**
      * Placeholder for Grade section: currently logs a click event.
      */
     @FXML private void onGrade() {
-        System.out.println("Clicked on Grade");
+        loadSection("HomeWorkGradePage.fxml");  // Assuming this is the actual Grades view
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Grade");
     }
 
     /**

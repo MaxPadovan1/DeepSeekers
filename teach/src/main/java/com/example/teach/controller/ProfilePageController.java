@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  * Controller for the Profile page fragment within the Dashboard.
  * <p>
@@ -23,6 +26,7 @@ public class ProfilePageController {
     private DashboardController dashboardController;
 
     // Profile header
+   // @FXML private Label profileLabel;
     @FXML private Label nameLabel;
     @FXML private Label idLabel;
     @FXML private Button viewPerformanceButton;
@@ -47,6 +51,7 @@ public class ProfilePageController {
     // Action buttons
     @FXML private Button saveButton;
     @FXML private Button editButton;
+
 
     /**
      * Initializes the profile view with the given user.
@@ -79,12 +84,14 @@ public class ProfilePageController {
 
         if (user instanceof Student) {
             viewPerformanceButton.setVisible(false);
+            //profileLabel.setText("Student Profile");
             // student-specific data loading (e.g. assigned teacher)
         } else if (user instanceof Teacher t) {
             viewPerformanceButton.setVisible(true);
             teacherFirstNameField.setText(t.getFirstName());
             teacherLastNameField.setText(t.getLastName());
             teacherEmailField.setText(t.getEmail());
+            //profileLabel.setText("Teacher Profile");
             // divisionField.setText(t.getDivision());
         }
 
@@ -100,6 +107,8 @@ public class ProfilePageController {
     public void setDashboardController(DashboardController dashCtrl) {
         this.dashboardController = dashCtrl;
     }
+
+
 
     /**
      * Saves any changes (stub) and toggles edit mode off.
@@ -145,4 +154,11 @@ public class ProfilePageController {
     @FXML private void onViewPerformance(ActionEvent ev) {
         // TODO: load performance view
     }
+    @FXML
+    private void goBack() {
+        if (dashboardController != null) {
+            dashboardController.goToDashboard(null); // or navigate to SubjectHomePage if appropriate
+        }
+    }
+
 }
