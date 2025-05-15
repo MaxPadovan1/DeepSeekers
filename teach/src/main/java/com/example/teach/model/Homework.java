@@ -13,6 +13,8 @@ public class Homework {
     /** Identifier of the subject to which this homework belongs. */
     private final String subjectId;
 
+    private String week;
+
     /** Short title of the homework. */
     private final String title;
 
@@ -21,6 +23,11 @@ public class Homework {
 
     /** Due date for the homework, formatted as YYYY-MM-DD or similar. */
     private final String dueDate;
+
+    private final String releaseDate;
+
+    private final String openDate;
+
 
     /**
      * Constructs a new Homework instance.
@@ -31,17 +38,25 @@ public class Homework {
      * @param description  detailed description or instructions
      * @param dueDate      due date string (e.g., "2025-05-10")
      */
-    public Homework(String id,
-                    String subjectId,
+    public Homework(String subjectId,
+                    String week,
                     String title,
                     String description,
-                    String dueDate) {
-        this.id = id;
+                    String dueDate,
+                    String releaseDate,
+                    String openDate) {
+        this.id = null; // or generate UUID if needed
         this.subjectId = subjectId;
+        this.week = week;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
+        this.releaseDate = releaseDate;
+        this.openDate = openDate;
     }
+
+
+
 
     /**
      * Returns the unique homework ID.
@@ -79,6 +94,10 @@ public class Homework {
         return description;
     }
 
+    public String getWeek() {
+        return week;
+    }
+
     /**
      * Returns the due date for the homework.
      *
@@ -87,4 +106,8 @@ public class Homework {
     public String getDueDate() {
         return dueDate;
     }
+
+    public String getReleaseDate(){return releaseDate;}
+
+    public  String getOpenDate(){return openDate;}
 }
