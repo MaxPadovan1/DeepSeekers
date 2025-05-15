@@ -28,6 +28,10 @@ jobs:
           distribution: 'corretto'
           java-version: '21'
 
+      - name: Compile with Maven
+        working-directory: teach
+        run: mvn -B compile
+
       - name: Run Maven tests
         working-directory: teach
         run: mvn -B test
