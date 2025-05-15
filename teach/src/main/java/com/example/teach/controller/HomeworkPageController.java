@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Controller for the "Homework" section of a subject.
@@ -143,7 +144,8 @@ public class HomeworkPageController implements SectionControllerBase {
                     description,
                     dueDate,
                     releaseDate,
-                    openDate
+                    openDate,
+                    UUID.randomUUID().toString()
             );
 
             try {

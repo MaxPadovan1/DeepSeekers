@@ -106,7 +106,6 @@ public class SQLiteDAO {
             // Homework table (fixed)
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Homework (" +
-                            "  id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                             "  subject_id TEXT NOT NULL REFERENCES Subjects(id), " +
                             "  week TEXT NOT NULL, " +
                             "  title TEXT NOT NULL, " +
@@ -114,6 +113,7 @@ public class SQLiteDAO {
                             "  due_date TEXT, " +
                             "  release_date TEXT, " +
                             "  open_date TEXT " +
+                            "  id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                             ")"
             );
 

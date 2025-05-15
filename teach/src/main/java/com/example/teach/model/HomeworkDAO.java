@@ -35,7 +35,9 @@ public class HomeworkDAO {
                             rs.getString("description"),
                             rs.getString("due_date"),
                             rs.getString("release_date"),
-                            rs.getString("open_date")
+                            rs.getString("open_date"),
+                            rs.getString("homework id")
+
                     ));
                 }
             }
@@ -52,6 +54,7 @@ public class HomeworkDAO {
     public void add(Homework h) throws SQLException {
         String sql = "INSERT INTO Homework(subject_id, week, title, description, due_date, release_date, open_date) VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(8,h.getId());
             ps.setString(1, h.getSubjectId());
             ps.setString(2, h.getWeek());
             ps.setString(3, h.getTitle());
@@ -59,6 +62,7 @@ public class HomeworkDAO {
             ps.setString(5, h.getDueDate());
             ps.setString(6, h.getReleaseDate());
             ps.setString(7, h.getOpenDate());
+
             ps.executeUpdate();
         }
     }
