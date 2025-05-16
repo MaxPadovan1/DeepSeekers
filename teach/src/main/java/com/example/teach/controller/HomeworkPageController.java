@@ -1,197 +1,66 @@
 package com.example.teach.controller;
 
-import com.example.teach.model.*;
-import com.example.teach.session.SessionManager;
+import com.example.teach.model.Homework;
+import com.example.teach.model.Subject;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
-import java.awt.event.ActionEvent;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
-/**
- * Controller for the "Homework" section of a subject.
- * <p>
- * Implements {@link SectionControllerBase} to allow dependency injection of
- * the current user, subject, and dashboard controller. Manages an Accordion
- * UI component to display homework-related content.
- */
-public class HomeworkPageController implements SectionControllerBase {
+public class HomeworkPageController {
 
-    /** The authenticated user viewing this section. */
-    private User currentUser;
-    /** The subject context for this Homework page. */
+    @FXML private VBox homeworkList;
+    @FXML private TextField titleField;
+    @FXML private TextField weekField;
+    @FXML private DatePicker dueDatePicker;
+    @FXML private TextArea descriptionField;
+    @FXML private DatePicker releaseDatePicker;
+    @FXML private DatePicker openDatePicker;
+    @FXML private Label feedbackLabel;
+
+    private final HomeworkController homeworkController = new HomeworkController();
     private Subject currentSubject;
-    /** Parent DashboardController for navigation and UI control. */
-    private DashboardController dashboardController;
-    /** Accordion UI container for organizing homework panes. */
-    @FXML private Accordion accordion;
 
-    /**
-     * Injects the authenticated user into this controller.
-     *
-     * @param user the logged-in {@link User}
-     */
-    @Override public void setUser(User user) {
-        this.currentUser = user;
-    }
-
-    /**
-     * Injects the current subject into this controller.
-     * Updates each titled pane's text to include the subject context.
-     *
-     * @param subject the {@link Subject} being viewed
-     */
-    @Override public void setSubject(Subject subject) {
+    public void setSubject(Subject subject) {
         this.currentSubject = subject;
-        // Prefix each pane title with the subject name
-        accordion.getPanes().forEach(pane ->
-                pane.setText(currentSubject.getName() + " / " + pane.getText())
-        );
-        displayHomeworkList();
+        loadHomeworks();
     }
 
-    /**
-     * Injects the DashboardController for navigation actions.
-     *
-     * @param dash the parent {@link DashboardController}
-     */
-    @Override public void setDashboardController(DashboardController dash) {
-        this.dashboardController = dash;
-    }
-
-    /**
-     * Handler for the "Home" button in the Homework section.
-     * Navigates back to the dashboard or subject home view.
-     */
-    @FXML private void onGoHome() {
-        dashboardController.goToDashboard(null);
-    }
-
-
-
-
-
-
-
-
-    @FXML
-    public void handleAddHomework(javafx.event.ActionEvent actionEvent) {
-
-        Button button = (Button) actionEvent.getSource();
-
-        // 向上查找按钮所属的 TitledPane
-        Parent parent = button.getParent();
-        while (parent != null && !(parent instanceof TitledPane)) {
-            parent = parent.getParent();
-        }
-
-        if (parent instanceof TitledPane titledPane) {
-            String weekText = titledPane.getText(); // e.g., "Math / Week 1"
-            String[] parts = weekText.split("Week ");
-            if (parts.length < 2) {
-                System.out.println("❌ can't identity week number");
-                return;
-            }
-            int week = Integer.parseInt(parts[1].trim());
-
-            // ===== 弹窗 1：输入标题 =====
-            TextInputDialog titleDialog = new TextInputDialog();
-            titleDialog.setTitle("Create Homework");
-            titleDialog.setHeaderText("Enter Homework Title for Week " + week);
-            Optional<String> titleResult = titleDialog.showAndWait();
-            if (titleResult.isEmpty()) return;
-            String title = titleResult.get();
-
-            // ===== 弹窗 2：输入描述 =====
-            TextInputDialog descDialog = new TextInputDialog();
-            descDialog.setTitle("Create Homework");
-            descDialog.setHeaderText("Enter Homework Description");
-            Optional<String> descResult = descDialog.showAndWait();
-            String description = descResult.orElse("No description");
-
-            // ===== 弹窗 3：输入截止日期（due date）=====
-            TextInputDialog dueDialog = new TextInputDialog(LocalDate.now().plusDays(7).toString());
-            dueDialog.setTitle("Create Homework");
-            dueDialog.setHeaderText("Enter Due Date (yyyy-MM-dd)");
-            Optional<String> dueResult = dueDialog.showAndWait();
-            String dueDate = dueResult.orElse(LocalDate.now().plusDays(7).toString());
-
-            // ===== 弹窗 4：输入发布时间（release date）=====
-            TextInputDialog releaseDialog = new TextInputDialog(LocalDate.now().toString());
-            releaseDialog.setTitle("Create Homework");
-            releaseDialog.setHeaderText("Enter Release Date (yyyy-MM-dd)");
-            Optional<String> releaseResult = releaseDialog.showAndWait();
-            String releaseDate = releaseResult.orElse(LocalDate.now().toString());
-
-            // ===== 弹窗 5：输入开放时间（open date）=====
-            TextInputDialog openDialog = new TextInputDialog(LocalDate.now().toString());
-            openDialog.setTitle("Create Homework");
-            openDialog.setHeaderText("Enter Open Date for Students (yyyy-MM-dd)");
-            Optional<String> openResult = openDialog.showAndWait();
-            String openDate = openResult.orElse(LocalDate.now().toString());
-
-            // ===== 创建并保存作业对象 =====
-            Homework hw = new Homework(
-                    currentSubject.getId(),
-                    String.valueOf(week),
-                    title,
-                    description,
-                    dueDate,
-                    releaseDate,
-                    openDate,
-                    UUID.randomUUID().toString()
-            );
-
-            try {
-                new HomeworkDAO().add(hw);
-                System.out.println("✅ homework added to " + week + ": " + title);
-
-                // ✅ 添加后立即刷新显示
-                displayHomeworkList();
-            } catch (SQLException e) {
-                System.err.println("❌ failed to add homework: " + e.getMessage());
-            }
-        } else {
-            System.out.println("❌ can't identity the week（TitledPane）");
-        }
-    }
-
-    private void displayHomeworkList() {
+    private void loadHomeworks() {
+        homeworkList.getChildren().clear();
         try {
-            List<Homework> homeworks = new HomeworkDAO().getBySubject(currentSubject.getId());
-            for (TitledPane pane : accordion.getPanes()) {
-                VBox vbox = (VBox) pane.getContent();
-                vbox.getChildren().removeIf(node -> node instanceof Label);
-
-                String weekText = pane.getText();
-                String[] parts = weekText.split("Week ");
-                if (parts.length < 2) continue;
-                String week = parts[1].trim();
-
-                for (Homework hw : homeworks) {
-                    if (hw.getWeek().equals(week)) {
-                        Label hwLabel = new Label("\u2022 " + hw.getTitle());
-                        hwLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
-                        vbox.getChildren().add(0, hwLabel);
-
-                        for (javafx.scene.Node node : vbox.getChildren()) {
-                            if (node instanceof TextArea ta) {
-                                ta.setText(hw.getDescription());
-                                break; // 设置一次即可
-                            }
-                        }
-                    }
-                }
+            List<Homework> homeworks = homeworkController.getHomeworksForSubject(currentSubject.getId());
+            for (Homework hw : homeworks) {
+                Label label = new Label("📘 Week " + hw.getWeek() + ": " + hw.getTitle());
+                homeworkList.getChildren().add(label);
             }
         } catch (SQLException e) {
-            System.err.println("❌ Failed to load homework list: " + e.getMessage());
+            feedbackLabel.setText("⚠ Failed to load homeworks.");
+            e.printStackTrace();
         }
     }
 
+    @FXML
+    private void onAddHomework() {
+        try {
+            Homework hw = new Homework(
+                    currentSubject.getId(),
+                    weekField.getText(),
+                    titleField.getText(),
+                    descriptionField.getText(),
+                    dueDatePicker.getValue().toString(),
+                    releaseDatePicker.getValue().toString(),
+                    openDatePicker.getValue().toString(),
+                    "HW" + System.currentTimeMillis() // temp ID
+            );
+            homeworkController.addHomework(hw);
+            feedbackLabel.setText("✅ Homework added.");
+            loadHomeworks();
+        } catch (Exception e) {
+            feedbackLabel.setText("❌ Error adding homework.");
+            e.printStackTrace();
+        }
+    }
 }

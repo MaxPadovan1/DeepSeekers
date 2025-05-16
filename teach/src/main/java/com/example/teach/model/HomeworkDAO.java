@@ -45,6 +45,15 @@ public class HomeworkDAO {
         return out;
     }
 
+
+    public void delete(String id) throws SQLException {
+        String sql = "DELETE FROM Homework WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
     /**
      * Inserts a new homework record into the database.
      *
