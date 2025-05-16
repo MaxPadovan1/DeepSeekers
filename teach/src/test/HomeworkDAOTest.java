@@ -37,7 +37,7 @@ class HomeworkDAOTest extends DatabaseTestBase {
         assertEquals("Essay", fetched.getTitle());
         assertEquals("Write about summer", fetched.getDescription());
         assertEquals("2025-06-01", fetched.getDueDate());
-        assertEquals("2025-05-01", fetched.getOpenDate());
+        assertEquals("2025-05-01", fetched.getReleaseDate());
         assertEquals("2025-05-20", fetched.getOpenDate());
     }
 

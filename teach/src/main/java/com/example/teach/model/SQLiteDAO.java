@@ -35,6 +35,10 @@ public class SQLiteDAO {
      */
     private void createSchema() {
         try (Statement stmt = connection.createStatement()) {
+
+            stmt.execute("DROP TABLE IF EXISTS Homeworks");
+            stmt.execute("DROP TABLE IF EXISTS Homework");
+
             // 4) Subjects master list
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Subjects (" +
@@ -106,6 +110,7 @@ public class SQLiteDAO {
             // Homework table (fixed)
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Homework (" +
+                            "  id TEXT PRIMARY KEY, " +
                             "  subject_id TEXT NOT NULL REFERENCES Subjects(id), " +
                             "  week TEXT NOT NULL, " +
                             "  title TEXT NOT NULL, " +
@@ -113,7 +118,6 @@ public class SQLiteDAO {
                             "  due_date TEXT, " +
                             "  release_date TEXT, " +
                             "  open_date TEXT " +
-                            "  id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                             ")"
             );
 
@@ -157,12 +161,22 @@ public class SQLiteDAO {
                 stmt.execute("ALTER TABLE Assignments ADD COLUMN is_released BOOLEAN DEFAULT 0");
             } catch (SQLException ignore){
 
-            }
+            }try {
+                stmt.execute("ALTER TABLE Homeworks ADD COLUMN week TEXT");
+            } catch (SQLException ignore) {}
+
+            try {
+                stmt.execute("ALTER TABLE Homeworks ADD COLUMN release_date TEXT");
+            } catch (SQLException ignore) {}
+
+            try {
+                stmt.execute("ALTER TABLE Homeworks ADD COLUMN open_date TEXT");
+            } catch (SQLException ignore) {}
 
             // 🧪 Development: reset tables to allow clean testing
             stmt.execute("DELETE FROM Teachers");
             stmt.execute("DELETE FROM Users");
-            stmt.execute("DELETE FROM Homework");
+
 
         } catch (SQLException e) {
             e.printStackTrace();
