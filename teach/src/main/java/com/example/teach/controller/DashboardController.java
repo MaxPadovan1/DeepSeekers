@@ -4,8 +4,6 @@ import com.example.teach.model.Student;
 import com.example.teach.model.Subject;
 import com.example.teach.model.Teacher;
 import com.example.teach.model.User;
-import com.example.teach.session.LoginPersistenceManager;
-import com.example.teach.session.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -271,8 +269,6 @@ public class DashboardController implements Initializable {
     }
     @FXML
     private void handleLogout(ActionEvent event) {
-        SessionManager.clearSession();
-        LoginPersistenceManager.clearUser();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/LoginPage-view.fxml"));
