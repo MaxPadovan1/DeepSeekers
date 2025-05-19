@@ -1,5 +1,10 @@
 package com.example.teach.controller;
 
+import com.example.teach.model.GradeDAO;
+import com.example.teach.model.Grade;
+import com.example.teach.model.Teacher;
+import java.util.List;
+
 import com.example.teach.model.Subject;
 import com.example.teach.model.User;
 import javafx.fxml.FXML;
@@ -27,12 +32,21 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // If you're planning to load content dynamically later, you can call a method here.
-        accordion.getPanes().addAll(
-                createPane("Assignment 1", "Feedback for Assignment 1", "9/10", "2025-05-10 14:00"),
-                createPane("Test 2", "Feedback for Test 2", "18/20", "2025-05-12 10:30"),
-                createPane("Assignment 2", "Feedback for Assignment 2", "7/10", "2025-05-14 11:00"),
-                createPane("Test 3", "Feedback for Test 3", "20/20", "2025-05-15 09:45")
-        );
+        GradeDAO gradeDAO = new GradeDAO();
+        List<Grade> grades;
+
+        if (currentUser instanceof Teacher) {
+            grades = gradeDAO.getGradesForAssignment(currentSubject.getId());
+        } else {
+            grades = gradeDAO.getGradesForStudent(currentUser.getId());
+        }
+
+        for (Grade g : grades) {
+            accordion.getPanes().add(
+                    createPane("Assignment ID: " + g.getAssignmentId(), g.getFeedback(), g.getGrade(), g.getSubmittedTime())
+            );
+        }
+
 
     }
 
@@ -41,18 +55,20 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
         this.currentUser = user;
     }
     private TitledPane createPane(String title, String feedback, String grade, String submittedTime) {
+        boolean isTeacher = currentUser instanceof com.example.teach.model.Teacher;
+
         Text feedbackLabel = new Text("Feedback");
         feedbackLabel.setStyle("-fx-font-size: 24px;");
 
         TextArea feedbackArea = new TextArea(feedback);
         feedbackArea.setPrefHeight(200);
         feedbackArea.setPrefWidth(800);
-        feedbackArea.setEditable(false); // ❗ prevent editing
+        feedbackArea.setEditable(isTeacher); // ❗ prevent editing
 
         TextArea gradeArea = new TextArea(grade);
         gradeArea.setPrefHeight(100);
         gradeArea.setPrefWidth(240);
-        gradeArea.setEditable(false); // ❗ prevent editing
+        gradeArea.setEditable(isTeacher); // ❗ prevent editing
 
         Text gradeLabel = new Text("Grade");
         gradeLabel.setStyle("-fx-font-size: 22px;");
@@ -64,7 +80,7 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
         TextArea submittedArea = new TextArea(submittedTime);
         submittedArea.setPrefHeight(100);
         submittedArea.setPrefWidth(240);
-        submittedArea.setEditable(false); // ❗ prevent editing
+        submittedArea.setEditable(isTeacher); // ❗ prevent editing
 
         Text submittedLabel = new Text("Submitted");
         submittedLabel.setStyle("-fx-font-size: 22px;");
