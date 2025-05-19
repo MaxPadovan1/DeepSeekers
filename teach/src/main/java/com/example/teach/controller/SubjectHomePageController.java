@@ -91,7 +91,8 @@ public class SubjectHomePageController {
      * Placeholder for Test section: currently logs a click event.
      */
     @FXML private void onTest() {
-        System.out.println("Clicked on Test");
+        loadSection("TestPage.fxml");
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Test");
     }
 
     /**
