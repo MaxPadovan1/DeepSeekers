@@ -44,8 +44,9 @@ public class Homework {
                     String description,
                     String dueDate,
                     String releaseDate,
-                    String openDate) {
-        this.id = null; // or generate UUID if needed
+                    String openDate,
+                    String id) {
+
         this.subjectId = subjectId;
         this.week = week;
         this.title = title;
@@ -53,6 +54,7 @@ public class Homework {
         this.dueDate = dueDate;
         this.releaseDate = releaseDate;
         this.openDate = openDate;
+        this.id = id; // or generate UUID if needed
     }
 
 
