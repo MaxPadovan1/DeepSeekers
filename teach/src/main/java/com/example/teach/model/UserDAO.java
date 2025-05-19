@@ -75,6 +75,58 @@ public class UserDAO {
         }
     }
 
+    public User findByUserId(String id) {
+        String sql = "SELECT passwordHash, firstName, lastName, role, email FROM Users WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) return null;
+
+                String passwordHash = rs.getString("passwordHash");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                String role = rs.getString("role");
+                String email = rs.getString("email");
+
+                if (role.equals("S")) {
+                    // 加载学生科目
+                    List<Subject> subs = new ArrayList<>();
+                    String subSql = "SELECT subject_id FROM StudentSubjects WHERE student_id = ?";
+                    try (PreparedStatement ps2 = conn.prepareStatement(subSql)) {
+                        ps2.setString(1, id);
+                        try (ResultSet rs2 = ps2.executeQuery()) {
+                            while (rs2.next()) {
+                                Subject s = subjectDao.findById(rs2.getString("subject_id"));
+                                if (s != null) subs.add(s);
+                            }
+                        }
+                    }
+                    return new Student(id, passwordHash, firstName, lastName, email, subs);
+                } else {
+                    // 加载教师科目
+                    Subject subject = null;
+                    String sql2 = "SELECT subject_id FROM Teachers WHERE id = ?";
+                    try (PreparedStatement ps2 = conn.prepareStatement(sql2)) {
+                        ps2.setString(1, id);
+                        try (ResultSet rs2 = ps2.executeQuery()) {
+                            if (rs2.next()) {
+                                subject = subjectDao.findById(rs2.getString("subject_id"));
+                            }
+                        }
+                    }
+                    return new Teacher(id, passwordHash, firstName, lastName, email, subject);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+
     /**
      * Finds the maximum user ID matching a given prefix, e.g. highest student or teacher ID.
      *
