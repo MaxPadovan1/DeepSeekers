@@ -1,12 +1,11 @@
 package com.example.teach.controller;
 
-import com.example.teach.model.GradeDAO;
 import com.example.teach.model.Grade;
-import com.example.teach.model.Teacher;
-import java.util.List;
-
+import com.example.teach.model.GradeDAO;
 import com.example.teach.model.Subject;
+import com.example.teach.model.Teacher;
 import com.example.teach.model.User;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
@@ -18,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class HomeWorkGradePageController implements Initializable, SectionControllerBase {
@@ -31,7 +31,31 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // If you're planning to load content dynamically later, you can call a method here.
+        // Don't load anything here — wait until setUser & setSubject are called
+    }
+
+    @Override
+    public void setUser(User user) {
+        this.currentUser = user;
+        loadGrades();
+    }
+
+    @Override
+    public void setSubject(Subject subject) {
+        this.currentSubject = subject;
+        loadGrades();
+    }
+
+    @Override
+    public void setDashboardController(DashboardController dash) {
+        this.dashboardController = dash;
+    }
+
+    private void loadGrades() {
+        if (currentUser == null || currentSubject == null) return;
+        System.out.println("CurrentUser: " + currentUser.getId());
+        System.out.println("CurrentSubject: " + currentSubject.getId());
+
         GradeDAO gradeDAO = new GradeDAO();
         List<Grade> grades;
 
@@ -41,61 +65,57 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
             grades = gradeDAO.getGradesForStudent(currentUser.getId());
         }
 
+        accordion.getPanes().clear();
+
         for (Grade g : grades) {
             accordion.getPanes().add(
                     createPane("Assignment ID: " + g.getAssignmentId(), g.getFeedback(), g.getGrade(), g.getSubmittedTime())
             );
         }
-
-
     }
 
-    @Override
-    public void setUser(User user) {
-        this.currentUser = user;
-    }
     private TitledPane createPane(String title, String feedback, String grade, String submittedTime) {
-        boolean isTeacher = currentUser instanceof com.example.teach.model.Teacher;
+        boolean isTeacher = currentUser instanceof Teacher;
 
+        // FEEDBACK
         Text feedbackLabel = new Text("Feedback");
-        feedbackLabel.setStyle("-fx-font-size: 24px;");
+        feedbackLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
         TextArea feedbackArea = new TextArea(feedback);
         feedbackArea.setPrefHeight(200);
         feedbackArea.setPrefWidth(800);
-        feedbackArea.setEditable(isTeacher); // ❗ prevent editing
+        feedbackArea.setEditable(isTeacher);
 
+        // GRADE
+        Text gradeLabel = new Text("Grade");
+        gradeLabel.setStyle("-fx-font-size: 22px;");
         TextArea gradeArea = new TextArea(grade);
         gradeArea.setPrefHeight(100);
         gradeArea.setPrefWidth(240);
-        gradeArea.setEditable(isTeacher); // ❗ prevent editing
-
-        Text gradeLabel = new Text("Grade");
-        gradeLabel.setStyle("-fx-font-size: 22px;");
+        gradeArea.setEditable(isTeacher);
 
         VBox gradeBox = new VBox(gradeLabel, gradeArea);
-        gradeBox.setStyle("-fx-background-color: #A9A9A9;");
         gradeBox.setPrefWidth(280);
 
+        // SUBMITTED
+        Text submittedLabel = new Text("Submitted");
+        submittedLabel.setStyle("-fx-font-size: 22px;");
         TextArea submittedArea = new TextArea(submittedTime);
         submittedArea.setPrefHeight(100);
         submittedArea.setPrefWidth(240);
-        submittedArea.setEditable(isTeacher); // ❗ prevent editing
-
-        Text submittedLabel = new Text("Submitted");
-        submittedLabel.setStyle("-fx-font-size: 22px;");
+        submittedArea.setEditable(isTeacher);
 
         VBox submittedBox = new VBox(submittedLabel, submittedArea);
-        submittedBox.setStyle("-fx-background-color: #A9A9A9;");
         submittedBox.setPrefWidth(280);
 
+        // RIGHT COLUMN (Grade + Submitted)
         VBox rightColumn = new VBox(gradeBox, submittedBox);
-        rightColumn.setStyle("-fx-background-color: #A9A9A9;");
         rightColumn.setPrefWidth(280);
 
+        // MAIN ROW
         HBox mainBox = new HBox(30, feedbackLabel, feedbackArea, rightColumn);
-        mainBox.setStyle("-fx-background-color: #A9A9A9;");
         mainBox.setPrefWidth(1280);
+        mainBox.setStyle("-fx-background-color: #ECECEC; -fx-padding: 20px;");
 
         AnchorPane content = new AnchorPane(mainBox);
         AnchorPane.setTopAnchor(mainBox, 0.0);
@@ -106,22 +126,6 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
         return titledPane;
     }
 
-    private void openGradesSection() {
-        // Automatically open the "Grade" pane (assume it's the last one)
-        if (!accordion.getPanes().isEmpty()) {
-            accordion.setExpandedPane(accordion.getPanes().get(accordion.getPanes().size() - 1));
-        }
-    }
-
-    @Override
-    public void setSubject(Subject subject) {
-        this.currentSubject = subject;
-    }
-
-    @Override
-    public void setDashboardController(DashboardController dash) {
-        this.dashboardController = dash;
-    }
 
     @FXML
     private void goBack() {
@@ -139,7 +143,4 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
             );
         }
     }
-
-    // Optional: Add method to populate accordion dynamically if needed
 }
-
