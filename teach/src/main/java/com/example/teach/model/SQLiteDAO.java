@@ -36,9 +36,6 @@ public class SQLiteDAO {
     private void createSchema() {
         try (Statement stmt = connection.createStatement()) {
 
-            stmt.execute("DROP TABLE IF EXISTS Homeworks");
-            stmt.execute("DROP TABLE IF EXISTS Homework");
-
             // 4) Subjects master list
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Subjects (" +
@@ -173,9 +170,6 @@ public class SQLiteDAO {
                 stmt.execute("ALTER TABLE Homeworks ADD COLUMN open_date TEXT");
             } catch (SQLException ignore) {}
 
-            // 🧪 Development: reset tables to allow clean testing
-            stmt.execute("DELETE FROM Teachers");
-            stmt.execute("DELETE FROM Users");
 
 
         } catch (SQLException e) {
