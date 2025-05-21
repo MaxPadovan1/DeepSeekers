@@ -34,6 +34,10 @@
         <Label text="Assignment Details:"/>
         <TextArea fx:id="assignmentDetailsText" prefHeight="120.0" wrapText="true"/>
 
+        <!-- 🔍 AI Help button for teachers -->
+        <HBox alignment="CENTER_LEFT">
+            <Button fx:id="aiHelpButton" text="💡 AI Help: Improve or Clarify Description" onAction="#onAIHelp"/>
+        </HBox>
     </VBox>
 
     <HBox fx:id="studentSection" spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">

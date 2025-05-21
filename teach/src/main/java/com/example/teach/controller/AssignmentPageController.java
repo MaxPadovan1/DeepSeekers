@@ -32,6 +32,7 @@ public class AssignmentPageController implements SectionControllerBase {
     @FXML private DatePicker dueDatePicker;
     @FXML private TableColumn<ASubmission, Void> viewColumn;
     @FXML private Button saveAssignmentButton;
+    @FXML private Button aiHelpButton;
     private boolean editingAssignment = false;
 
 
@@ -385,7 +386,37 @@ public class AssignmentPageController implements SectionControllerBase {
         }
     }
 
+    @FXML
+    private void onAIHelp() {
+        if (!(user instanceof Teacher)) return;
 
+        String prompt = assignmentDetailsText.getText();
+        if (prompt == null || prompt.isBlank()) {
+            submissionStatusLabel.setText("⚠️ Please enter assignment details first.");
+            return;
+        }
+
+        submissionStatusLabel.setText("🧠 Asking AI...");
+
+        new Thread(() -> {
+            try {
+                String refined = OllamaService.getInstance().generate(
+                        "llama3",
+                        "Rewrite this assignment description to be clearer and more structured:\n\n" + prompt
+                ).getResponse();
+
+                javafx.application.Platform.runLater(() -> {
+                    assignmentDetailsText.setText(refined);
+                    submissionStatusLabel.setText("✅ AI suggestion applied.");
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                javafx.application.Platform.runLater(() ->
+                        submissionStatusLabel.setText("❌ AI request failed.")
+                );
+            }
+        }).start();
+    }
 
 
 
