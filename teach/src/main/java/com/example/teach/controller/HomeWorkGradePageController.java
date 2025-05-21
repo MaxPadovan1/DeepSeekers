@@ -1,23 +1,16 @@
 package com.example.teach.controller;
 
-import com.example.teach.model.Grade;
-import com.example.teach.model.GradeDAO;
-import com.example.teach.model.Subject;
-import com.example.teach.model.Teacher;
-import com.example.teach.model.User;
-
+import com.example.teach.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.text.Text;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.List;
+import java.util.*;
 import java.util.ResourceBundle;
 
 public class HomeWorkGradePageController implements Initializable, SectionControllerBase {
@@ -26,121 +19,130 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
     private Subject currentSubject;
     private DashboardController dashboardController;
 
-    @FXML
-    private Accordion accordion;
+    @FXML private Accordion accordion;
+    @FXML private ListView<String> studentListView;
+    @FXML private Button submitGradeButton;
+    @FXML private Button editButton;
+
+    @FXML private TextArea feedbackArea;
+    @FXML private TextArea gradeArea;
+    @FXML private TextArea submittedArea;
+
+    private String selectedStudentId = null;
+    private final Map<String, String> nameToIdMap = new HashMap<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Don't load anything here — wait until setUser & setSubject are called
+        // Init after context set
     }
 
     @Override
     public void setUser(User user) {
         this.currentUser = user;
-        loadGrades();
+        trySetup();
     }
 
     @Override
     public void setSubject(Subject subject) {
         this.currentSubject = subject;
-        loadGrades();
+        trySetup();
     }
 
     @Override
-    public void setDashboardController(DashboardController dash) {
-        this.dashboardController = dash;
+    public void setDashboardController(DashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
+
+    private void trySetup() {
+        if (currentUser != null && currentSubject != null) {
+            if (currentUser instanceof Teacher) {
+                loadStudentList();
+            } else {
+                selectedStudentId = currentUser.getId();
+                loadGrades();
+                if (studentListView != null) studentListView.setVisible(false);
+                if (submitGradeButton != null) submitGradeButton.setVisible(false);
+                if (editButton != null) editButton.setVisible(false);
+            }
+        }
+    }
+
+    private void loadStudentList() {
+        List<Student> students = new StudentDAO().getStudentsBySubject(currentSubject.getId());
+        List<String> names = new ArrayList<>();
+        for (Student s : students) {
+            String fullName = s.getFirstName() + " " + s.getLastName();
+            names.add(fullName);
+            nameToIdMap.put(fullName, s.getId());
+        }
+        studentListView.getItems().setAll(names);
+
+        studentListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            selectedStudentId = nameToIdMap.get(newVal);
+            loadGrades();
+        });
+
+        if (!names.isEmpty()) {
+            studentListView.getSelectionModel().selectFirst();
+        }
     }
 
     private void loadGrades() {
-        if (currentUser == null || currentSubject == null) return;
-        System.out.println("CurrentUser: " + currentUser.getId());
-        System.out.println("CurrentSubject: " + currentSubject.getId());
-
-        GradeDAO gradeDAO = new GradeDAO();
-        List<Grade> grades;
-
-        if (currentUser instanceof Teacher) {
-            grades = gradeDAO.getGradesForAssignment(currentSubject.getId());
-        } else {
-            grades = gradeDAO.getGradesForStudent(currentUser.getId());
-        }
-
+        List<Grade> grades = new GradeDAO().getGradesForStudent(selectedStudentId);
         accordion.getPanes().clear();
 
         for (Grade g : grades) {
-            accordion.getPanes().add(
-                    createPane("Assignment ID: " + g.getAssignmentId(), g.getFeedback(), g.getGrade(), g.getSubmittedTime())
-            );
+            accordion.getPanes().add(createPane("Assignment: " + g.getAssignmentId(), g.getFeedback(), g.getGrade(), g.getSubmittedTime()));
         }
     }
 
     private TitledPane createPane(String title, String feedback, String grade, String submittedTime) {
+        feedbackArea = new TextArea(feedback);
+        gradeArea = new TextArea(grade);
+        submittedArea = new TextArea(submittedTime);
+
         boolean isTeacher = currentUser instanceof Teacher;
 
-        // FEEDBACK
-        Text feedbackLabel = new Text("Feedback");
-        feedbackLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-
-        TextArea feedbackArea = new TextArea(feedback);
-        feedbackArea.setPrefHeight(200);
-        feedbackArea.setPrefWidth(800);
         feedbackArea.setEditable(isTeacher);
-
-        // GRADE
-        Text gradeLabel = new Text("Grade");
-        gradeLabel.setStyle("-fx-font-size: 22px;");
-        TextArea gradeArea = new TextArea(grade);
-        gradeArea.setPrefHeight(100);
-        gradeArea.setPrefWidth(240);
         gradeArea.setEditable(isTeacher);
-
-        VBox gradeBox = new VBox(gradeLabel, gradeArea);
-        gradeBox.setPrefWidth(280);
-
-        // SUBMITTED
-        Text submittedLabel = new Text("Submitted");
-        submittedLabel.setStyle("-fx-font-size: 22px;");
-        TextArea submittedArea = new TextArea(submittedTime);
-        submittedArea.setPrefHeight(100);
-        submittedArea.setPrefWidth(240);
         submittedArea.setEditable(isTeacher);
 
-        VBox submittedBox = new VBox(submittedLabel, submittedArea);
-        submittedBox.setPrefWidth(280);
+        feedbackArea.setPrefSize(500, 150);
+        gradeArea.setPrefSize(150, 60);
+        submittedArea.setPrefSize(150, 60);
 
-        // RIGHT COLUMN (Grade + Submitted)
-        VBox rightColumn = new VBox(gradeBox, submittedBox);
-        rightColumn.setPrefWidth(280);
+        VBox feedbackBox = new VBox(new Text("Feedback"), feedbackArea);
+        VBox gradeBox = new VBox(new Text("Grade"), gradeArea);
+        VBox submittedBox = new VBox(new Text("Submitted Time"), submittedArea);
 
-        // MAIN ROW
-        HBox mainBox = new HBox(30, feedbackLabel, feedbackArea, rightColumn);
-        mainBox.setPrefWidth(1280);
-        mainBox.setStyle("-fx-background-color: #ECECEC; -fx-padding: 20px;");
+        HBox content = new HBox(20, feedbackBox, gradeBox, submittedBox);
+        AnchorPane root = new AnchorPane(content);
+        AnchorPane.setTopAnchor(content, 10.0);
+        AnchorPane.setLeftAnchor(content, 10.0);
 
-        AnchorPane content = new AnchorPane(mainBox);
-        AnchorPane.setTopAnchor(mainBox, 0.0);
-        AnchorPane.setLeftAnchor(mainBox, 0.0);
-
-        TitledPane titledPane = new TitledPane(title, content);
-        titledPane.setPrefWidth(1280);
-        return titledPane;
+        return new TitledPane(title, root);
     }
 
+    @FXML
+    private void handleEdit() {
+        feedbackArea.setEditable(true);
+        gradeArea.setEditable(true);
+        submittedArea.setEditable(true);
+    }
 
     @FXML
-    private void goBack() {
-        if (dashboardController != null && currentSubject != null) {
-            dashboardController.navigateTo(
-                    "/com/example/teach/SubjectHomePage-view.fxml",
-                    "Dashboard / " + currentSubject.getName(),
-                    ctrl -> {
-                        if (ctrl instanceof SubjectHomePageController shc) {
-                            shc.setDashboardController(dashboardController);
-                            shc.setUser(currentUser);
-                            shc.setSubject(currentSubject);
-                        }
-                    }
-            );
-        }
+    private void handleSubmit() {
+        if (selectedStudentId == null) return;
+
+        Grade grade = new Grade(
+                UUID.randomUUID().toString(),
+                "A001", // Example assignment ID
+                selectedStudentId,
+                gradeArea.getText(),
+                feedbackArea.getText(),
+                submittedArea.getText()
+        );
+        new GradeDAO().saveOrUpdateGrade(grade);
+        loadGrades();
     }
 }
