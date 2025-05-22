@@ -61,6 +61,7 @@ public class DashboardController implements Initializable {
      */
     @Override public void initialize(URL location, ResourceBundle resources) {
         this.originalCenter = rootBorderPane.getCenter();
+
     }
 
     /**
@@ -268,6 +269,7 @@ public class DashboardController implements Initializable {
     }
     @FXML
     private void handleLogout(ActionEvent event) {
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/LoginPage-view.fxml"));
             Parent loginRoot = loader.load();

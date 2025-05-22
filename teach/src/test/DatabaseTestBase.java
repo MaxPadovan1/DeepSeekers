@@ -13,6 +13,7 @@ public abstract class DatabaseTestBase {
 
     @BeforeAll
     public static void initSchema() throws Exception {
+
         // Force schema creation
         new SQLiteDAO();  // runs createSchema() in its constructor
 
@@ -30,7 +31,7 @@ public abstract class DatabaseTestBase {
             st.executeUpdate("DELETE FROM Students");
             st.executeUpdate("DELETE FROM Users");
             st.executeUpdate("DELETE FROM Assignments");
-            st.executeUpdate("DELETE FROM Homeworks");
+            st.executeUpdate("DELETE FROM Homework");
             st.executeUpdate("DELETE FROM Study");
             st.executeUpdate("DELETE FROM Subjects");
         }

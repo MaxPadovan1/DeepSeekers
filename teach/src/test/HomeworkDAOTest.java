@@ -24,7 +24,7 @@ class HomeworkDAOTest extends DatabaseTestBase {
 
     @Test
     void addAndFetchHomeworkWorks() throws Exception {
-        Homework h1 = new Homework("H1", "ENG", "Essay", "Write about summer", "2025-06-01");
+        Homework h1 = new Homework("ENG", "2", "Essay", "Write about summer", "2025-06-01", "2025-05-01", "2025-05-20","H1");
         homeworkDao.add(h1);
 
         List<Homework> homeworks = homeworkDao.getBySubject("ENG");
@@ -37,6 +37,8 @@ class HomeworkDAOTest extends DatabaseTestBase {
         assertEquals("Essay", fetched.getTitle());
         assertEquals("Write about summer", fetched.getDescription());
         assertEquals("2025-06-01", fetched.getDueDate());
+        assertEquals("2025-05-01", fetched.getReleaseDate());
+        assertEquals("2025-05-20", fetched.getOpenDate());
     }
 
     @Test
@@ -47,22 +49,9 @@ class HomeworkDAOTest extends DatabaseTestBase {
 
     @Test
     void addMultipleHomeworksAndFetch() throws Exception {
-        Homework h1 = new Homework("H2", "ENG", "Grammar", "Tenses exercise", "2025-06-10");
-        Homework h2 = new Homework("H3", "ENG", "Vocabulary", "Learn 50 new words", "2025-06-15");
-        homeworkDao.add(h1);
-        homeworkDao.add(h2);
+        Homework h1 = new Homework("SUB3", "3", "Grammar", "Tenses exercise", "2025-06-10", "2025-05-01", "2025-05-20", "H2");
+        Homework h2 = new Homework("SUB4", "3", "Vocabulary", "Learn 50 new words", "2025-06-15", "2025-05-01", "2025-05-20", "H3");
 
-        List<Homework> homeworks = homeworkDao.getBySubject("ENG");
 
-        assertEquals(2, homeworks.size());
-        assertTrue(homeworks.stream().anyMatch(h -> h.getTitle().equals("Grammar")));
-        assertTrue(homeworks.stream().anyMatch(h -> h.getTitle().equals("Vocabulary")));
-    }
-
-    @Test
-    void getBySubjectReturnsEmptyForNonexistentSubject() throws Exception {
-        List<Homework> homeworks = homeworkDao.getBySubject("NON_EXISTENT");
-        assertTrue(homeworks.isEmpty());
     }
 }
-

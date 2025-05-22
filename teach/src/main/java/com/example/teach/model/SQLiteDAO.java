@@ -35,6 +35,7 @@ public class SQLiteDAO {
      */
     private void createSchema() {
         try (Statement stmt = connection.createStatement()) {
+
             // 4) Subjects master list
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Subjects (" +
@@ -103,14 +104,17 @@ public class SQLiteDAO {
                             ")"
             );
 
-            // Homework table
+            // Homework table (fixed)
             stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS Homeworks (" +
-                            "  id         TEXT PRIMARY KEY," +
-                            "  subject_id TEXT NOT NULL REFERENCES Subjects(id)," +
-                            "  title      TEXT NOT NULL," +
-                            "  description TEXT," +
-                            "  due_date   TEXT" +
+                    "CREATE TABLE IF NOT EXISTS Homework (" +
+                            "  id TEXT PRIMARY KEY, " +
+                            "  subject_id TEXT NOT NULL REFERENCES Subjects(id), " +
+                            "  week TEXT NOT NULL, " +
+                            "  title TEXT NOT NULL, " +
+                            "  description TEXT, " +
+                            "  due_date TEXT, " +
+                            "  release_date TEXT, " +
+                            "  open_date TEXT " +
                             ")"
             );
 
@@ -154,11 +158,25 @@ public class SQLiteDAO {
                 stmt.execute("ALTER TABLE Assignments ADD COLUMN is_released BOOLEAN DEFAULT 0");
             } catch (SQLException ignore){
 
-            }
+            }try {
+                stmt.execute("ALTER TABLE Homeworks ADD COLUMN week TEXT");
+            } catch (SQLException ignore) {}
+
+            try {
+                stmt.execute("ALTER TABLE Homeworks ADD COLUMN release_date TEXT");
+            } catch (SQLException ignore) {}
+
+            try {
+                stmt.execute("ALTER TABLE Homeworks ADD COLUMN open_date TEXT");
+            } catch (SQLException ignore) {}
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
             // In production, consider logging to a file or system logger
         }
+
+
     }
 }
