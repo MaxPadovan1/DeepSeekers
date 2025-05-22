@@ -37,6 +37,7 @@
         <!-- 🔍 AI Help button for teachers -->
         <HBox alignment="CENTER_LEFT">
             <Button fx:id="aiHelpButton" text="💡 AI Help: Improve or Clarify Description" onAction="#onAIHelp"/>
+            <Label text="Use AI to enhance the assignment description."/>
         </HBox>
     </VBox>
 

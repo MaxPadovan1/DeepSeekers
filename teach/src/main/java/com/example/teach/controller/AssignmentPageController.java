@@ -17,6 +17,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+
+
+
 public class AssignmentPageController implements SectionControllerBase {
 
     @FXML private VBox teacherSection;
@@ -33,6 +36,7 @@ public class AssignmentPageController implements SectionControllerBase {
     @FXML private TableColumn<ASubmission, Void> viewColumn;
     @FXML private Button saveAssignmentButton;
     @FXML private Button aiHelpButton;
+
     private boolean editingAssignment = false;
 
 
@@ -385,39 +389,41 @@ public class AssignmentPageController implements SectionControllerBase {
             submissionStatusLabel.setText("❌ Failed to save.");
         }
     }
-
     @FXML
     private void onAIHelp() {
-        if (!(user instanceof Teacher)) return;
-
-        String prompt = assignmentDetailsText.getText();
-        if (prompt == null || prompt.isBlank()) {
-            submissionStatusLabel.setText("⚠️ Please enter assignment details first.");
+        System.out.println("[DEBUG] AI button clicked");
+        Assignment selected = assignmentDropdown.getValue();
+        if (selected == null) {
+            submissionStatusLabel.setText("❗ Please select an assignment first.");
             return;
         }
 
-        submissionStatusLabel.setText("🧠 Asking AI...");
+        String prompt = "Summarize the following assignment or suggest improvements:\n\n"
+                + "Title: " + assignmentTitleField.getText() + "\n"
+                + "Description: " + assignmentDetailsText.getText();
+
+        aiHelpButton.setDisable(true);
+        submissionStatusLabel.setText("⏳ AI is generating suggestions...");
 
         new Thread(() -> {
-            try {
-                String refined = OllamaService.getInstance().generate(
-                        "llama3",
-                        "Rewrite this assignment description to be clearer and more structured:\n\n" + prompt
-                ).getResponse();
+            String response = AIService.getInstance().getResponse(prompt);
 
-                javafx.application.Platform.runLater(() -> {
-                    assignmentDetailsText.setText(refined);
-                    submissionStatusLabel.setText("✅ AI suggestion applied.");
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-                javafx.application.Platform.runLater(() ->
-                        submissionStatusLabel.setText("❌ AI request failed.")
-                );
-            }
+            // DEBUG: print response in console
+            System.out.println("[DEBUG] AI Response:\n" + response);
+
+            javafx.application.Platform.runLater(() -> {
+                if (assignmentDetailsText.isEditable()) {
+                    // Append suggestion instead of overwriting
+                    assignmentDetailsText.appendText("\n\n💡 AI Suggestion:\n" + response);
+                } else {
+                    assignmentDetailsText.setText(assignmentDetailsText.getText() + "\n\n💡 AI Suggestion:\n" + response);
+                }
+
+                submissionStatusLabel.setText("✅ AI suggestions inserted.");
+                aiHelpButton.setDisable(false);
+            });
         }).start();
     }
-
 
 
 }
