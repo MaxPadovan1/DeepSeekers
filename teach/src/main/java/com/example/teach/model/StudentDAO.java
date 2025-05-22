@@ -50,4 +50,27 @@ public class StudentDAO {
 
         return students;
     }
+
+    public Student getStudentById(String id) {
+        String sql = "SELECT u.id, u.passwordHash, u.firstName, u.lastName, u.email " +
+                "FROM Users u JOIN Students s ON u.id = s.id WHERE u.id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Student(
+                        rs.getString("id"),
+                        rs.getString("passwordHash"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("email"),
+                        new ArrayList<>()  // no subject list used here
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
