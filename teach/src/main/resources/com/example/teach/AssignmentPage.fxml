@@ -15,12 +15,9 @@
             <Button fx:id="editAssignmentButton" text="✏️ Edit Assignment" onAction="#onEditAssignment" disable="true"/>
             <Button fx:id="saveAssignmentButton" text="💾 Save" onAction="#onSaveEditedAssignment" disable="true"/>
 
-            <Button fx:id="releaseAssignmentButton" text="Release Assignment" onAction="#onReleaseAssignment" disable="true"/>
-            <Button fx:id="unReleaseAssignmentButton" text="Un-Release Assignment" onAction="#onUnReleaseAssignment" disable="true"/>
-
-
-
+            <Button fx:id="releaseAssignmentButton" text="Release" onAction="#onToggleRelease"/>
         </HBox>
+        <Label fx:id="teacherStatusLabel" text="" wrapText="true"/>
     </VBox>
 
     <!-- Assignment selector (shared) -->
