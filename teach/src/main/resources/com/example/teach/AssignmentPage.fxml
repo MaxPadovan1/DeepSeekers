@@ -8,12 +8,16 @@
       fx:controller="com.example.teach.controller.AssignmentPageController">
 
     <VBox fx:id="teacherSection" spacing="10" style="-fx-padding: 10;">
-        <HBox spacing="10" alignment="CENTER_RIGHT">
+        <HBox spacing="10" alignment="CENTER_LEFT">
             <Button fx:id="addAssignmentButton" text="Add Assignment" onAction="#onAddAssignment"/>
             <Button fx:id="removeAssignmentButton" text="Remove Assignment" onAction="#onRemoveAssignment"/>
-            <Button fx:id="editAssignmentButton" text="✏️ Edit Assignment" onAction="#onEditAssignment"/>
-            <Button fx:id="saveAssignmentButton" text="💾 Save" onAction="#onSaveEditedAssignment" visible="false"/>
+
             <Button fx:id="releaseAssignmentButton" text="Release Assignment" onAction="#onReleaseAssignment"/>
+            <Button fx:id="unReleaseAssignmentButton" text="Un-Release Assignment" onAction="#onUnReleaseAssignment"/>
+
+            <Button fx:id="editAssignmentButton" text="✏️ Edit Assignment" onAction="#onEditAssignment"/>
+            <Button fx:id="saveAssignmentButton" text="💾 Save" onAction="#onSaveEditedAssignment"/>
+
         </HBox>
     </VBox>
 

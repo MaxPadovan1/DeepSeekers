@@ -166,6 +166,12 @@ public class AssignmentPageController implements SectionControllerBase {
     }
 
     @FXML
+    private void onUnReleaseAssignment()
+    {
+
+    }
+
+    @FXML
     private void onAssignmentSelected() {
         Assignment selected = assignmentDropdown.getValue();
         if (selected == null) return;
