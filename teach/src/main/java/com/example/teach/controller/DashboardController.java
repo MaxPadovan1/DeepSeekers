@@ -237,6 +237,7 @@ public class DashboardController implements Initializable {
                 });
     }
 
+
     /**
      * Helper to load an FXML into the center pane, set title, and initialize controller.
      *
