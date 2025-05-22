@@ -7,10 +7,33 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import com.example.teach.model.Subject;
+import com.example.teach.model.User;
 
 import java.io.IOException;
 
-public class TestPageController {
+public class TestPageController implements SectionControllerBase{
+
+
+    private User currentUser;
+    private Subject currentSubject;
+    private DashboardController dashboardController;
+
+    // Injected by SubjectHomePageController
+    @Override
+    public void setUser(User user) {
+        this.currentUser = user;
+    }
+
+    @Override
+    public void setSubject(Subject subject) {
+        this.currentSubject = subject;
+    }
+
+    @Override
+    public void setDashboardController(DashboardController controller) {
+        this.dashboardController = controller;
+    }
     public void onRemoveAssignment(ActionEvent actionEvent) {
     }
 
@@ -28,14 +51,7 @@ public class TestPageController {
 
     public void onAssignmentSelected(ActionEvent actionEvent) {
     }
-    @FXML
-    private void handleGoToTestPage(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/teach/view/TestPage.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
+
 
 
 
