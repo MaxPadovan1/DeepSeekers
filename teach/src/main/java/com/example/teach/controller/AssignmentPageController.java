@@ -19,6 +19,12 @@ import java.util.UUID;
 
 public class AssignmentPageController implements SectionControllerBase {
 
+    @FXML private Button addAssignmentButton;
+    @FXML private Button removeAssignmentButton;
+    @FXML private Button releaseAssignmentButton;
+    @FXML private Button unReleaseAssignmentButton;
+    @FXML private Button editAssignmentButton;
+    @FXML private Button saveAssignmentButton;
     @FXML private VBox teacherSection;
     @FXML private HBox studentSection;
     @FXML private ComboBox<Assignment> assignmentDropdown;
@@ -31,7 +37,7 @@ public class AssignmentPageController implements SectionControllerBase {
     @FXML private TextField assignmentTitleField;
     @FXML private DatePicker dueDatePicker;
     @FXML private TableColumn<ASubmission, Void> viewColumn;
-    @FXML private Button saveAssignmentButton;
+
     private boolean editingAssignment = false;
 
 
@@ -122,11 +128,21 @@ public class AssignmentPageController implements SectionControllerBase {
     @FXML
     private void onAddAssignment() {
         if (!(user instanceof Teacher)) return;
-
-        assignmentTitleField.clear();
-        assignmentDetailsText.clear();
-        dueDatePicker.setValue(null);
         assignmentDropdown.getSelectionModel().clearSelection();
+        assignmentTitleField.clear();
+        assignmentTitleField.setText("Empty Assignment");
+        assignmentTitleField.setDisable(false);
+
+
+        assignmentDetailsText.clear();
+        removeAssignmentButton.setDisable(false);
+
+
+
+
+
+        dueDatePicker.setValue(null);
+
 
         assignmentTitleField.setEditable(true);
         assignmentDetailsText.setEditable(true);
@@ -163,6 +179,12 @@ public class AssignmentPageController implements SectionControllerBase {
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    private void onUnReleaseAssignment()
+    {
+
     }
 
     @FXML
@@ -384,10 +406,4 @@ public class AssignmentPageController implements SectionControllerBase {
             submissionStatusLabel.setText("❌ Failed to save.");
         }
     }
-
-
-
-
-
 }
-
