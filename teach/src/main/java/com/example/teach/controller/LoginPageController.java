@@ -113,7 +113,7 @@ public class LoginPageController {
     @FXML private void handleForgotPassword(ActionEvent event) {
             try {
                 FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/example/teach/RestPage.fxml")
+                        getClass().getResource("/com/example/teach/ResetPage.fxml")
                 );
                 Parent resetRoot = loader.load();
 
