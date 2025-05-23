@@ -107,4 +107,13 @@ public class AssignmentDAO {
         }
     }
 
+    public void unreleaseAssignment(String assignmentId) throws SQLException {
+        String sql = "UPDATE Assignments SET is_released = 0 WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, assignmentId);
+            ps.executeUpdate();
+        }
+    }
+
+
 }

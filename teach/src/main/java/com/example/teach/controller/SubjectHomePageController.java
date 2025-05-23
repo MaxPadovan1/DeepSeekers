@@ -1,6 +1,7 @@
 package com.example.teach.controller;
 
 import com.example.teach.model.Subject;
+import com.example.teach.model.Teacher;
 import com.example.teach.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -111,9 +112,12 @@ public class SubjectHomePageController {
      * Placeholder for Grade section: currently logs a click event.
      */
     @FXML private void onGrade() {
-        loadSection("HomeWorkGradePage.fxml");  // Assuming this is the actual Grades view
+        boolean isTeacher = currentUser instanceof Teacher;
+        String fxmlName = isTeacher ? "HomeWorkGradePage.fxml" : "studentgradepage.fxml";
+        loadSection(fxmlName);
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Grade");
     }
+
 
     /**
      * Helper to load a section FXML into the center pane, performing
