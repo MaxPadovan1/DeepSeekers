@@ -35,6 +35,7 @@ public class SQLiteDAO {
      */
     private void createSchema() {
         try (Statement stmt = connection.createStatement()) {
+
             // 4) Subjects master list
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Subjects (" +
@@ -98,18 +99,22 @@ public class SQLiteDAO {
                             "  subject_id TEXT NOT NULL REFERENCES Subjects(id)," +
                             "  title      TEXT NOT NULL," +
                             "  description TEXT," +
-                            "  due_date   TEXT" +
+                            "  due_date   TEXT," +
+                            "is_released BOOLEAN DEFAULT 0"+
                             ")"
             );
 
-            // Homework table
+            // Homework table (fixed)
             stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS Homeworks (" +
-                            "  id         TEXT PRIMARY KEY," +
-                            "  subject_id TEXT NOT NULL REFERENCES Subjects(id)," +
-                            "  title      TEXT NOT NULL," +
-                            "  description TEXT," +
-                            "  due_date   TEXT" +
+                    "CREATE TABLE IF NOT EXISTS Homework (" +
+                            "  id TEXT PRIMARY KEY, " +
+                            "  subject_id TEXT NOT NULL REFERENCES Subjects(id), " +
+                            "  week TEXT NOT NULL, " +
+                            "  title TEXT NOT NULL, " +
+                            "  description TEXT, " +
+                            "  due_date TEXT, " +
+                            "  release_date TEXT, " +
+                            "  open_date TEXT " +
                             ")"
             );
 
@@ -122,6 +127,21 @@ public class SQLiteDAO {
                             "  content    TEXT NOT NULL" +
                             ")"
             );
+            // Submission table
+            stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS Submissions ("+
+                            "id TEXT PRIMARY KEY,"+
+                            "assignment_id TEXT NOT NULL REFERENCES Assignments(id),"+
+                            "student_id TEXT NOT NULL REFERENCES Students(id),"+
+                            "file_path TEXT,"+
+                            "timestamp TEXT"+
+                            ")"
+
+            );
+            stmt.execute(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS idx_submission_unique ON Submissions(assignment_id, student_id)"
+            );
+
 
             // 6) Add missing columns to Users table for existing schemas
             try {
@@ -134,10 +154,29 @@ public class SQLiteDAO {
             } catch (SQLException ignore) {
                 // column already exists
             }
+            try{
+                stmt.execute("ALTER TABLE Assignments ADD COLUMN is_released BOOLEAN DEFAULT 0");
+            } catch (SQLException ignore){
+
+            }try {
+                stmt.execute("ALTER TABLE Homeworks ADD COLUMN week TEXT");
+            } catch (SQLException ignore) {}
+
+            try {
+                stmt.execute("ALTER TABLE Homeworks ADD COLUMN release_date TEXT");
+            } catch (SQLException ignore) {}
+
+            try {
+                stmt.execute("ALTER TABLE Homeworks ADD COLUMN open_date TEXT");
+            } catch (SQLException ignore) {}
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
             // In production, consider logging to a file or system logger
         }
+
+
     }
 }

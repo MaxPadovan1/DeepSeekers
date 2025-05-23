@@ -1,97 +1,501 @@
 package com.example.teach.controller;
 
-import com.example.teach.model.Subject;
-import com.example.teach.model.User;
+import com.example.teach.model.*;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
-/**
- * Controller for the "Assignment" section of a subject.
- * <p>
- * Implements {@link SectionControllerBase} for dependency injection of
- * the current user, subject, and dashboard controller. Manages UI
- * components related to assignments, including selection, details,
- * submission, and notes.
- */
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
 public class AssignmentPageController implements SectionControllerBase {
 
-    /** The authenticated user viewing this section. */
-    private User currentUser;
-    /** The subject context for this Assignment page. */
-    private Subject currentSubject;
-    /** Reference to the DashboardController for navigation and UI updates. */
-    private DashboardController dashboardController;
-
-    // UI components
-    @FXML private ComboBox<?> assignmentDropdown;
+    @FXML private Button addAssignmentButton;
+    @FXML private Button removeAssignmentButton;
+    @FXML private Button releaseAssignmentButton;
+    @FXML private Button editAssignmentButton;
+    @FXML private Button saveAssignmentButton;
+    @FXML private VBox teacherSection;
+    @FXML private HBox studentSection;
+    @FXML private ComboBox<Assignment> assignmentDropdown;
     @FXML private TextArea assignmentDetailsText;
-    @FXML private TextArea instructionsText;
-    @FXML private Button uploadButton;
-    @FXML private Button submitButton;
-    @FXML private Hyperlink notesLink;
+    @FXML private TableView<ASubmission> submissionTable;
+    @FXML private TableColumn<ASubmission, String> studentNameColumn;
+    @FXML private TableColumn<ASubmission, String> submissionTimeColumn;
+    @FXML private TableColumn<ASubmission, String> fileColumn;
     @FXML private Label submissionStatusLabel;
+    @FXML private TextField assignmentTitleField;
+    @FXML private DatePicker dueDatePicker;
+    @FXML private TableColumn<ASubmission, Void> viewColumn;
+    @FXML private Label teacherStatusLabel;
 
-    /**
-     * Injects the authenticated User into this controller.
-     *
-     * @param u the current {@link User}
-     */
-    @Override public void setUser(User u) {
-        this.currentUser = u;
+
+    private boolean editingAssignment = false;
+
+
+    private User user;
+    private Subject subject;
+    private File selectedFile;
+    private boolean addingNewAssignment = false;
+
+
+    private final AssignmentDAO assignmentDAO = new AssignmentDAO();
+    private final ASubmissionDAO ASubmissionDAO = new ASubmissionDAO();// You will need to implement this
+
+    @Override
+    public void setUser(User user) {
+        this.user = user;
+        updateUIForUserRole();
     }
 
-    /**
-     * Injects the current Subject into this controller.
-     *
-     * @param s the current {@link Subject}
-     */
-    @Override public void setSubject(Subject s) {
-        this.currentSubject = s;
-        // TODO: use SubjectDAO to load assignment data if needed
+    @Override
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+        updateUIForUserRole();
+    }
+    @Override
+    public void setDashboardController(DashboardController controller) {
+        // Optional, in case you want to update labels or switch pages
+    }
+    private void show(Button btn) {
+        btn.setVisible(true);
+        btn.setManaged(true);
+        btn.setDisable(false);
     }
 
-    /**
-     * Injects the DashboardController for navigation actions.
-     *
-     * @param dash the parent {@link DashboardController}
-     */
-    @Override public void setDashboardController(DashboardController dash) {
-        this.dashboardController = dash;
+    private void hide(Button btn) {
+        btn.setVisible(false);
+        btn.setManaged(false);
+        btn.setDisable(true); // optional: just in case
     }
 
-    /**
-     * Handler for when an assignment is selected from the dropdown.
-     * Currently a no-op stub for FXML reference.
-     */
-    @FXML private void onAssignmentSelected() {
-        // TODO: load assignment details into assignmentDetailsText and instructionsText
+
+    @FXML
+    public void initialize() {
     }
 
-    /**
-     * Handler for the Upload button click.
-     * Currently a no-op stub for FXML reference.
-     */
-    @FXML private void onUpload() {
-        // TODO: implement file upload dialog and set submissionStatusLabel
+    private void updateUIForUserRole() {
+        if (user == null || subject == null) return;
+
+        System.out.println("[AssignmentPageController] User is " + user.getClass().getSimpleName());
+
+        boolean isTeacher = user instanceof Teacher;
+
+        if (teacherSection != null) {
+            teacherSection.setVisible(isTeacher);
+            teacherSection.setManaged(isTeacher);
+        }
+
+        if (studentSection != null) {
+            studentSection.setVisible(!isTeacher);
+            studentSection.setManaged(!isTeacher);
+        }
+
+        if (submissionTable != null) {
+            submissionTable.setVisible(isTeacher);
+            submissionTable.setManaged(isTeacher);
+        }
+
+        // Make fields read-only for students
+        if (assignmentTitleField != null) {
+            assignmentTitleField.setEditable(isTeacher);
+        }
+        if (dueDatePicker != null) {
+            dueDatePicker.setDisable(!isTeacher);
+        }
+        if (assignmentDetailsText != null) {
+            assignmentDetailsText.setEditable(isTeacher);
+        }
+        if (user instanceof Student) {
+            assignmentTitleField.setEditable(false);
+            assignmentTitleField.setDisable(false); // ✅ Let it stay visually normal
+
+            dueDatePicker.setEditable(false);       // for dropdown interaction
+            dueDatePicker.setDisable(false);        // ✅ Allow it to look normal but do nothing with it
+
+            assignmentDetailsText.setEditable(false);
+            assignmentDetailsText.setDisable(false);
+        }
+        hide(editAssignmentButton);
+        hide(removeAssignmentButton);
+        hide(releaseAssignmentButton);
+        hide(saveAssignmentButton);
+
+        loadAssignments();
     }
 
-    /**
-     * Handler for the Submit button click.
-     * Currently a no-op stub for FXML reference.
-     */
-    @FXML private void onSubmit() {
-        // TODO: implement assignment submission logic and update submissionStatusLabel
+
+    private void loadAssignments() {
+        try {
+            List<Assignment> assignments = (user instanceof Teacher)
+                    ? assignmentDAO.getBySubject(subject.getId())
+                    : assignmentDAO.getReleasedAssignments(subject.getId());
+            assignmentDropdown.setItems(FXCollections.observableArrayList(assignments));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Handler for the Notes hyperlink click.
-     * Currently a no-op stub for FXML reference.
-     */
-    @FXML private void onNotesLink() {
-        // TODO: open student notes URL or dialog
+    @FXML
+    private void onAddAssignment() {
+        if (!(user instanceof Teacher)) return;
+        assignmentDropdown.getSelectionModel().clearSelection();
+        assignmentTitleField.clear();
+        assignmentDetailsText.clear();
+        applyPlaceholderStyle(assignmentTitleField, "Enter Assignment Title");
+        applyPlaceholderStyle(assignmentDetailsText, "Enter Assignment Details");
+        assignmentTitleField.setDisable(false);
+        assignmentDetailsText.setDisable(false);
+        hide(editAssignmentButton);
+        hide(releaseAssignmentButton);
+        hide(removeAssignmentButton);
+
+        dueDatePicker.setValue(null);
+
+        assignmentTitleField.setEditable(true);
+        assignmentDetailsText.setEditable(true);
+        dueDatePicker.setDisable(false);
+        ChangeListener<Object> formListener = (obs, oldVal, newVal) -> {
+            saveAssignmentButton.setDisable(!isAssignmentFormValid());
+        };
+
+        assignmentTitleField.textProperty().addListener(formListener);
+        assignmentDetailsText.textProperty().addListener(formListener);
+        dueDatePicker.valueProperty().addListener(formListener);
+
+        addingNewAssignment = true;
+        editingAssignment = false;
+        show(saveAssignmentButton);
+        teacherStatusLabel.setText("Enter assignment details, then press Save.");
+    }
+
+
+    @FXML
+    private void onRemoveAssignment() {
+        Assignment selected = assignmentDropdown.getValue();
+        if (selected == null) return;
+
+        try {
+            assignmentDAO.removeAssignment(selected.getId());
+            loadAssignments();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onToggleRelease() {
+        Assignment selected = assignmentDropdown.getValue();
+        if (selected == null || !(user instanceof Teacher)) return;
+
+        try {
+            if (selected.isReleased()) {
+                assignmentDAO.unreleaseAssignment(selected.getId());
+                teacherStatusLabel.setText("Assignment is now *unreleased*.");
+            } else {
+                assignmentDAO.releaseAssignment(selected.getId());
+                teacherStatusLabel.setText("Assignment is now *released*.");
+            }
+
+            // Clear fields
+            assignmentTitleField.clear();
+            assignmentDetailsText.clear();
+            dueDatePicker.setValue(null);
+            assignmentTitleField.setEditable(false);
+            assignmentTitleField.setDisable(true);
+
+            assignmentDetailsText.setEditable(false);
+            assignmentDetailsText.setDisable(true);
+
+            dueDatePicker.setDisable(true);
+
+// Hide action buttons
+            hide(saveAssignmentButton);
+            hide(editAssignmentButton);
+            hide(removeAssignmentButton);
+            hide(releaseAssignmentButton);
+
+            teacherStatusLabel.setText("");
+
+            assignmentDropdown.getSelectionModel().clearSelection();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            teacherStatusLabel.setText("Failed to update release status.");
+        }
+    }
+
+
+
+    public static void applyPlaceholderStyle(TextInputControl field, String placeholderText) {
+        field.setText(placeholderText);
+        field.setStyle("-fx-text-fill: grey; -fx-font-style: italic;");
+
+        field.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+            if (isNowFocused) {
+                if (field.getText().equals(placeholderText)) {
+                    field.clear();
+                    field.setStyle("-fx-text-fill: black; -fx-font-style: normal;");
+                }
+            } else {
+                if (field.getText().isEmpty()) {
+                    field.setText(placeholderText);
+                    field.setStyle("-fx-text-fill: grey; -fx-font-style: italic;");
+                }
+            }
+        });
+    }
+
+
+    @FXML
+    private void onAssignmentSelected() {
+        Assignment selected = assignmentDropdown.getValue();
+        teacherStatusLabel.setText("");
+        if (selected == null) return;
+        assignmentTitleField.setText(selected.getTitle());
+        assignmentDetailsText.setText(selected.getDescription());
+        dueDatePicker.setValue(LocalDate.parse(selected.getDueDate()));
+
+        if (user instanceof Teacher) {
+            loadSubmissions(selected);
+
+            // Lock fields by default unless editing
+            if (!addingNewAssignment && !editingAssignment) {
+                assignmentTitleField.setEditable(false);
+                assignmentDetailsText.setEditable(false);
+                dueDatePicker.setDisable(true);
+                hide(saveAssignmentButton);
+            }
+
+            // Show Edit and Delete always
+            show(editAssignmentButton);
+            show(removeAssignmentButton);
+
+            releaseAssignmentButton.setText(selected.isReleased() ? "Unrelease" : "Release");
+            show(releaseAssignmentButton);
+        }
+
+        if (user instanceof Student student) {
+            try {
+                ASubmission existing = ASubmissionDAO.getSubmissionByStudentAndAssignment(
+                        student.getId(), selected.getId()
+                );
+                if (existing != null) {
+                    submissionStatusLabel.setText("Previously submitted: " + Path.of(existing.getFilePath()).getFileName());
+                } else {
+                    submissionStatusLabel.setText("No submission yet.");
+                }
+            } catch (SQLException e) {
+                submissionStatusLabel.setText("Failed to check submission.");
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+    private void loadSubmissions(Assignment assignment) {
+        try {
+            List<ASubmission> submissions = ASubmissionDAO.getSubmissionsByAssignmentId(assignment.getId());
+            ObservableList<ASubmission> observable = FXCollections.observableArrayList(submissions);
+
+            submissionTable.setItems(observable);
+
+            studentNameColumn.setCellValueFactory(data -> data.getValue().studentNameProperty());
+            submissionTimeColumn.setCellValueFactory(data -> data.getValue().timestampProperty());
+            fileColumn.setCellValueFactory(data -> data.getValue().filePathProperty());
+            viewColumn.setCellFactory(col -> new TableCell<>() {
+                private final Button viewButton = new Button("Open");
+
+                {
+                    viewButton.setOnAction(event -> {
+                        ASubmission s = getTableView().getItems().get(getIndex());
+                        try {
+                            File file = new File(s.getFilePath());
+                            if (file.exists()) {
+                                java.awt.Desktop.getDesktop().open(file);
+                            } else {
+                                System.out.println("File not found: " + s.getFilePath());
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(viewButton);
+                    }
+                }
+            });
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isAssignmentFormValid() {
+        String title = assignmentTitleField.getText();
+        String details = assignmentDetailsText.getText();
+        LocalDate dueDate = dueDatePicker.getValue();
+
+        return title != null && !title.trim().isEmpty() && !title.equals("Enter Assignment Title")
+                && details != null && !details.trim().isEmpty() && !details.equals("Enter Assignment Details")
+                && dueDate != null;
+    }
+
+    @FXML
+    private void onUpload() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select a text file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            submissionStatusLabel.setText("Selected: " + selectedFile.getName());
+        }
+    }
+
+    @FXML
+    private void onSubmit() {
+        if (selectedFile == null || !(user instanceof Student)) return;
+
+        Assignment assignment = assignmentDropdown.getValue();
+        if (assignment == null) return;
+
+        Student student = (Student) user;
+
+        // Format timestamp
+        String timestamp = java.time.LocalDateTime.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+
+        // Generate unique filename
+        String fileName = student.getId() + "_" + timestamp + ".txt";
+
+        // Destination path
+        String dest = "teach/submissions/" + subject.getId() + "/" + assignment.getId() + "/" + fileName;
+
+        try {
+            Path destPath = Paths.get(dest);
+            Files.createDirectories(destPath.getParent());
+            Files.copy(selectedFile.toPath(), destPath, StandardCopyOption.REPLACE_EXISTING);
+
+            // Save submission to DB
+            ASubmissionDAO.submitAssignment(new ASubmission(
+                    UUID.randomUUID().toString(),           // unique submission ID
+                    assignment.getId(),
+                    student.getId(),
+                    dest,
+                    java.time.LocalDateTime.now().toString()
+            ));
+
+            submissionStatusLabel.setText("Submitted: " + fileName);
+
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            submissionStatusLabel.setText("Submission failed.");
+        }
+    }
+    @FXML
+    private void onEditAssignment() {
+        Assignment selected = assignmentDropdown.getValue();
+        if (selected == null || !(user instanceof Teacher)) return;
+        if (selected.isReleased()) {
+            teacherStatusLabel.setText("Cannot edit a released assignment.");
+            return;
+        }
+        editingAssignment = true;
+        assignmentTitleField.setText(selected.getTitle());
+        assignmentDetailsText.setText(selected.getDescription());
+        dueDatePicker.setValue(LocalDate.parse(selected.getDueDate()));
+        assignmentTitleField.setDisable(false);
+        assignmentTitleField.setEditable(true);
+        assignmentDetailsText.setDisable(false);
+        assignmentDetailsText.setEditable(true);
+        dueDatePicker.setDisable(false);
+        show(saveAssignmentButton);
+        teacherStatusLabel.setText("Now editing. Press Save to confirm.");
+    }
+
+    @FXML
+    private void onSaveEditedAssignment() {
+        if (!(user instanceof Teacher)) return;
+
+        String title = assignmentTitleField.getText();
+        String description = assignmentDetailsText.getText();
+        String dueDate = dueDatePicker.getValue() != null ? dueDatePicker.getValue().toString() : null;
+
+        if (title.isBlank() || description.isBlank() || dueDate == null) {
+            teacherStatusLabel.setText("All fields are required.");
+            return;
+        }
+
+        try {
+            if (addingNewAssignment) {
+                Assignment newAssignment = new Assignment(
+                        UUID.randomUUID().toString(),
+                        subject.getId(),
+                        title,
+                        description,
+                        dueDate,
+                        false
+                );
+                assignmentDAO.add(newAssignment);
+                teacherStatusLabel.setText("Assignment added.");
+            } else if (editingAssignment) {
+                Assignment selected = assignmentDropdown.getValue();
+                if (selected == null) return;
+
+                Assignment updated = new Assignment(
+                        selected.getId(),
+                        selected.getSubjectId(),
+                        title,
+                        description,
+                        dueDate,
+                        selected.isReleased()
+                );
+                assignmentDAO.updateAssignment(updated);
+                teacherStatusLabel.setText("Assignment updated.");
+            }
+            // Reset UI
+            addingNewAssignment = false;
+            editingAssignment = false;
+            hide(saveAssignmentButton);
+            assignmentTitleField.setEditable(false);
+            assignmentTitleField.setDisable(true);
+
+            assignmentDetailsText.setEditable(false);
+            assignmentDetailsText.setDisable(true);
+
+            dueDatePicker.setDisable(true);
+            hide(editAssignmentButton);
+            hide(removeAssignmentButton);
+            hide(releaseAssignmentButton);
+            assignmentTitleField.clear();
+            assignmentDetailsText.clear();
+            dueDatePicker.setValue(null);
+            loadAssignments();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            teacherStatusLabel.setText("Failed to save.");
+        }
     }
 }

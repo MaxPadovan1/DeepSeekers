@@ -1,10 +1,12 @@
 package com.example.teach.controller;
 
 import com.example.teach.model.Subject;
+import com.example.teach.model.Teacher;
 import com.example.teach.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
@@ -90,24 +92,32 @@ public class SubjectHomePageController {
      * Placeholder for Test section: currently logs a click event.
      */
     @FXML private void onTest() {
-        System.out.println("Clicked on Test");
+        loadSection("TestPage.fxml");
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Test");
     }
 
     /**
      * Loads the Assignment section into the center pane.
      * Updates the dashboard title accordingly.
      */
-    @FXML private void onAssignment() {
+    @FXML
+    private void onAssignment() {
         loadSection("AssignmentPage.fxml");
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Assignment");
     }
+
+
 
     /**
      * Placeholder for Grade section: currently logs a click event.
      */
     @FXML private void onGrade() {
-        System.out.println("Clicked on Grade");
+        boolean isTeacher = currentUser instanceof Teacher;
+        String fxmlName = isTeacher ? "HomeWorkGradePage.fxml" : "studentgradepage.fxml";
+        loadSection(fxmlName);
+        dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Grade");
     }
+
 
     /**
      * Helper to load a section FXML into the center pane, performing

@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Main entry point for the DeepSeekers JavaFX application.
@@ -34,7 +36,7 @@ public class DeepSeeekersApplication extends Application {
 
         // 2. Construct AdminDAO for potential maintenance operations
         AdminDAO admin = new AdminDAO();
-        // admin.CLEAN_DB(); // use with caution: deletes entries from multiple tables - check adminDAO
+        //admin.CLEAN_DB(); // use with caution: drops & recreates all tables
 
         // 3️. Load and display the login screen from FXML
         FXMLLoader loader = new FXMLLoader(

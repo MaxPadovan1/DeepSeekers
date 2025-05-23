@@ -110,4 +110,21 @@ public class LoginPageController {
             errorLabel.setText("Unable to load Sign Up page. Please try again later.");
         }
     }
+    @FXML private void handleForgotPassword(ActionEvent event) {
+            try {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/example/teach/ResetPage.fxml")
+                );
+                Parent resetRoot = loader.load();
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(resetRoot, 1280, 720);
+                stage.setScene(scene);
+                stage.setTitle("Reset Password");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                errorLabel.setText("Unable to load Reset Password page. Please try again later.");
+            }
+    }
 }

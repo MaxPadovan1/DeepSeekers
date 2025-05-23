@@ -1,52 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.Accordion?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="720.0" prefWidth="1280.0"
-      xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.teach.controller.HomeworkPageController">
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.AssignmentPageController">
 
-    <Accordion fx:id="accordion"
-               VBox.vgrow="ALWAYS"
-               style="-fx-padding: 0; -fx-background-color: transparent;">
-        <panes>
-            <TitledPane text="Week 1" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
+    <VBox fx:id="teacherSection" spacing="10" style="-fx-padding: 10;">
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Button fx:id="addAssignmentButton" onAction="#onAddAssignment" text="Add Homework" />
+            <Button fx:id="removeAssignmentButton" onAction="#onRemoveAssignment" text="Remove Homework" />
+            <Button fx:id="editAssignmentButton" onAction="#onEditAssignment" text="✏️ Edit Homework" />
+            <Button fx:id="saveAssignmentButton" onAction="#onSaveEditedAssignment" text="💾 Save" visible="false" />
+            <Button fx:id="releaseAssignmentButton" onAction="#onReleaseAssignment" text="Release Homework" />
+        </HBox>
+    </VBox>
 
-            <TitledPane text="Week 2" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
+    <!-- Assignment selector (shared) -->
+    <HBox spacing="10" style="-fx-padding: 10;">
+        <Label text="Homework:" />
+        <ComboBox fx:id="assignmentDropdown" onAction="#onAssignmentSelected" prefWidth="300.0" />
+    </HBox>
 
-            <TitledPane text="Week 3" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
+    <!-- Assignment content (editable for teacher) -->
+    <VBox spacing="10" style="-fx-padding: 10;">
+        <Label text="Homework Title:" />
+        <TextField fx:id="assignmentTitleField" promptText="Enter title here" />
 
-            <TitledPane text="Week 4" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
+        <Label text="Due Date:" />
+      <Label layoutX="20.0" layoutY="79.0" text="Open Date:">
+         <VBox.margin>
+            <Insets left="300.0" top="-20.0" />
+         </VBox.margin>
+         <padding>
+            <Insets top="-5.0" />
+         </padding>
+      </Label>
+      <DatePicker fx:id="dueDatePicker1" layoutX="20.0" layoutY="105.0">
+         <VBox.margin>
+            <Insets left="300.0" />
+         </VBox.margin>
+      </DatePicker>
+        <DatePicker fx:id="dueDatePicker">
+         <VBox.margin>
+            <Insets top="-33.0" />
+         </VBox.margin></DatePicker>
 
-            <TitledPane text="Week 5" animated="false">
-                <VBox spacing="5"
-                      style="-fx-background-color:#A9A9A9; -fx-padding:10;">
-                    <TextArea promptText="Homework details..." wrapText="true" prefRowCount="3"/>
-                </VBox>
-            </TitledPane>
-        </panes>
-    </Accordion>
+        <Label text="Homework Details:" />
+        <TextArea fx:id="assignmentDetailsText" prefHeight="120.0" wrapText="true" />
+
+    </VBox>
+
+    <HBox fx:id="studentSection" alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
+        <Button fx:id="uploadButton" onAction="#onUpload" text="Upload (.txt)" />
+        <Button fx:id="submitButton" onAction="#onSubmit" text="Submit" />
+        <Label fx:id="submissionStatusLabel" text="No file uploaded." />
+    </HBox>
+
+    <TableView fx:id="submissionTable" prefHeight="200.0" visible="false">
+        <columns>
+            <TableColumn fx:id="studentNameColumn" prefWidth="100" text="Student" />
+            <TableColumn fx:id="submissionTimeColumn" prefWidth="100" text="Submitted At" />
+            <TableColumn fx:id="fileColumn" prefWidth="100" text="File" />
+            <TableColumn fx:id="viewColumn" prefWidth="100" text="View" />
+        </columns>
+    </TableView>
 </VBox>

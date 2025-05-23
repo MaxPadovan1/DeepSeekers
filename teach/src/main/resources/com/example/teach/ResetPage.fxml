@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.ResetController">
+
+    <VBox alignment="CENTER" spacing="20" VBox.vgrow="ALWAYS">
+        <!-- Header Section -->
+        <Label text="Welcome to DeepSeekers!&#10;In the deep, we seek."
+               wrapText="true"
+               style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-alignment: center;" />
+        <!-- Instruction Text -->
+    <TextFlow textAlignment="CENTER" lineSpacing="10.0" maxWidth="600">
+        <Text text="Please enter your email address so that we can send you a reset link."
+              style="-fx-font-size: 20px;" />
+    </TextFlow>
+
+    <!-- Email Input Field -->
+    <TextField fx:id="emailField"
+               promptText="Email"
+               maxWidth="400.0" prefHeight="35" />
+
+    <!-- Submit Button -->
+
+    <Button text="Submit"
+            fx:id="submitButton"
+            prefWidth="75" prefHeight="35" onAction="#handleResetSubmit"/>
+    </VBox>
+</VBox>

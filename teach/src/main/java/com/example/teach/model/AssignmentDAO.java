@@ -23,7 +23,7 @@ public class AssignmentDAO {
      */
     public List<Assignment> getBySubject(String subjectId) throws SQLException {
         List<Assignment> out = new ArrayList<>();
-        String sql = "SELECT id,title,description,due_date FROM Assignments WHERE subject_id=?";
+        String sql = "SELECT id, title, description, due_date, is_released FROM Assignments WHERE subject_id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, subjectId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -33,7 +33,8 @@ public class AssignmentDAO {
                             subjectId,
                             rs.getString("title"),
                             rs.getString("description"),
-                            rs.getString("due_date")
+                            rs.getString("due_date"),
+                            rs.getBoolean("is_released")
                     ));
                 }
             }
@@ -48,14 +49,71 @@ public class AssignmentDAO {
      * @throws SQLException if a database access error occurs
      */
     public void add(Assignment a) throws SQLException {
-        String sql = "INSERT INTO Assignments(id,subject_id,title,description,due_date) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Assignments(id, subject_id, title, description, due_date, is_released) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, a.getId());
             ps.setString(2, a.getSubjectId());
             ps.setString(3, a.getTitle());
             ps.setString(4, a.getDescription());
             ps.setString(5, a.getDueDate());
+            ps.setBoolean(6, a.isReleased());
             ps.executeUpdate();
         }
     }
+
+    public void releaseAssignment(String assignmentId) throws SQLException {
+        String sql = "UPDATE Assignments SET is_released = 1 WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, assignmentId);
+            ps.executeUpdate();
+        }
+    }
+
+    public List<Assignment> getReleasedAssignments(String subjectId) throws SQLException {
+        List<Assignment> out = new ArrayList<>();
+        String sql = "SELECT id, title, description, due_date, is_released FROM Assignments WHERE subject_id=? AND is_released=1";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, subjectId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    out.add(new Assignment(
+                            rs.getString("id"),
+                            subjectId,
+                            rs.getString("title"),
+                            rs.getString("description"),
+                            rs.getString("due_date"),
+                            rs.getBoolean("is_released")
+                    ));
+                }
+            }
+        }
+        return out;
+    }
+    public void removeAssignment(String assignmentId) throws SQLException {
+        String sql = "DELETE FROM Assignments WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, assignmentId);
+            ps.executeUpdate();
+        }
+    }
+    public void updateAssignment(Assignment assignment) throws SQLException {
+        String sql = "UPDATE Assignments SET title = ?, description = ?, due_date = ? WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, assignment.getTitle());
+            ps.setString(2, assignment.getDescription());
+            ps.setString(3, assignment.getDueDate());
+            ps.setString(4, assignment.getId());
+            ps.executeUpdate();
+        }
+    }
+
+    public void unreleaseAssignment(String assignmentId) throws SQLException {
+        String sql = "UPDATE Assignments SET is_released = 0 WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, assignmentId);
+            ps.executeUpdate();
+        }
+    }
+
+
 }

@@ -1,65 +1,66 @@
 package com.example.teach.controller;
 
+import com.example.teach.model.Homework;
 import com.example.teach.model.Subject;
-import com.example.teach.model.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Accordion;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
-/**
- * Controller for the "Homework" section of a subject.
- * <p>
- * Implements {@link SectionControllerBase} to allow dependency injection of
- * the current user, subject, and dashboard controller. Manages an Accordion
- * UI component to display homework-related content.
- */
-public class HomeworkPageController implements SectionControllerBase {
+import java.sql.SQLException;
+import java.util.List;
 
-    /** The authenticated user viewing this section. */
-    private User currentUser;
-    /** The subject context for this Homework page. */
+public class HomeworkPageController {
+
+    @FXML private VBox homeworkList;
+    @FXML private TextField titleField;
+    @FXML private TextField weekField;
+    @FXML private DatePicker dueDatePicker;
+    @FXML private TextArea descriptionField;
+    @FXML private DatePicker releaseDatePicker;
+    @FXML private DatePicker openDatePicker;
+    @FXML private Label feedbackLabel;
+
+    private final HomeworkController homeworkController = new HomeworkController();
     private Subject currentSubject;
-    /** Parent DashboardController for navigation and UI control. */
-    private DashboardController dashboardController;
-    /** Accordion UI container for organizing homework panes. */
-    @FXML private Accordion accordion;
 
-    /**
-     * Injects the authenticated user into this controller.
-     *
-     * @param user the logged-in {@link User}
-     */
-    @Override public void setUser(User user) {
-        this.currentUser = user;
-    }
-
-    /**
-     * Injects the current subject into this controller.
-     * Updates each titled pane's text to include the subject context.
-     *
-     * @param subject the {@link Subject} being viewed
-     */
-    @Override public void setSubject(Subject subject) {
+    public void setSubject(Subject subject) {
         this.currentSubject = subject;
-        // Prefix each pane title with the subject name
-        accordion.getPanes().forEach(pane ->
-                pane.setText(currentSubject.getName() + " / " + pane.getText())
-        );
+        loadHomeworks();
     }
 
-    /**
-     * Injects the DashboardController for navigation actions.
-     *
-     * @param dash the parent {@link DashboardController}
-     */
-    @Override public void setDashboardController(DashboardController dash) {
-        this.dashboardController = dash;
+    private void loadHomeworks() {
+        homeworkList.getChildren().clear();
+        try {
+            List<Homework> homeworks = homeworkController.getHomeworksForSubject(currentSubject.getId());
+            for (Homework hw : homeworks) {
+                Label label = new Label("📘 Week " + hw.getWeek() + ": " + hw.getTitle());
+                homeworkList.getChildren().add(label);
+            }
+        } catch (SQLException e) {
+            feedbackLabel.setText("⚠ Failed to load homeworks.");
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Handler for the "Home" button in the Homework section.
-     * Navigates back to the dashboard or subject home view.
-     */
-    @FXML private void onGoHome() {
-        dashboardController.goToDashboard(null);
+    @FXML
+    private void onAddHomework() {
+        try {
+            Homework hw = new Homework(
+                    currentSubject.getId(),
+                    weekField.getText(),
+                    titleField.getText(),
+                    descriptionField.getText(),
+                    dueDatePicker.getValue().toString(),
+                    releaseDatePicker.getValue().toString(),
+                    openDatePicker.getValue().toString(),
+                    "HW" + System.currentTimeMillis() // temp ID
+            );
+            homeworkController.addHomework(hw);
+            feedbackLabel.setText("✅ Homework added.");
+            loadHomeworks();
+        } catch (Exception e) {
+            feedbackLabel.setText("❌ Error adding homework.");
+            e.printStackTrace();
+        }
     }
 }

@@ -43,8 +43,7 @@
             <Region HBox.hgrow="ALWAYS"/>
             <MenuButton fx:id="userMenu" text="User Name" style="-fx-text-fill: white;">
                 <items>
-                    <MenuItem text="Profile"/>
-                    <MenuItem text="Logout"/>
+                    <MenuItem fx:id="logoutMenuItem" text="Logout" onAction="#handleLogout"/>
                 </items>
             </MenuButton>
         </HBox>
@@ -75,7 +74,10 @@
                 <padding>
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
+
+                <Label fx:id="greetingLabel" style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold"/>
                 <Region HBox.hgrow="ALWAYS"/>
+
                 <Button fx:id="notificationButton" onAction="#showNotifications"
                         style="-fx-background-color: transparent;">
                     <graphic>
