@@ -104,6 +104,17 @@ public class SQLiteDAO {
                             ")"
             );
 
+            // Lesson Plan table
+            stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS LessonPlans (" +
+                            "  id           TEXT PRIMARY KEY, " +
+                            "  subject_id   TEXT NOT NULL REFERENCES Subjects(id), " +
+                            "  title        TEXT NOT NULL, " +
+                            "  details      TEXT, " +
+                            "  is_released  BOOLEAN DEFAULT 0" +
+                            ")"
+            );
+
             // Homework table (fixed)
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Homework (" +
@@ -176,7 +187,5 @@ public class SQLiteDAO {
             e.printStackTrace();
             // In production, consider logging to a file or system logger
         }
-
-
     }
 }
