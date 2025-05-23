@@ -15,9 +15,7 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
     private DashboardController dashboardController;
 
     @FXML private Accordion weekAccordion;
-    @FXML private Button addWeekButton;
     @FXML private Button removeWeekButton;
-    @FXML private ToggleButton toggleViewButton;
 
     private int weekCount = 0;
 
