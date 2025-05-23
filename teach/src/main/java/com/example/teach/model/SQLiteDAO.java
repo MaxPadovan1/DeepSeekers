@@ -110,7 +110,7 @@ public class SQLiteDAO {
                             "  id           TEXT PRIMARY KEY, " +
                             "  subject_id   TEXT NOT NULL REFERENCES Subjects(id), " +
                             "  title        TEXT NOT NULL, " +
-                            "  details      TEXT, " +
+                            "  details      TEXT" +
                             ")"
             );
 
