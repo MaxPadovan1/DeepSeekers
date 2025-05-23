@@ -111,7 +111,6 @@ public class SQLiteDAO {
                             "  subject_id   TEXT NOT NULL REFERENCES Subjects(id), " +
                             "  title        TEXT NOT NULL, " +
                             "  details      TEXT, " +
-                            "  is_released  BOOLEAN DEFAULT 0" +
                             ")"
             );
 
