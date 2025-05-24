@@ -11,8 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,20 +29,39 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
 
     private final LessonPlanDAO lpDao = new LessonPlanDAO();
 
-    @FXML private Button    addLPButton;
-    @FXML private Button    removeLPButton;
-    @FXML private Button    editLPButton;
-    @FXML private Button    saveLPButton;
+    @FXML private Button addLPButton;
+    @FXML private Button removeLPButton;
+    @FXML private Button editLPButton;
+    @FXML private Button saveLPButton;
     @FXML private ComboBox<LessonPlan> LPDropdown;
     @FXML private TextField LPTitleField;
-    @FXML private TextArea  LPDetailsText;
+    @FXML private TextArea LPDetailsText;
 
     private final ObservableList<LessonPlan> plans = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         clearSelectionState();
+
+        // Setup ComboBox with custom display
         LPDropdown.setItems(plans);
+        LPDropdown.setCellFactory(cb -> new ListCell<LessonPlan>() {
+            @Override
+            protected void updateItem(LessonPlan item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.getTitle());
+            }
+        });
+        LPDropdown.setConverter(new StringConverter<LessonPlan>() {
+            @Override
+            public String toString(LessonPlan lp) {
+                return lp == null ? "" : lp.getTitle();
+            }
+            @Override
+            public LessonPlan fromString(String string) {
+                return null; // not needed
+            }
+        });
         LPDropdown.setOnAction(this::onLPSelected);
     }
 
@@ -54,9 +75,6 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         this.dashboardController = dash;
     }
 
-    /**
-     * Interface method: load plans for a single subject.
-     */
     @Override
     public void setSubject(Subject subject) {
         this.currentSubject = subject;
@@ -64,9 +82,6 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         clearSelectionState();
     }
 
-    /**
-     * Overload used by Dashboard (when passing list of subjects).
-     */
     public void setSubject(List<Subject> subjects) {
         if (subjects != null && !subjects.isEmpty()) {
             setSubject(subjects.get(0));
@@ -88,7 +103,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         LPTitleField.clear();
         LPDetailsText.clear();
         LPTitleField.setDisable(false);
+        LPTitleField.setEditable(true);
         LPDetailsText.setDisable(false);
+        LPDetailsText.setEditable(true);
         saveLPButton.setVisible(true);
         saveLPButton.setDisable(false);
     }
@@ -99,10 +116,11 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         if (sel == null) return;
         LPTitleField.setText(sel.getTitle());
         LPDetailsText.setText(sel.getDetails());
-        LPTitleField.setDisable(true);
-        LPDetailsText.setDisable(true);
-        saveLPButton.setVisible(true);
-        saveLPButton.setDisable(true);
+        LPTitleField.setDisable(false);
+        LPTitleField.setEditable(false);
+        LPDetailsText.setDisable(false);
+        LPDetailsText.setEditable(false);
+
         removeLPButton.setVisible(true);
         removeLPButton.setDisable(false);
         editLPButton.setVisible(true);
@@ -112,7 +130,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
     @FXML
     private void onEditLP(ActionEvent event) {
         LPTitleField.setDisable(false);
+        LPTitleField.setEditable(true);
         LPDetailsText.setDisable(false);
+        LPDetailsText.setEditable(true);
         saveLPButton.setVisible(true);
         saveLPButton.setDisable(false);
         editLPButton.setVisible(false);
@@ -124,7 +144,8 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         try {
             if (sel == null) {
                 String id = UUID.randomUUID().toString();
-                LessonPlan lp = new LessonPlan(id,
+                LessonPlan lp = new LessonPlan(
+                        id,
                         currentSubject.getId(),
                         LPTitleField.getText(),
                         LPDetailsText.getText());
@@ -134,6 +155,7 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             } else {
                 sel.setTitle(LPTitleField.getText());
                 sel.setDetails(LPDetailsText.getText());
+                LPDetailsText.setEditable(true);
                 lpDao.update(sel);
             }
         } catch (SQLException e) {
@@ -156,9 +178,6 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         clearSelectionState();
     }
 
-    /**
-     * Resets UI: only Add is visible, fields disabled.
-     */
     private void clearSelectionState() {
         addLPButton.setVisible(true);
         removeLPButton.setVisible(false);

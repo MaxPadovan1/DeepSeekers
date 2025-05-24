@@ -10,32 +10,39 @@
 <VBox prefHeight="720.0" prefWidth="1280.0"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.teach.controller.LessonPlanController">
+      fx:controller="com.example.teach.controller.LessonPlanController"
+      spacing="10" style="-fx-padding: 10;">
 
-    <VBox fx:id="teacherSection" spacing="10" style="-fx-padding: 10;">
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Button fx:id="addLPButton" text="Add Lesson Plan" onAction="#onAddLP" disable="false"/>
-            <Button fx:id="saveLPButton" text="💾 Save" onAction="#onSaveEditedLP" disable="true"/>
+    <!-- Teacher controls -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button fx:id="addLPButton" text="Add Lesson Plan" onAction="#onAddLP"/>
+        <Button fx:id="saveLPButton" text="💾 Save" onAction="#onSaveEditedLP" visible="false"/>
+        <Button fx:id="removeLPButton" text="Delete Lesson Plan" onAction="#onRemoveLP" visible="false"/>
+        <Button fx:id="editLPButton" text="✏️ Edit Lesson Plan" onAction="#onEditLP" visible="false"/>
+    </HBox>
 
-            <Button fx:id="removeLPButton" text="Delete Lesson Plan" onAction="#onRemoveLP" disable="true"/>
-            <Button fx:id="editLPButton" text="✏️ Edit Lesson Plan" onAction="#onEditLP" disable="true"/>
-        </HBox>
-        <Label fx:id="teacherStatusLabel" text="" wrapText="true"/>
-    </VBox>
-
-    <!-- Assignment selector (shared) -->
-    <HBox spacing="10" style="-fx-padding: 10;">
+    <!-- Selector -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
         <Label text="Lesson Plan:"/>
         <ComboBox fx:id="LPDropdown" prefWidth="300.0" onAction="#onLPSelected"/>
     </HBox>
 
-    <!-- Assignment content (editable for teacher) -->
-    <VBox spacing="10" style="-fx-padding: 10;">
+    <!-- Title field -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
         <Label text="Lesson Plan Title:"/>
-        <TextField fx:id="LPTitleField" promptText="Enter title here" disable="true"/>
+        <TextField fx:id="LPTitleField"
+                   promptText="Enter title here"
+                   editable="false"
+                   HBox.hgrow="ALWAYS"/>
+    </HBox>
 
+    <!-- Details area (fills remaining space, scrollable even when non-editable) -->
+    <VBox spacing="5" VBox.vgrow="ALWAYS">
         <Label text="Lesson Plan Details:"/>
-        <TextArea fx:id="LPDetailsText" prefHeight="120.0" wrapText="true" disable="true"/>
-
+        <TextArea fx:id="LPDetailsText"
+                  wrapText="true"
+                  editable="false"
+                  VBox.vgrow="ALWAYS"/>
     </VBox>
+
 </VBox>
