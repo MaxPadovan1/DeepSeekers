@@ -1,60 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Accordion?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
-
-<?import javafx.scene.layout.BorderPane?>
-
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <VBox prefHeight="720.0" prefWidth="1280.0"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.teach.controller.LessonPlanController">
+      fx:controller="com.example.teach.controller.LessonPlanController"
+      spacing="10" style="-fx-padding: 10;">
 
-    <!-- Control buttons visible only to teachers -->
-    <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
-        <!-- Back Arrow Image Button -->
-        <Button onAction="#goBack" style="-fx-background-color: transparent;">
-            <graphic>
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                <ImageView fitWidth="24" fitHeight="24">
-                    <image>
-                        <Image url="@images/back_aarow.png" /> <!-- Replace with your image path -->
-                    </image>
-                </ImageView>
-
-            <Label text="Lesson Plan" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-        </HBox>
-        </graphic>
-        </Button>
-
-
-        <Region HBox.hgrow="ALWAYS"/>
-
-        <Button fx:id="addWeekButton" text="➕ Add Week" onAction="#onAddWeek"/>
-        <Button fx:id="removeWeekButton" text="➖ Remove Week" onAction="#onRemoveWeek"/>
-        <ToggleButton fx:id="toggleViewButton" text="👁️‍🗨️ Student View"/>
+    <!-- Teacher controls -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button fx:id="addLPButton" text="Add Lesson Plan" onAction="#onAddLP"/>
+        <Button fx:id="saveLPButton" text="💾 Save" onAction="#onSaveEditedLP" visible="false"/>
+        <Button fx:id="removeLPButton" text="Delete Lesson Plan" onAction="#onRemoveLP" visible="false"/>
+        <Button fx:id="editLPButton" text="✏️ Edit Lesson Plan" onAction="#onEditLP" visible="false"/>
     </HBox>
 
-    <!-- Accordion that holds all week panes, content dynamically added from controller -->
-    <Accordion fx:id="weekAccordion" VBox.vgrow="ALWAYS"/>
-</VBox>
+    <!-- Selector -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Lesson Plan:"/>
+        <ComboBox fx:id="LPDropdown" prefWidth="300.0" onAction="#onLPSelected"/>
+    </HBox>
 
+    <!-- Title field -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Lesson Plan Title:"/>
+        <TextField fx:id="LPTitleField"
+                   promptText="Enter title here"
+                   editable="false"
+                   HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <!-- Details area (fills remaining space, scrollable even when non-editable) -->
+    <VBox spacing="5" VBox.vgrow="ALWAYS">
+        <Label text="Lesson Plan Details:"/>
+        <TextArea fx:id="LPDetailsText"
+                  wrapText="true"
+                  editable="false"
+                  VBox.vgrow="ALWAYS"/>
+    </VBox>
+
+</VBox>
