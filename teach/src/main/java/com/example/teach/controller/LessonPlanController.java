@@ -27,26 +27,19 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
 
     private final LessonPlanDAO lpDao = new LessonPlanDAO();
 
-    @FXML private Button addLPButton;
-    @FXML private Button removeLPButton;
-    @FXML private Button editLPButton;
-    @FXML private Button saveLPButton;
+    @FXML private Button    addLPButton;
+    @FXML private Button    removeLPButton;
+    @FXML private Button    editLPButton;
+    @FXML private Button    saveLPButton;
     @FXML private ComboBox<LessonPlan> LPDropdown;
     @FXML private TextField LPTitleField;
-    @FXML private TextArea LPDetailsText;
+    @FXML private TextArea  LPDetailsText;
 
     private final ObservableList<LessonPlan> plans = FXCollections.observableArrayList();
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // disable controls by default
-        removeLPButton.setDisable(true);
-        editLPButton.setDisable(true);
-        saveLPButton.setDisable(true);
-        LPTitleField.setDisable(true);
-        LPDetailsText.setDisable(true);
-
-        // set up ComboBox
+    public void initialize(URL location, ResourceBundle resources) {
+        clearSelectionState();
         LPDropdown.setItems(plans);
         LPDropdown.setOnAction(this::onLPSelected);
     }
@@ -62,67 +55,67 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
     }
 
     /**
-     * Called by DashboardController, passing a list of subjects.
-     * We take the first subject (teacher has one) and load its plans.
+     * Interface method: load plans for a single subject.
+     */
+    @Override
+    public void setSubject(Subject subject) {
+        this.currentSubject = subject;
+        loadPlans();
+        clearSelectionState();
+    }
+
+    /**
+     * Overload used by Dashboard (when passing list of subjects).
      */
     public void setSubject(List<Subject> subjects) {
         if (subjects != null && !subjects.isEmpty()) {
             setSubject(subjects.get(0));
-        } else {
-            plans.clear();
-            clearFields();
         }
     }
 
-    /**
-     * Internal: load plans for a single subject.
-     */
-    public void setSubject(Subject subject) {
-        this.currentSubject = subject;
+    private void loadPlans() {
+        plans.clear();
         try {
-            List<LessonPlan> list = lpDao.findBySubject(subject.getId());
-            plans.setAll(list);
+            plans.addAll(lpDao.findBySubject(currentSubject.getId()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        clearFields();
-        LPDropdown.getSelectionModel().clearSelection();
     }
 
     @FXML
     private void onAddLP(ActionEvent event) {
-        LPDropdown.getSelectionModel().clearSelection();
+        clearSelectionState();
         LPTitleField.clear();
         LPDetailsText.clear();
-
         LPTitleField.setDisable(false);
         LPDetailsText.setDisable(false);
+        saveLPButton.setVisible(true);
         saveLPButton.setDisable(false);
-        editLPButton.setDisable(true);
-        removeLPButton.setDisable(true);
     }
 
     @FXML
     private void onLPSelected(ActionEvent event) {
         LessonPlan sel = LPDropdown.getValue();
         if (sel == null) return;
-
         LPTitleField.setText(sel.getTitle());
         LPDetailsText.setText(sel.getDetails());
-
         LPTitleField.setDisable(true);
         LPDetailsText.setDisable(true);
-        editLPButton.setDisable(false);
-        removeLPButton.setDisable(false);
+        saveLPButton.setVisible(true);
         saveLPButton.setDisable(true);
+        removeLPButton.setVisible(true);
+        removeLPButton.setDisable(false);
+        editLPButton.setVisible(true);
+        editLPButton.setDisable(false);
     }
 
     @FXML
     private void onEditLP(ActionEvent event) {
         LPTitleField.setDisable(false);
         LPDetailsText.setDisable(false);
+        saveLPButton.setVisible(true);
         saveLPButton.setDisable(false);
-        editLPButton.setDisable(true);
+        editLPButton.setVisible(false);
     }
 
     @FXML
@@ -130,59 +123,49 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         LessonPlan sel = LPDropdown.getValue();
         try {
             if (sel == null) {
-                // creating new lesson plan
                 String id = UUID.randomUUID().toString();
-                LessonPlan lp = new LessonPlan(
-                        id,
+                LessonPlan lp = new LessonPlan(id,
                         currentSubject.getId(),
                         LPTitleField.getText(),
-                        LPDetailsText.getText()
-                );
+                        LPDetailsText.getText());
                 lpDao.save(lp);
                 plans.add(lp);
                 LPDropdown.getSelectionModel().select(lp);
             } else {
-                // updating existing
                 sel.setTitle(LPTitleField.getText());
                 sel.setDetails(LPDetailsText.getText());
                 lpDao.update(sel);
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            // reset UI
-            LPTitleField.setDisable(true);
-            LPDetailsText.setDisable(true);
-            saveLPButton.setDisable(true);
-            editLPButton.setDisable(false);
-            removeLPButton.setDisable(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        clearSelectionState();
     }
 
     @FXML
     private void onRemoveLP(ActionEvent event) {
         LessonPlan sel = LPDropdown.getValue();
-        if (sel == null) return;
-
-        try {
-            lpDao.delete(sel.getId());
-            plans.remove(sel);
-            clearFields();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        if (sel != null) {
+            try {
+                lpDao.delete(sel.getId());
+                plans.remove(sel);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        clearSelectionState();
     }
 
     /**
-     * Clear and disable fields and buttons.
+     * Resets UI: only Add is visible, fields disabled.
      */
-    private void clearFields() {
-        LPTitleField.clear();
-        LPDetailsText.clear();
+    private void clearSelectionState() {
+        addLPButton.setVisible(true);
+        removeLPButton.setVisible(false);
+        editLPButton.setVisible(false);
+        saveLPButton.setVisible(false);
         LPTitleField.setDisable(true);
         LPDetailsText.setDisable(true);
-        editLPButton.setDisable(true);
-        removeLPButton.setDisable(true);
-        saveLPButton.setDisable(true);
+        LPDropdown.getSelectionModel().clearSelection();
     }
 }
