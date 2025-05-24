@@ -32,14 +32,8 @@ public class AIService {
     }
 
     public String getResponse(String prompt) {
-        System.out.println("[DEBUG] Sending prompt to Ollama: " + prompt);
         try {
             OllamaResult result = ollamaAPI.generate(MODEL_NAME, prompt, false, new OptionsBuilder().build());
-
-            if (result != null) {
-                System.out.println("[DEBUG] HTTP status: " + result.getHttpStatusCode());
-                System.out.println("[DEBUG] Raw AI response: " + result.getResponse());
-            }
 
             if (result != null && result.getHttpStatusCode() == 200) {
                 return result.getResponse();
@@ -48,9 +42,10 @@ public class AIService {
             }
 
         } catch (OllamaBaseException | IOException | InterruptedException e) {
-            System.out.println("[ERROR] AI generation failed:");
             e.printStackTrace();
             return "❌ Error during AI generation.";
         }
     }
+
 }
+
