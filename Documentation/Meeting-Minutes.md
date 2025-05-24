@@ -69,14 +69,25 @@
 - 7th weekly meeting
 - Discussed about the work going to be done by front end and back end.
 - Also discussed about About how to create the video presentation and ideas
+- Had disagreements about splitting work among members, because of time management issues and unavailabilities.
 #### Glen, Kai, Nav, Angela, Max attended the meeting on the 29th April.
 
 ### May 1
 - scrum meeting.
 - Discussed about submitting and combining the work project.
+- Had arguments about doing work on time, as everyone had different availabilities.
+- Resolved the issues by taking responsibility on how to complete the task on time and helping each other with the tasks.
 - #### Glen, Kai, Nav, Angela, Max(video call) attended the meeting on the 1st May.
 
 ### May 6   
 - 8th weekly meeting.
-- Discussed about modifying UI and back end and working on the functionalities of some UI elements/
+- Discussed about modifying UI and back end and working on the functionalities of some UI elements.
 - #### Glen, Kai, Nav, Angela, Max attended the meeting on the 6th of May.
+
+### May 8  
+- scrum meeting.
+- Submitted the assignment and started working on modifying the code.
+- #### Glen, Kai, Nav, Max attended the meeting on 8th of May.
+
+### May 13
+
