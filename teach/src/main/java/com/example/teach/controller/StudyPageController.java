@@ -1,17 +1,24 @@
 package com.example.teach.controller;
 
-import com.example.teach.model.Subject;
-import com.example.teach.model.User;
+import com.example.teach.model.*;
 import javafx.fxml.Initializable;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.nio.file.*;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+
 /**
  * Controller for the "Study" section of a subject.
  * <p>
@@ -31,6 +38,14 @@ public class StudyPageController implements SectionControllerBase, Initializable
     @FXML private Accordion weekAccordion;
     @FXML private Button addWeekButton;
     @FXML private Button removeWeekButton;
+    @FXML private ComboBox<Week> weekDropdown;
+    @FXML private ListView<String> fileListView;
+    @FXML
+    private Label statusLabel;
+
+    private File selectedFile;
+    @FXML
+    private ComboBox<Assignment> assignmentDropdown;
 
     /**
      * Called by the JavaFX framework after root element injection.
@@ -44,6 +59,126 @@ public class StudyPageController implements SectionControllerBase, Initializable
         // TODO: add initialization logic for the Study page
         addWeekPane();
         updateRemoveButtonState(); // check if we should disable the remove button
+        File baseDir = new File("teach/study/" + currentSubject.getId());
+        if (baseDir.exists()) {
+            File[] weekDirs = baseDir.listFiles(File::isDirectory);
+            if (weekDirs != null) {
+                List<Week> weeks = new ArrayList<>();
+                for (File dir : weekDirs) {
+                    String name = dir.getName(); // e.g. "week1"
+                    if (name.startsWith("week")) {
+                        try {
+                            int weekNumber = Integer.parseInt(name.substring(4));
+                            weeks.add(new Week(weekNumber));
+                        } catch (NumberFormatException ignored) {}
+                    }
+                }
+                // 按照周次排序
+                weeks.sort(Comparator.comparingInt(Week::getNumber));
+                weekDropdown.getItems().setAll(weeks);
+            }
+        }
+
+    }
+
+
+    @FXML
+    private void onUpload() {
+        if (weekDropdown.getValue() == null) {
+            statusLabel.setText("Please select a week first.");
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Teaching File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile == null) {
+            statusLabel.setText("No file selected.");
+            return;
+        }
+
+        Week week = weekDropdown.getValue();
+        String destPath = "teach/study/" + currentSubject.getId() + "/week" + week.getNumber() + "/" + selectedFile.getName();
+
+        try {
+            Path target = Paths.get(destPath);
+            Files.createDirectories(target.getParent());
+            Files.copy(selectedFile.toPath(), target, StandardCopyOption.REPLACE_EXISTING);
+            statusLabel.setText("Uploaded: " + selectedFile.getName());
+            updateFileList(week); // 上传完刷新该周文件列表
+        } catch (IOException e) {
+            e.printStackTrace();
+            statusLabel.setText("Upload failed.");
+        }
+    }
+
+    @FXML
+    private void onSubmit() {
+        if (!(currentUser instanceof Student)) {
+            statusLabel.setText("Only students can submit files.");
+            return;
+        }
+
+        if (selectedFile == null) {
+            statusLabel.setText("Please upload a file first.");
+            return;
+        }
+
+        Week selectedWeek = weekDropdown.getValue();
+        if (selectedWeek == null) {
+            statusLabel.setText("Please select a week.");
+            return;
+        }
+
+        Assignment assignment = assignmentDropdown.getValue();
+        if (assignment == null) {
+            statusLabel.setText("Please select an assignment.");
+            return;
+        }
+
+        Student student = (Student) currentUser;
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String fileName = student.getId() + "_" + timestamp + ".txt";
+        String folderPath = "teach/study/" + currentSubject.getId() + "/week" + selectedWeek.getNumber();
+
+        try {
+            Path targetDir = Paths.get(folderPath);
+            Files.createDirectories(targetDir);
+            Path targetPath = targetDir.resolve(fileName);
+            Files.copy(selectedFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+
+            statusLabel.setText("Uploaded: " + fileName);
+            updateFileList(selectedWeek);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            statusLabel.setText("Upload failed.");
+        }
+    }
+
+    private void updateFileList(Week week) {
+        fileListView.getItems().clear();
+        String folderPath = "teach/study/" + currentSubject.getId() + "/week" + week.getNumber();
+
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(folderPath))) {
+            for (Path file : stream) {
+                String fileName = file.getFileName().toString();
+                if (fileName.endsWith(".link")) {
+                    String link = Files.readAllLines(file).get(0);
+                    fileListView.getItems().add("🔗 " + link);
+                } else {
+                    fileListView.getItems().add("📄 " + fileName);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -89,6 +224,24 @@ public class StudyPageController implements SectionControllerBase, Initializable
     private void onAddWeek() {
         addWeekPane();
         updateRemoveButtonState();
+        int nextWeekNumber = weekDropdown.getItems().stream()
+                .mapToInt(Week::getNumber)
+                .max()
+                .orElse(0) + 1;
+
+        Week newWeek = new Week(nextWeekNumber);
+        weekDropdown.getItems().add(newWeek);
+        weekDropdown.getSelectionModel().select(newWeek);
+
+        String weekDirPath = "teach/study/" + currentSubject.getId() + "/week" + nextWeekNumber;
+        try {
+            Files.createDirectories(Paths.get(weekDirPath));
+            statusLabel.setText("Added Week " + nextWeekNumber);
+            updateFileList(newWeek);
+        } catch (IOException e) {
+            e.printStackTrace();
+            statusLabel.setText("Failed to add week.");
+        }
     }
 
     private void addWeekPane() {
@@ -148,6 +301,41 @@ public class StudyPageController implements SectionControllerBase, Initializable
         if (dashboardController != null) {
             dashboardController.goToDashboard(null);
         }
+    }
+
+    @FXML
+    private void onUploadLink() {
+        if (weekDropdown.getValue() == null) {
+            statusLabel.setText("Please select a week first.");
+            return;
+        }
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Upload Link");
+        dialog.setHeaderText("Enter a link to upload:");
+        dialog.setContentText("URL:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(link -> {
+            if (!link.startsWith("http://") && !link.startsWith("https://")) {
+                statusLabel.setText("Invalid link.");
+                return;
+            }
+
+            Week week = weekDropdown.getValue();
+            String fileName = "link_" + System.currentTimeMillis() + ".link";
+            String filePath = "teach/study/" + currentSubject.getId() + "/week" + week.getNumber() + "/" + fileName;
+
+            try {
+                Files.createDirectories(Paths.get(filePath).getParent());
+                Files.write(Paths.get(filePath), Collections.singletonList(link));
+                statusLabel.setText("Link uploaded.");
+                updateFileList(week);
+            } catch (IOException e) {
+                e.printStackTrace();
+                statusLabel.setText("Failed to save link.");
+            }
+        });
     }
 
 
