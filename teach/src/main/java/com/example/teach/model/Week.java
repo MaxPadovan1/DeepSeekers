@@ -32,6 +32,22 @@ public class Week {
         return tasks;
     }
 
+
+    private int number;
+
+    public Week(int number) {
+        this.number = number;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    @Override
+    public String toString() {
+        return "Week " + number;
+    }
+
     /**
      * Sets or updates the list of tasks for this week.
      *
