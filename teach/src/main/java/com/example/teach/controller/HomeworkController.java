@@ -1,10 +1,6 @@
 package com.example.teach.controller;
 
-import com.example.teach.model.Homework;
-import com.example.teach.model.HomeworkDAO;
-import com.example.teach.model.Subject;
-import com.example.teach.model.Teacher;
-import com.example.teach.model.User;
+import com.example.teach.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -38,7 +34,16 @@ public class HomeworkController implements SectionControllerBase {
     @Override
     public void setUser(User user) {
         this.currentUser = user;
+
+        // Only show the AI button for teachers
+        if (generateWithAIButton != null) {
+            boolean isTeacher = user instanceof Teacher;
+            generateWithAIButton.setVisible(isTeacher);
+            generateWithAIButton.setManaged(isTeacher);
+            generateWithAIButton.setDisable(!isTeacher);
+        }
     }
+
 
     @Override
     public void setSubject(Subject subject) {
@@ -148,8 +153,49 @@ public class HomeworkController implements SectionControllerBase {
 
     @FXML
     private void onGenerateWithAI() {
-        teacherStatusLabel.setText("AI generation not connected yet.");
+        if (!(currentUser instanceof Teacher)) return;
+
+        String title = homeworkTitleField.getText();
+        if (title == null || title.isBlank()) {
+            teacherStatusLabel.setText("Enter a title before generating.");
+            return;
+        }
+
+        teacherStatusLabel.setText("Generating with AI...");
+
+        new Thread(() -> {
+            AIService aiService = AIService.getInstance();
+            String prompt = "Generate a concise and clear homework description for the following title: \""
+                    + title + "\". Limit to 150 words.";
+
+            String aiResponse = aiService.getResponse(prompt);
+
+            javafx.application.Platform.runLater(() -> {
+                teacherStatusLabel.setText("AI suggestion ready. Review and edit.");
+
+                Dialog<String> dialog = new Dialog<>();
+                dialog.setTitle("AI Homework Description");
+                dialog.setHeaderText("Review and edit the AI-generated homework description:");
+
+                TextArea textArea = new TextArea(aiResponse);
+                textArea.setWrapText(true);
+                textArea.setPrefHeight(250);
+                dialog.getDialogPane().setContent(textArea);
+
+                ButtonType applyBtn = new ButtonType("Apply", ButtonBar.ButtonData.OK_DONE);
+                ButtonType cancelBtn = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+                dialog.getDialogPane().getButtonTypes().addAll(applyBtn, cancelBtn);
+
+                dialog.setResultConverter(button -> button == applyBtn ? textArea.getText() : null);
+
+                dialog.showAndWait().ifPresent(edited -> {
+                    homeworkDetailsText.setText(edited);
+                    teacherStatusLabel.setText("AI description applied. You can edit before saving.");
+                });
+            });
+        }).start();
     }
+
 
     private void enableEditing(boolean enable) {
         homeworkTitleField.setDisable(!enable);
