@@ -37,6 +37,10 @@
         <Label text="Assignment Details:"/>
         <TextArea fx:id="assignmentDetailsText" prefHeight="120.0" wrapText="true" disable="true"/>
 
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 0 0 10 10;">
+            <Button fx:id="generateWithAIButton" text="🤖 Generate with AI" onAction="#onGenerateWithAI"/>
+        </HBox>
+
     </VBox>
 
     <HBox fx:id="studentSection" spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">

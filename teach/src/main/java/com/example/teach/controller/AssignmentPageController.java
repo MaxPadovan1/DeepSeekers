@@ -39,6 +39,8 @@ public class AssignmentPageController implements SectionControllerBase {
     @FXML private DatePicker dueDatePicker;
     @FXML private TableColumn<ASubmission, Void> viewColumn;
     @FXML private Label teacherStatusLabel;
+    @FXML private Button generateWithAIButton;
+
 
 
     private boolean editingAssignment = false;
@@ -117,6 +119,12 @@ public class AssignmentPageController implements SectionControllerBase {
         if (assignmentDetailsText != null) {
             assignmentDetailsText.setEditable(isTeacher);
         }
+        if (generateWithAIButton != null) {
+            generateWithAIButton.setVisible(isTeacher);
+            generateWithAIButton.setManaged(isTeacher);
+            generateWithAIButton.setDisable(!isTeacher);
+        }
+
         if (user instanceof Student) {
             assignmentTitleField.setEditable(false);
             assignmentTitleField.setDisable(false); // ✅ Let it stay visually normal
@@ -498,4 +506,58 @@ public class AssignmentPageController implements SectionControllerBase {
             teacherStatusLabel.setText("Failed to save.");
         }
     }
+    @FXML
+    private void onGenerateWithAI() {
+        if (!(user instanceof Teacher)) return;
+
+        String title = assignmentTitleField.getText();
+        if (title == null || title.isBlank()) {
+            teacherStatusLabel.setText("Enter a title before generating.");
+            return;
+        }
+
+        teacherStatusLabel.setText("Generating with AI...");
+
+        new Thread(() -> {
+            AIService aiService = AIService.getInstance();
+            String prompt = "Generate a detailed assignment description for a task titled: " + title+ "\". Keep it concise, and limit the response to 200 words or less.";
+
+            String aiResponse = aiService.getResponse(prompt);
+
+            javafx.application.Platform.runLater(() -> {
+                teacherStatusLabel.setText("AI suggestion ready. Review and edit.");
+
+                // Create a custom dialog
+                Dialog<String> dialog = new Dialog<>();
+                dialog.setTitle("AI Assignment Description");
+                dialog.setHeaderText("Review and edit the AI-suggested assignment description below:");
+
+                // Editable TextArea
+                TextArea textArea = new TextArea(aiResponse);
+                textArea.setWrapText(true);
+                textArea.setPrefHeight(300);
+                dialog.getDialogPane().setContent(textArea);
+
+                // Dialog buttons
+                ButtonType applyButton = new ButtonType("Apply", ButtonBar.ButtonData.OK_DONE);
+                ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+                dialog.getDialogPane().getButtonTypes().addAll(applyButton, cancelButton);
+
+                // Return edited text on Apply
+                dialog.setResultConverter(dialogButton -> {
+                    if (dialogButton == applyButton) {
+                        return textArea.getText();
+                    }
+                    return null;
+                });
+
+                dialog.showAndWait().ifPresent(editedText -> {
+                    assignmentDetailsText.setText(editedText);
+                    teacherStatusLabel.setText("AI description applied. You can further edit before saving.");
+                });
+            });
+        }).start();
+    }
+
+
 }
