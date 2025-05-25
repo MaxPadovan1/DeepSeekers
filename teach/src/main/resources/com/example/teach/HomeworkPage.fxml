@@ -1,76 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.teach.controller.HomeworkController"
+      prefHeight="720" prefWidth="1280" spacing="10" style="-fx-padding: 10;">
 
-<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.AssignmentPageController">
+    <VBox fx:id="teacherSection" spacing="10">
+        <HBox spacing="10">
+            <Button fx:id="addHomeworkButton" text="Add Homework" onAction="#onAddHomework"/>
+            <Button fx:id="editHomeworkButton" text="✏️ Edit Homework" onAction="#onEditHomework" disable="true"/>
+            <Button fx:id="saveHomeworkButton" text="💾 Save" onAction="#onSaveHomework" disable="true"/>
+            <Button fx:id="deleteHomeworkButton" text="Delete" onAction="#onDeleteHomework" disable="true"/>
+            <Button fx:id="releaseHomeworkButton" text="Release" onAction="#onToggleRelease" disable="true"/>
+        </HBox>
+        <Label fx:id="teacherStatusLabel" text="" wrapText="true"/>
+    </VBox>
 
-    <VBox fx:id="teacherSection" spacing="10" style="-fx-padding: 10;">
-        <HBox alignment="CENTER_RIGHT" spacing="10">
-            <Button fx:id="addAssignmentButton" onAction="#onAddAssignment" text="Add Homework" />
-            <Button fx:id="removeAssignmentButton" onAction="#onRemoveAssignment" text="Remove Homework" />
-            <Button fx:id="editAssignmentButton" onAction="#onEditAssignment" text="✏️ Edit Homework" />
-            <Button fx:id="saveAssignmentButton" onAction="#onSaveEditedAssignment" text="💾 Save" visible="false" />
-            <Button fx:id="releaseAssignmentButton" onAction="#onReleaseAssignment" text="Release Homework" />
+    <HBox spacing="10">
+        <Label text="Homework:"/>
+        <ComboBox fx:id="homeworkDropdown" prefWidth="300.0" onAction="#onHomeworkSelected"/>
+    </HBox>
+
+    <VBox spacing="10">
+        <Label text="Homework Title:"/>
+        <TextField fx:id="homeworkTitleField" promptText="Enter title here" disable="true"/>
+
+        <Label text="Due Date:"/>
+        <DatePicker fx:id="homeworkDueDatePicker" disable="true"/>
+
+        <Label text="Homework Details:"/>
+        <TextArea fx:id="homeworkDetailsText" wrapText="true" prefHeight="120" disable="true"/>
+
+        <HBox spacing="10">
+            <Button fx:id="generateWithAIButton" text="🤖 Generate with AI" onAction="#onGenerateWithAI"/>
         </HBox>
     </VBox>
 
-    <!-- Assignment selector (shared) -->
-    <HBox spacing="10" style="-fx-padding: 10;">
-        <Label text="Homework:" />
-        <ComboBox fx:id="assignmentDropdown" onAction="#onAssignmentSelected" prefWidth="300.0" />
-    </HBox>
-
-    <!-- Assignment content (editable for teacher) -->
-    <VBox spacing="10" style="-fx-padding: 10;">
-        <Label text="Homework Title:" />
-        <TextField fx:id="assignmentTitleField" promptText="Enter title here" />
-
-        <Label text="Due Date:" />
-      <Label layoutX="20.0" layoutY="79.0" text="Open Date:">
-         <VBox.margin>
-            <Insets left="300.0" top="-20.0" />
-         </VBox.margin>
-         <padding>
-            <Insets top="-5.0" />
-         </padding>
-      </Label>
-      <DatePicker fx:id="dueDatePicker1" layoutX="20.0" layoutY="105.0">
-         <VBox.margin>
-            <Insets left="300.0" />
-         </VBox.margin>
-      </DatePicker>
-        <DatePicker fx:id="dueDatePicker">
-         <VBox.margin>
-            <Insets top="-33.0" />
-         </VBox.margin></DatePicker>
-
-        <Label text="Homework Details:" />
-        <TextArea fx:id="assignmentDetailsText" prefHeight="120.0" wrapText="true" />
-
-    </VBox>
-
-    <HBox fx:id="studentSection" alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
-        <Button fx:id="uploadButton" onAction="#onUpload" text="Upload (.txt)" />
-        <Button fx:id="submitButton" onAction="#onSubmit" text="Submit" />
-        <Label fx:id="submissionStatusLabel" text="No file uploaded." />
-    </HBox>
-
-    <TableView fx:id="submissionTable" prefHeight="200.0" visible="false">
-        <columns>
-            <TableColumn fx:id="studentNameColumn" prefWidth="100" text="Student" />
-            <TableColumn fx:id="submissionTimeColumn" prefWidth="100" text="Submitted At" />
-            <TableColumn fx:id="fileColumn" prefWidth="100" text="File" />
-            <TableColumn fx:id="viewColumn" prefWidth="100" text="View" />
-        </columns>
-    </TableView>
 </VBox>
