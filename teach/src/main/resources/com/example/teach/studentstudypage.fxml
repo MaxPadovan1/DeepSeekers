@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.teach.controller.StudentStudyPageController"
+            prefWidth="1280.0" prefHeight="720.0">
+
+
+   <VBox spacing="20" alignment="TOP_CENTER"
+         AnchorPane.topAnchor="50.0"
+         AnchorPane.leftAnchor="20.0"
+         AnchorPane.rightAnchor="20.0"
+         AnchorPane.bottomAnchor="20.0">
+
+      <Label text="Study Materials" style="-fx-font-size: 24px;"/>
+
+      <Accordion fx:id="weekAccordion" prefWidth="1240.0" />
+   </VBox>
+</AnchorPane>

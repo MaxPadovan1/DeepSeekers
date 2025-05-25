@@ -74,8 +74,13 @@ public class SubjectHomePageController {
      * Loads the Study section into the center pane.
      * Updates the dashboard title accordingly.
      */
-    @FXML private void onStudy() {
-        loadSection("StudyPage.fxml");
+    @FXML
+    private void onStudy() {
+        if (currentUser instanceof Teacher) {
+            loadSection("TeacherStudyPage.fxml");
+        } else {
+            loadSection("studentstudypage.fxml");
+        }
         dashboardController.setPageLabel("Dashboard / " + currentSubject.getName() + " / Study");
     }
 
