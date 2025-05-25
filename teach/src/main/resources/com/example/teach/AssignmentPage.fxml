@@ -12,8 +12,8 @@
             <Button fx:id="addAssignmentButton" text="Add Assignment" onAction="#onAddAssignment" disable="false"/>
             <Button fx:id="removeAssignmentButton" text="Delete Assignment" onAction="#onRemoveAssignment" disable="true"/>
 
-            <Button fx:id="editAssignmentButton" text="✏️ Edit Assignment" onAction="#onEditAssignment" disable="true"/>
-            <Button fx:id="saveAssignmentButton" text="💾 Save" onAction="#onSaveEditedAssignment" disable="true"/>
+            <Button fx:id="editAssignmentButton" text="Edit Assignment" onAction="#onEditAssignment" disable="true"/>
+            <Button fx:id="saveAssignmentButton" text="Save" onAction="#onSaveEditedAssignment" disable="true"/>
 
             <Button fx:id="releaseAssignmentButton" text="Release" onAction="#onToggleRelease"/>
         </HBox>
@@ -38,7 +38,7 @@
         <TextArea fx:id="assignmentDetailsText" prefHeight="120.0" wrapText="true" disable="true"/>
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 0 0 10 10;">
-            <Button fx:id="generateWithAIButton" text="🤖 Generate with AI" onAction="#onGenerateWithAI"/>
+            <Button fx:id="generateWithAIButton" text="Enhance with AI" onAction="#onGenerateWithAI"/>
         </HBox>
 
     </VBox>

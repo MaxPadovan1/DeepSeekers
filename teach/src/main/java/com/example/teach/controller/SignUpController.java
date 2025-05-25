@@ -18,7 +18,12 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Controller for the Sign-Up page.
+ * <p>
+ * Handles user registration logic, including input validation, subject selection,
+ * and database communication.
+ */
 public class SignUpController {
 
     @FXML private TextField idField;
@@ -34,7 +39,12 @@ public class SignUpController {
     private Connection conn;
 
     private final Set<String> selectedSubjectIds = new HashSet<>();  // ✅ Add this at class level
-
+    /**
+     * Initializes the Sign-Up screen.
+     * <p>
+     * Populates the role dropdown, sets up subject list with checkboxes,
+     * and connects to the database to fetch available subjects.
+     */
     @FXML
     public void initialize() {
         roleBox.setItems(FXCollections.observableArrayList("Student", "Teacher"));
@@ -71,8 +81,14 @@ public class SignUpController {
         }
     }
 
-
-
+    /**
+     * Handles the "Sign Up" button click.
+     * <p>
+     * Validates user input, processes selected subjects,
+     * hashes the password, and attempts to register the user.
+     *
+     * @param event the ActionEvent triggered by the Sign-Up button
+     */
     @FXML
     private void handleSignUp(ActionEvent event) {
         String id = idField.getText().trim();
@@ -121,7 +137,13 @@ public class SignUpController {
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
-
+    /**
+     * Navigates back to the login page.
+     * <p>
+     * Invoked either on successful sign-up or from a "Back to Login" button.
+     *
+     * @param actionEvent the ActionEvent (can be null)
+     */
     @FXML
     public void goToLogin(ActionEvent actionEvent) {
         try {

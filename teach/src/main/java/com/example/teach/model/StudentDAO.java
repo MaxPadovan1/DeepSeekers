@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO for retrieving student-related data.
+ * Data Access Object for retrieving and managing student-related data from the database.
+ * <p>
+ * Provides methods to retrieve students enrolled in a subject or by their ID.
  */
 public class StudentDAO {
     private final Connection conn;
 
+    /**
+     * Constructs a new StudentDAO with a connection to the SQLite database.
+     */
     public StudentDAO() {
         this.conn = SQliteConnection.getInstance();
     }
@@ -51,6 +56,14 @@ public class StudentDAO {
         return students;
     }
 
+    /**
+     * Retrieves a student by their unique user ID.
+     * <p>
+     * Uses a join between the Users and Students tables to verify student status.
+     *
+     * @param id the ID of the student to retrieve
+     * @return the corresponding {@link Student} object, or {@code null} if not found
+     */
     public Student getStudentById(String id) {
         String sql = "SELECT u.id, u.passwordHash, u.firstName, u.lastName, u.email " +
                 "FROM Users u JOIN Students s ON u.id = s.id WHERE u.id = ?";
@@ -72,5 +85,4 @@ public class StudentDAO {
         }
         return null;
     }
-
 }

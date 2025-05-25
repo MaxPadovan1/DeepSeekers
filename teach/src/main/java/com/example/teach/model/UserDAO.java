@@ -75,6 +75,14 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Retrieves a user (Student or Teacher) by their ID.
+     * <p>
+     * Loads associated subject(s) depending on role.
+     *
+     * @param id the ID of the user to retrieve
+     * @return the {@link User} object if found, otherwise {@code null}
+     */
     public User findByUserId(String id) {
         String sql = "SELECT passwordHash, firstName, lastName, role, email FROM Users WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -122,11 +130,6 @@ public class UserDAO {
             return null;
         }
     }
-
-
-
-
-
     /**
      * Finds the maximum user ID matching a given prefix, e.g. highest student or teacher ID.
      *
@@ -149,8 +152,8 @@ public class UserDAO {
     /**
      * Registers a new user (Student or Teacher) in the database.
      * <p>
-     * Enforces unique ID, subject count constraints for students (<=4),
-     * and single-teacher-per-subject for teachers.
+     * For students, associates multiple subjects (up to 4 allowed).
+     * For teachers, assigns one subject.
      *
      * @param u the {@link User} instance to persist
      * @return true if registration succeeds; false otherwise

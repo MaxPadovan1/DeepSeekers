@@ -18,7 +18,13 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
+/**
+ * Controller for managing the Assignment page.
+ * <p>
+ * Handles assignment creation, editing, releasing, submission,
+ * and AI-based generation of assignment descriptions. Supports both
+ * teacher and student roles, updating the UI accordingly.
+ */
 public class AssignmentPageController implements SectionControllerBase {
 
     @FXML private Button addAssignmentButton;
@@ -55,38 +61,60 @@ public class AssignmentPageController implements SectionControllerBase {
     private final AssignmentDAO assignmentDAO = new AssignmentDAO();
     private final ASubmissionDAO ASubmissionDAO = new ASubmissionDAO();// You will need to implement this
 
+    /**
+     * Sets the currently logged-in user and updates the UI.
+     */
     @Override
     public void setUser(User user) {
         this.user = user;
         updateUIForUserRole();
     }
 
+    /**
+     * Sets the current subject context and updates the UI.
+     */
     @Override
     public void setSubject(Subject subject) {
         this.subject = subject;
         updateUIForUserRole();
     }
+
+    /**
+     * Sets the dashboard controller reference (optional).
+     */
     @Override
     public void setDashboardController(DashboardController controller) {
         // Optional, in case you want to update labels or switch pages
     }
+
+    /**
+     * Shows a button (makes it visible and enabled).
+     */
     private void show(Button btn) {
         btn.setVisible(true);
         btn.setManaged(true);
         btn.setDisable(false);
     }
 
+    /**
+     * Hides a button (makes it invisible and disables it).
+     */
     private void hide(Button btn) {
         btn.setVisible(false);
         btn.setManaged(false);
         btn.setDisable(true); // optional: just in case
     }
 
-
+    /**
+     * Called automatically after the FXML is loaded.
+     */
     @FXML
     public void initialize() {
     }
 
+    /**
+     * Updates the UI based on the user's role (Teacher or Student).
+     */
     private void updateUIForUserRole() {
         if (user == null || subject == null) return;
 
@@ -127,10 +155,10 @@ public class AssignmentPageController implements SectionControllerBase {
 
         if (user instanceof Student) {
             assignmentTitleField.setEditable(false);
-            assignmentTitleField.setDisable(false); // ✅ Let it stay visually normal
+            assignmentTitleField.setDisable(false);
 
             dueDatePicker.setEditable(false);       // for dropdown interaction
-            dueDatePicker.setDisable(false);        // ✅ Allow it to look normal but do nothing with it
+            dueDatePicker.setDisable(false);
 
             assignmentDetailsText.setEditable(false);
             assignmentDetailsText.setDisable(false);
@@ -144,6 +172,9 @@ public class AssignmentPageController implements SectionControllerBase {
     }
 
 
+    /**
+     * Loads assignments based on user role.
+     */
     private void loadAssignments() {
         try {
             List<Assignment> assignments = (user instanceof Teacher)
@@ -155,6 +186,9 @@ public class AssignmentPageController implements SectionControllerBase {
         }
     }
 
+    /**
+     * Prepares form for adding a new assignment.
+     */
     @FXML
     private void onAddAssignment() {
         if (!(user instanceof Teacher)) return;
@@ -188,7 +222,9 @@ public class AssignmentPageController implements SectionControllerBase {
         teacherStatusLabel.setText("Enter assignment details, then press Save.");
     }
 
-
+    /**
+     * Removes the selected assignment.
+     */
     @FXML
     private void onRemoveAssignment() {
         Assignment selected = assignmentDropdown.getValue();
@@ -202,6 +238,9 @@ public class AssignmentPageController implements SectionControllerBase {
         }
     }
 
+    /**
+     * Releases or unreleases the selected assignment.
+     */
     @FXML
     private void onToggleRelease() {
         Assignment selected = assignmentDropdown.getValue();
@@ -228,7 +267,6 @@ public class AssignmentPageController implements SectionControllerBase {
 
             dueDatePicker.setDisable(true);
 
-// Hide action buttons
             hide(saveAssignmentButton);
             hide(editAssignmentButton);
             hide(removeAssignmentButton);
@@ -244,8 +282,9 @@ public class AssignmentPageController implements SectionControllerBase {
         }
     }
 
-
-
+    /**
+     * Applies placeholder style to text input fields.
+     */
     public static void applyPlaceholderStyle(TextInputControl field, String placeholderText) {
         field.setText(placeholderText);
         field.setStyle("-fx-text-fill: grey; -fx-font-style: italic;");
@@ -265,7 +304,10 @@ public class AssignmentPageController implements SectionControllerBase {
         });
     }
 
-
+    /**
+     * Called when an assignment is selected from the dropdown.
+     * Populates form and loads submissions.
+     */
     @FXML
     private void onAssignmentSelected() {
         Assignment selected = assignmentDropdown.getValue();
@@ -311,9 +353,9 @@ public class AssignmentPageController implements SectionControllerBase {
         }
     }
 
-
-
-
+    /**
+     * Loads all submissions for a given assignment.
+     */
     private void loadSubmissions(Assignment assignment) {
         try {
             List<ASubmission> submissions = ASubmissionDAO.getSubmissionsByAssignmentId(assignment.getId());
@@ -360,6 +402,9 @@ public class AssignmentPageController implements SectionControllerBase {
         }
     }
 
+    /**
+     * Validates the assignment form fields.
+     */
     private boolean isAssignmentFormValid() {
         String title = assignmentTitleField.getText();
         String details = assignmentDetailsText.getText();
@@ -370,6 +415,9 @@ public class AssignmentPageController implements SectionControllerBase {
                 && dueDate != null;
     }
 
+    /**
+     * Opens a file chooser to upload a .txt file.
+     */
     @FXML
     private void onUpload() {
         FileChooser fileChooser = new FileChooser();
@@ -381,6 +429,9 @@ public class AssignmentPageController implements SectionControllerBase {
         }
     }
 
+    /**
+     * Submits the selected file as an assignment submission.
+     */
     @FXML
     private void onSubmit() {
         if (selectedFile == null || !(user instanceof Student)) return;
@@ -421,6 +472,10 @@ public class AssignmentPageController implements SectionControllerBase {
             submissionStatusLabel.setText("Submission failed.");
         }
     }
+
+    /**
+     * Enables editing of the selected assignment.
+     */
     @FXML
     private void onEditAssignment() {
         Assignment selected = assignmentDropdown.getValue();
@@ -442,6 +497,9 @@ public class AssignmentPageController implements SectionControllerBase {
         teacherStatusLabel.setText("Now editing. Press Save to confirm.");
     }
 
+    /**
+     * Saves the assignment after editing or adding.
+     */
     @FXML
     private void onSaveEditedAssignment() {
         if (!(user instanceof Teacher)) return;
@@ -506,13 +564,22 @@ public class AssignmentPageController implements SectionControllerBase {
             teacherStatusLabel.setText("Failed to save.");
         }
     }
+
+    /**
+     * Uses AI to generate a description based on current title and description.
+     */
     @FXML
     private void onGenerateWithAI() {
         if (!(user instanceof Teacher)) return;
 
         String title = assignmentTitleField.getText();
+        String desc = assignmentDetailsText.getText();
         if (title == null || title.isBlank()) {
             teacherStatusLabel.setText("Enter a title before generating.");
+            return;
+        }
+        if (desc == null || desc.isBlank()){
+            teacherStatusLabel.setText("Enter a description before generating.");
             return;
         }
 
@@ -520,7 +587,7 @@ public class AssignmentPageController implements SectionControllerBase {
 
         new Thread(() -> {
             AIService aiService = AIService.getInstance();
-            String prompt = "Generate a detailed assignment description for a task titled: " + title+ "\". Keep it concise, and limit the response to 200 words or less.";
+            String prompt = "Generate a well-structured assignment brief titled '" + title + "', based on this description: '" + desc + "'. Limit it to 200 words. Use only plain text. Do not include bullet points, asterisks, markdown, or any formatting symbols. Write it as if for a teacher giving instructions to students.";
 
             String aiResponse = aiService.getResponse(prompt);
 
@@ -558,6 +625,4 @@ public class AssignmentPageController implements SectionControllerBase {
             });
         }).start();
     }
-
-
 }

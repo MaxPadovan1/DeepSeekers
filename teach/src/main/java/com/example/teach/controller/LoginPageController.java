@@ -110,6 +110,13 @@ public class LoginPageController {
             errorLabel.setText("Unable to load Sign Up page. Please try again later.");
         }
     }
+    /**
+     * Invoked when the "Forgot Password?" hyperlink is clicked.
+     * <p>
+     * Loads the password reset view and transitions the user to that page.
+     *
+     * @param event the ActionEvent triggered by clicking the Forgot Password link
+     */
     @FXML private void handleForgotPassword(ActionEvent event) {
             try {
                 FXMLLoader loader = new FXMLLoader(
