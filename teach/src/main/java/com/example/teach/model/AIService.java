@@ -45,7 +45,12 @@ public class AIService {
             e.printStackTrace();
             return "❌ Error during AI generation.";
         }
+
     }
 
-}
+    public String generateLessonPlan(String prompt) {
+        return getResponse(prompt);
 
+
+    }
+}
