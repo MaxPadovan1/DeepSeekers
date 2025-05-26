@@ -46,4 +46,16 @@ public class SQliteConnection {
         }
         return instance;
     }
+
+    private static final String URL = "jdbc:sqlite:teach.db";  // ✅ 类级变量
+
+    public static Connection connect() {
+        try {
+            return DriverManager.getConnection(URL);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

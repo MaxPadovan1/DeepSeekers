@@ -1,9 +1,14 @@
 package com.example.teach.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.ArrayList;
+import java.sql.*;
+import java.util.*;
+import java.io.*;
+import com.example.teach.model.StudyFile;
 /**
  * Data Access Object that ensures the database schema exists and is up-to-date.
  * <p>
@@ -128,6 +133,24 @@ public class SQLiteDAO {
                             ")"
             );
 
+
+            stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS study_files (" +
+                            "  id           INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            "  subject_id   TEXT NOT NULL REFERENCES Subjects(id)," +
+                            "  week         TEXT," +
+                            "  file_name    TEXT NOT NULL," +
+                            "  title        TEXT NOT NULL," +
+                            "  file_data    BLOB NOT NULL," +
+                            "  is_released  INTEGER NOT NULL DEFAULT 0" +
+                            ")"
+            );
+
+
+
+
+
+
             // Study table
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Study (" +
@@ -187,4 +210,50 @@ public class SQLiteDAO {
             // In production, consider logging to a file or system logger
         }
     }
+
+    public static void saveStudyFile(String subjectId, String week, String fileName, String title, byte[] data, boolean isReleased) {
+        String sql = "INSERT INTO study_files (subject_id, week, file_name, title, file_data, is_released) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = SQliteConnection.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, subjectId);
+            stmt.setString(2, week);
+            stmt.setString(3, fileName);
+            stmt.setString(4, title);
+            stmt.setBytes(5, data);
+            stmt.setInt(6, isReleased ? 1 : 0);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void releasePendingFiles(String subjectId, String week) {
+        String sql = "UPDATE study_files SET week = ?, is_released = 1 WHERE subject_id = ? AND is_released = 0";
+        try (Connection conn = SQliteConnection.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, week);
+            stmt.setString(2, subjectId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<StudyFile> getReleasedFilesForWeek(String subjectId, String week) {
+        List<StudyFile> files = new ArrayList<>();
+        String sql = "SELECT file_name, title, file_data FROM study_files WHERE subject_id = ? AND week = ? AND is_released = 1";
+        try (Connection conn = SQliteConnection.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, subjectId);
+            stmt.setString(2, week);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("file_name");
+                String title = rs.getString("title");
+                byte[] data = rs.getBytes("file_data");
+                files.add(new StudyFile(name, title, data));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return files;
+    }
+
 }
