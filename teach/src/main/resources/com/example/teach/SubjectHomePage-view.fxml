@@ -47,12 +47,6 @@
                         <Label text="Class Info" style="-fx-font-size:18; -fx-font-weight:bold;"/>
                         <TextArea text="Details..." style="-fx-font-size:14;" VBox.vgrow="ALWAYS"/>
                     </VBox>
-                    <VBox spacing="10"
-                          style="-fx-background-color:#d0d3d4; -fx-padding:20; -fx-background-radius:10;"
-                          VBox.vgrow="ALWAYS">
-                        <Label text="Teacher Messages" style="-fx-font-size:18; -fx-font-weight:bold;"/>
-                        <TextArea text="text..." style="-fx-font-size:14;" VBox.vgrow="ALWAYS"/>
-                    </VBox>
                 </VBox>
 
                 <!-- Right Column -->
