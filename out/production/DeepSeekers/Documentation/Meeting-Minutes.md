@@ -69,14 +69,35 @@
 - 7th weekly meeting
 - Discussed about the work going to be done by front end and back end.
 - Also discussed about About how to create the video presentation and ideas
+- Had disagreements about splitting work among members, because of time management issues and unavailabilities.
 #### Glen, Kai, Nav, Angela, Max attended the meeting on the 29th April.
 
 ### May 1
 - scrum meeting.
 - Discussed about submitting and combining the work project.
-- #### Glen, Kai, Nav, Angela, Max(video call) attended the meeting on the 1st May.
+- Had arguments about doing work on time, as everyone had different availabilities.
+- Resolved the issues by taking responsibility on how to complete the task on time and helping each other with the tasks.
+#### Glen, Kai, Nav, Angela, Max(video call) attended the meeting on the 1st May.
 
 ### May 6   
 - 8th weekly meeting.
-- Discussed about modifying UI and back end and working on the functionalities of some UI elements/
-- #### Glen, Kai, Nav, Angela, Max attended the meeting on the 6th of May.
+- Discussed about modifying UI and back end and working on the functionalities of some UI elements.
+#### Glen, Kai, Nav, Angela, Max attended the meeting on the 6th of May.
+
+### May 8  
+- scrum meeting.
+- Submitted the assignment and started working on modifying the code.
+#### Glen, Kai, Nav, Max attended the meeting on 8th of May.
+
+### May 13
+- 9th weekly online meeting.
+- Assigned tasks to each team members in terms of backend and frontend work.
+- Had concerns about work management, splitting and assigning of work to members as everyone had a busy schedule with other assignments and personal matters.
+### Glen, Kai, Nav, Angela and Max attended the meeting online on 13th of May.
+
+### May 15
+- weekly scrum meeting.
+- Modified the frontend UI, added more features in the controllers, made sure that all the must have elements and most of the should have elements are working properly.
+- Lack of teamwork was seen that specific week, because of the busy schedules of some of the members, which resulted in the inability to complete some of the tasks.
+- Resolved it by making sure that the members get their tasks done within 2-3 days so that we don't waste a lot of time on some of the sprints and move on to the next.
+#### Glen, Kai, Nav, Angela and Max attended the tutoriaal on 15th of May and submitted the checkpoint.

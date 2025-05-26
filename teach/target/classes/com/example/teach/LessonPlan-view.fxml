@@ -19,6 +19,7 @@
         <Button fx:id="saveLPButton" text="💾 Save" onAction="#onSaveEditedLP" visible="false"/>
         <Button fx:id="removeLPButton" text="Delete Lesson Plan" onAction="#onRemoveLP" visible="false"/>
         <Button fx:id="editLPButton" text="✏️ Edit Lesson Plan" onAction="#onEditLP" visible="false"/>
+
     </HBox>
 
     <!-- Selector -->

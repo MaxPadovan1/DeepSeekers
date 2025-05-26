@@ -7,7 +7,7 @@ import io.github.ollama4j.utils.OptionsBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
+import java.io.IOException;//hello
 
 public class AIService {
 
@@ -45,7 +45,12 @@ public class AIService {
             e.printStackTrace();
             return "❌ Error during AI generation.";
         }
+
     }
 
-}
+    public String generateLessonPlan(String prompt) {
+        return getResponse(prompt);
 
+
+    }
+}
