@@ -1,5 +1,6 @@
 package com.example.teach.controller;
 
+import com.example.teach.model.SQLiteDAO;
 import com.example.teach.model.Subject;
 import com.example.teach.model.User;
 import javafx.fxml.FXML;
@@ -99,25 +100,38 @@ public class TeacherStudyPageController implements SectionControllerBase{
         }
 
         int weekNumber = extractWeekNumber(selectedWeekName);
+
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Upload Teaching File");
+        fileChooser.setTitle("Upload Short Story or Lecture Note");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Files", "*.*"),
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
                 new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
-                new FileChooser.ExtensionFilter("Text Files", "*.txt")
+                new FileChooser.ExtensionFilter("All Files", "*.*")
         );
 
         File selectedFile = fileChooser.showOpenDialog(null);
-
         if (selectedFile != null) {
             try {
+                byte[] fileContent = Files.readAllBytes(selectedFile.toPath());
+                String title = selectedFile.getName().replaceAll("\\.(txt|pdf)", "");
+
+                // Store in DB
+                SQLiteDAO.saveStudyFile(
+                        subjectId,
+                        "Week " + weekNumber,
+                        selectedFile.getName(),
+                        title,
+                        fileContent,
+                        true // released immediately
+                );
+
+                // (Optional) Save on disk for legacy view
                 String folderPath = "teach/study/" + subjectId + "/week" + weekNumber;
                 Files.createDirectories(Paths.get(folderPath));
-
                 Path targetPath = Paths.get(folderPath, selectedFile.getName());
                 Files.copy(selectedFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-                statusLabel.setText("Uploaded: " + selectedFile.getName());
+                statusLabel.setText("Uploaded and released: " + selectedFile.getName());
                 updateFileList(weekNumber);
 
             } catch (IOException e) {
@@ -128,6 +142,7 @@ public class TeacherStudyPageController implements SectionControllerBase{
             statusLabel.setText("No file selected.");
         }
     }
+
 
     @FXML
     private void handleRelease() {

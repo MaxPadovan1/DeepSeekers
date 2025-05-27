@@ -1,9 +1,6 @@
 package com.example.teach.controller;
 
-import com.example.teach.model.LessonPlanDAO;
-import com.example.teach.model.LessonPlan;
-import com.example.teach.model.Subject;
-import com.example.teach.model.User;
+import com.example.teach.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,8 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
-import com.example.teach.model.AIService;
+
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -214,52 +212,64 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         }
     }
     private void showWeekSelectionAndGenerateAI() {
-        List<String> weeks = List.of(
-                "Week 1: Understanding Computers and Programming Languages",
-                "Week 2: Variables, Data Types, and Expressions",
-                "Week 3: Control Flow – if, else, switch",
-                "Week 4: Loops – while, for, do-while",
-                "Week 5: Methods and Modular Programming",
-                "Week 6: Arrays and Collections",
-                "Week 7: Object-Oriented Programming Basics",
-                "Week 8: Exception Handling and File I/O"
-        );
-
-        ChoiceDialog<String> dialog = new ChoiceDialog<>(weeks.get(0), weeks);
-        dialog.setTitle("Select Week");
-        dialog.setHeaderText("Choose the week for which to generate the lesson plan.");
-        dialog.setContentText("Week:");
-
-        Optional<String> selected = dialog.showAndWait();
-        selected.ifPresent(this::generateAIForWeek);
-    }
-    private void generateAIForWeek(String selectedWeek) {
         try {
-            URL resourceUrl = getClass().getClassLoader().getResource("syllabus/course_content.txt");
-            if (resourceUrl == null) {
-                LPDetailsText.setText("❌ Syllabus file not found in resources.");
+            String subjectId = currentSubject.getId();
+            List<StudyFile> releasedFiles = SQLiteDAO.getReleasedFilesForWeek(subjectId, "Week 1"); // You can iterate all weeks if needed
+
+            if (releasedFiles.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("No Files Found");
+                alert.setHeaderText("No released short stories found.");
+                alert.setContentText("Please upload and release a short story from the Study page.");
+                alert.showAndWait();
                 return;
             }
 
-            Path path = Path.of(resourceUrl.toURI());
-            String fullSyllabus = Files.readString(path);
+            // Convert files to choice labels like "Week 1: short_story.txt"
+            List<String> choices = releasedFiles.stream()
+                    .map(file -> "Week 1: " + file.getFileName()) // Or use file.getTitle()
+                    .toList();
 
-            String prompt = "Generate a lesson plan for the following course week:\n\n"
-                    + selectedWeek + "\n\n"
-                    + "Include:\n"
-                    + "- 2 to 3 learning objectives\n"
-                    + "- 2 to 3 key topics\n"
-                    + "- 1 to 2 suggested activities\n"
-                    + "Keep it under 200 words.\n"
-                    + "Here is the course context:\n\n"
-                    + fullSyllabus;
+            ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+            dialog.setTitle("Select Short Story");
+            dialog.setHeaderText("Choose a short story to generate a lesson plan.");
+            dialog.setContentText("Story:");
 
+            Optional<String> selected = dialog.showAndWait();
 
-            String aiOutput = AIService.getInstance().generateLessonPlan(prompt);
+            selected.ifPresent(selectionLabel -> {
+                // Extract file name back from the label
+                String fileName = selectionLabel.substring(selectionLabel.indexOf(":") + 2); // after "Week 1: "
+                StudyFile selectedFile = releasedFiles.stream()
+                        .filter(f -> f.getFileName().equals(fileName))
+                        .findFirst()
+                        .orElse(null);
 
-            LPTitleField.setText(selectedWeek);
-            LPDetailsText.setText(aiOutput);
+                if (selectedFile != null) {
+                    generateAIFromStudyFile(selectedFile);
+                }
+            });
 
+        } catch (Exception e) {
+            LPDetailsText.setText("❌ Failed to load study files.");
+            e.printStackTrace();
+        }
+    }
+    private void generateAIFromStudyFile(StudyFile story) {
+        try {
+            String storyText = new String(story.getData(), StandardCharsets.UTF_8);
+
+            String prompt = "Using this short story:\n\n" + storyText + "\n\n" +
+                    "Generate a lesson plan including:\n" +
+                    "- 2 to 3 learning objectives\n" +
+                    "- 2 discussion questions\n" +
+                    "- 1 suggested classroom activity\n" +
+                    "Keep output under 200 words.";
+
+            String result = AIService.getInstance().generateLessonPlan(prompt);
+
+            LPTitleField.setText(story.getTitle());
+            LPDetailsText.setText(result);
             LPTitleField.setDisable(false);
             LPTitleField.setEditable(true);
             LPDetailsText.setDisable(false);
@@ -268,10 +278,12 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             saveLPButton.setDisable(false);
 
         } catch (Exception e) {
-            LPDetailsText.setText("❌ Failed to generate AI lesson plan.");
+            LPDetailsText.setText("❌ Lesson plan generation failed.");
             e.printStackTrace();
         }
     }
+
+
 
 
 
