@@ -227,26 +227,27 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
 
             // Convert files to choice labels like "Week 1: short_story.txt"
             List<String> choices = releasedFiles.stream()
-                    .map(file -> "Week 1: " + file.getFileName()) // Or use file.getTitle()
+                    .map(file -> "Week 1: " + file.getFileName())
                     .toList();
 
             ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
             dialog.setTitle("Select Short Story");
-            dialog.setHeaderText("Choose a short story to generate a lesson plan.");
+            dialog.setHeaderText("Choose a short story to preview and generate a lesson plan.");
             dialog.setContentText("Story:");
 
             Optional<String> selected = dialog.showAndWait();
 
             selected.ifPresent(selectionLabel -> {
                 // Extract file name back from the label
-                String fileName = selectionLabel.substring(selectionLabel.indexOf(":") + 2); // after "Week 1: "
+                String fileName = selectionLabel.substring(selectionLabel.indexOf(":") + 2);
                 StudyFile selectedFile = releasedFiles.stream()
                         .filter(f -> f.getFileName().equals(fileName))
                         .findFirst()
                         .orElse(null);
 
                 if (selectedFile != null) {
-                    generateAIFromStudyFile(selectedFile);
+                    // Show preview dialog
+                    previewAndConfirmLessonGeneration(selectedFile);
                 }
             });
 
@@ -255,6 +256,37 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             e.printStackTrace();
         }
     }
+    private void previewAndConfirmLessonGeneration(StudyFile storyFile) {
+        try {
+            String storyText = new String(storyFile.getData(), StandardCharsets.UTF_8);
+
+            Alert previewDialog = new Alert(Alert.AlertType.CONFIRMATION);
+            previewDialog.setTitle("Preview Short Story");
+            previewDialog.setHeaderText("Would you like to generate a lesson plan based on this story?");
+
+            TextArea previewText = new TextArea(storyText);
+            previewText.setWrapText(true);
+            previewText.setEditable(false);
+            previewText.setPrefWidth(600);
+            previewText.setPrefHeight(400);
+            previewDialog.getDialogPane().setContent(previewText);
+
+            ButtonType generateButton = new ButtonType("Generate Lesson Plan");
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            previewDialog.getButtonTypes().setAll(generateButton, cancelButton);
+
+            Optional<ButtonType> result = previewDialog.showAndWait();
+            if (result.isPresent() && result.get() == generateButton) {
+                generateAIFromStudyFile(storyFile);
+            }
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "❌ Error previewing story.").showAndWait();
+            e.printStackTrace();
+        }
+    }
+
+
     private void generateAIFromStudyFile(StudyFile story) {
         try {
             String storyText = new String(story.getData(), StandardCharsets.UTF_8);
