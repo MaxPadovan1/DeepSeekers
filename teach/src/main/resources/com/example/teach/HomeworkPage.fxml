@@ -38,7 +38,8 @@
         <TextArea fx:id="homeworkDetailsText" wrapText="true" prefHeight="120" disable="true"/>
 
         <HBox spacing="10">
-            <Button fx:id="generateWithAIButton" text="🤖 Generate with AI" onAction="#onGenerateWithAI"/>
+            <Button fx:id="enhanceWithAIButton" text="Enhance with AI" onAction="#onEnhanceWithAI"/>
+
         </HBox>
     </VBox>
 
