@@ -1,4 +1,4 @@
-# Sprint Retrospective – Sprint 1 (April 10, 2025)
+# Sprint Retrospective – Sprint 1 (May 4, 2025)
 
 ## Team
 - Angela Suresh Thomas
@@ -22,4 +22,17 @@
 ## Appreciations
 - Thanks to every team member for contributing to the project.
 - Everyone is an integral part of the team.
-  
+
+
+# Sprint Retrospective – Sprint 2 (May 27, 2025)
+
+## What Went Well
+- Everyone is working on the project, we have good communication, doing team meeting every weeks and ensure that tasks are assigned according to each person's abilities.
+- Our team members are very supportive, when someone meets a problem, others will guide him to find the solution. 
+- After several rounds of discussion, we create both low fidelity and medium fidelity UI designs, the resulting UI page is clean and  highly usable. 
+
+
+## What Didn't Go Well
+- Sometimes, some of the team members received the task but because of there was some time clash or they got something to
+do, so they had forgot to start that until someone else followed up and asked for the result.
+
