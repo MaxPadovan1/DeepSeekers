@@ -36,3 +36,17 @@
 - Sometimes, some of the team members received the task but because of there was some time clash or they got something to
 do, so they had forgot to start that until someone else followed up and asked for the result.
 
+# Sprint Retrospective – Sprint 3 (April 10, 2025)
+
+## What Went Well
+- All team members are consistently engaged in the project.
+- We maintain strong communication and conduct weekly team meetings.
+- Responsibilities are distributed according to individual strengths.
+- We had extensive discussions on merging our work, refining the user interface, updating the backend, and implementing the functionality of various UI elements.
+
+## What Didn't Go Well
+- Some team members became occupied with other assignments, which caused slight delays in our progress.
+- As the semester came to an end, a few members were unable to attend meetings due to exam preparation.
+
+
+
