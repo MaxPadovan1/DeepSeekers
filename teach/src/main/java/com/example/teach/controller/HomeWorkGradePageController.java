@@ -257,7 +257,7 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
                     submittedArea.getText()
             );
             new GradeDAO().saveOrUpdateGrade(g);
-            new Alert(Alert.AlertType.INFORMATION, "✅ Grade submitted.").showAndWait();
+            new Alert(Alert.AlertType.INFORMATION, " Grade submitted.").showAndWait();
         });
 
         // Layout
