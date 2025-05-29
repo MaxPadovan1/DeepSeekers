@@ -62,27 +62,39 @@ UAC - Given that there is a class information page, when I want to know my class
 ### User Story 21 - Teacher viewing student overview
 As a teacher, I want to view my student's information, so that I can know my cohort and the information about them that I am required to be aware of.
 UAC - Given that there is a student overview section, when I want to get my student cohort's details, then I can view it in the student overview section.
-## User Story 22 - Teacher releasing course content
+### User Story 22 - Teacher releasing course content
 As a teacher, I want to give my student's the course content for each week, so that they can learn the content and keep updated with the course.\
 UAC -  Given that there is a study section for course content, when I release the course content, then the content is uploaded to the application study page.
-## User Story 23 - Teacher making weekly practice quiz
+### User Story 23 - Teacher making weekly practice quiz
 As a teacher, I want to make weekly practice quizzes for the week's course content, so that the students can attempt the quizzes to aid with their learning.\
 UAC - Given that there is course content in the study section of the app, when I want to create practice quizzes, then I can make them with the help of AI.
-## User Story 24 - Student making flashcards
+### User Story 24 - Student making flashcards
 As a student, I want to make flashcards with the course content, so that I can use it to help with my learning process.
 UAC - Given that there is course content in the study section, when I want to create flashcards using the course content, then I can create them in the application with the help of AI.
-## User Story 25 - Teacher making lesson plan
+### User Story 25 - Teacher making lesson plan
 As a teacher, I want to make lesson plans for my classes, so that I can use it to prepare before my lectures.
 UAC - Given that there is a section for lesson plans, when I want to create lesson plans for my classes, then I can use the application to create them with the help of AI.
-## User Story 26 - Course content
+### User Story 26 - Course content
 As a student, I want to see the course content of my enrolled courses, so that I can learn the content and keep up to date with my course.
 UAC - Given that there is a study section, when the teacher releases the course content in the study section, then the content can be accessed by the student in the study section.
-## User Story 27 - Subjects via Dashboard
-As a student, I want to go to the subject I enrolled by clicking the button in the dashboard, so that I can easily go to the subject's main page.
+### User Story 27 - Subjects via Dashboard
+As a student, I want to go to the subject I enrolled in, by clicking the button in the dashboard, so that I can easily go to the subject's main page.
 UAC- assume subject user enrolled exist, given a button link to the subject main page showing in dashboard.
-## User Story 28 - Check teacher info and classmates info
+### User Story 28 - Check teacher info and classmates info
 As a student, I want to check my teacher's information such as name, email and phone number. And also classmates' name and email in the class, so that I can contact them by these information.
 UAC- assume subject exist, teacher and students enrolled, given a list showing teacher's name, email and phone number, and every students' name with email.
-## User Story 29 - Checking each week's study material
+### User Story 29 - Checking each week's study material
 As a student, I want to check every weeks' study materials so that I can review what I learned or preview what will be learning and ensure I'm understanding the knowledge well.
 UAC- while user enroll the subject, given user links to every weeks' study material such as lecture notes, pre-lecture notes, flashcards and practice quiz.
+### US 30 - Teacher viewing Lesson Plan
+As a teacher, I want to view a Lesson Plan for all weekdays and be able to upload my teaching plans for each day while viewing it, so that I can effectively plan and organize my daily lessons.
+UAC- while user views the Lesson Plan, given user uploads every weekdays teaching plan such as in the form of overview and details.
+### US 31 - Adding AI in assignment
+As a teacher, I want to use AI assistance in assignment enhancing, so that I can view the assignment details in a more enhanced way.
+UAC - Given that a window, when user ask for AI enhancing, the assignment details will be enhanced the window.
+### US 32 - Adding AI in homework
+As a teacher, I want to use AI for creating homework, so I can save time on the class preparation.
+UAC - Given a window, when user ask for generating homework, AI will create a document containing required questions.
+### US 33 - Adding AI in LessonPlan
+As a teacher, I want to use AI for creating a recommended lesson plan, so that I can focus on the course content.
+UAC - Given a window, when user ask for a lesson plan, give an outline for the teaching content with related details from the study.
