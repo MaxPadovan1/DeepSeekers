@@ -18,7 +18,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
-
+/**
+ * Controller for the Teacher Study Page.
+ * <p>
+ * Allows teachers to upload, view, delete, and release weekly course content.
+ * Uploaded files are stored both in the database and optionally in the local filesystem.
+ */
 public class TeacherStudyPageController implements SectionControllerBase{
 
     @FXML private ComboBox<String> weekDropdown;
@@ -30,8 +35,9 @@ public class TeacherStudyPageController implements SectionControllerBase{
     @FXML private Button backToTeacherViewButton;
     private User currentUser;
     private Subject currentSubject;
-
-
+    /**
+     * Initializes the controller and sets up the week dropdown and file list view cell factory.
+     */
     @FXML
     public void initialize() {
         weekDropdown.getItems().addAll("Week 1", "Week 2", "Week 3", "Week 4");
@@ -65,9 +71,11 @@ public class TeacherStudyPageController implements SectionControllerBase{
             }
         });
     }
-
-
-
+    /**
+     * Deletes a file from the local week directory and refreshes the file list.
+     *
+     * @param fileName the name of the file to delete
+     */
     private void deleteFile(String fileName) {
         String subjectId = currentSubject.getId();
         String selectedWeekName = weekDropdown.getValue();
@@ -88,8 +96,10 @@ public class TeacherStudyPageController implements SectionControllerBase{
             showAlert("Failed to delete file: " + fileName);
         }
     }
-
-
+    /**
+     * Handles file upload, stores the file in the database and file system,
+     * and marks it as released immediately.
+     */
     @FXML
     private void handleUpload() {
         String subjectId = currentSubject.getId();
@@ -142,8 +152,10 @@ public class TeacherStudyPageController implements SectionControllerBase{
             statusLabel.setText("No file selected.");
         }
     }
-
-
+    /**
+     * Handles the release of uploaded files for the selected week.
+     * Copies files into a 'released' folder and stores the week title.
+     */
     @FXML
     private void handleRelease() {
         String selectedWeek = weekDropdown.getValue();
@@ -188,7 +200,11 @@ public class TeacherStudyPageController implements SectionControllerBase{
             showAlert("Release failed.");
         }
     }
-
+    /**
+     * Updates the file list view to reflect the current contents of the selected week's folder.
+     *
+     * @param weekNumber the week number to refresh
+     */
     private void updateFileList(int weekNumber) {
         String subjectId = currentSubject.getId();
         fileListView.getItems().clear();
@@ -202,11 +218,20 @@ public class TeacherStudyPageController implements SectionControllerBase{
             e.printStackTrace();
         }
     }
-
+    /**
+     * Extracts the numeric week value from a string like "Week 2".
+     *
+     * @param weekText text label (e.g., "Week 3")
+     * @return the integer value of the week (e.g., 3)
+     */
     private int extractWeekNumber(String weekText) {
         return Integer.parseInt(weekText.replaceAll("[^0-9]", ""));
     }
-
+    /**
+     * Displays a generic information alert to the user.
+     *
+     * @param message the message to show
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
@@ -214,17 +239,17 @@ public class TeacherStudyPageController implements SectionControllerBase{
         alert.showAndWait();
     }
 
-
+    /** Sets the current authenticated user. */
     @Override
     public void setUser(User user) {
         this.currentUser = user;
     }
-
+    /** Sets the current subject being edited. */
     @Override
     public void setSubject(Subject subject) {
         this.currentSubject = subject;
     }
-
+    /** Unused method from interface (not required for this view). */
     @Override
     public void setDashboardController(DashboardController dashboardController) {
 

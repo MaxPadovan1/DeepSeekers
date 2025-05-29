@@ -21,6 +21,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.UUID;
+/**
+ * Controller for the Lesson Plan page.
+ * Supports creating, editing, saving, and auto-generating lesson plans based on uploaded study materials.
+ */
 
 public class LessonPlanController implements SectionControllerBase, Initializable {
     private User currentUser;
@@ -50,8 +54,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         saveLPButton.setVisible(true);
         saveLPButton.setDisable(false);
     }
-
-
+    /**
+     * Initializes the controller and configures the ComboBox for selecting lesson plans.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         clearSelectionState();
@@ -94,13 +99,17 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         loadPlans();
         clearSelectionState();
     }
-
+    /**
+     * Alternate method to support subject selection via a list (used during onboarding).
+     */
     public void setSubject(List<Subject> subjects) {
         if (subjects != null && !subjects.isEmpty()) {
             setSubject(subjects.get(0));
         }
     }
-
+    /**
+     * Loads all lesson plans related to the current subject.
+     */
     private void loadPlans() {
         plans.clear();
         try {
@@ -109,8 +118,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             e.printStackTrace();
         }
     }
-
-
+    /**
+     * Handles selection of a lesson plan from the dropdown.
+     */
     @FXML
     private void onLPSelected(ActionEvent event) {
         LessonPlan sel = LPDropdown.getValue();
@@ -127,7 +137,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         editLPButton.setVisible(true);
         editLPButton.setDisable(false);
     }
-
+    /**
+     * Enables editing for the currently selected lesson plan.
+     */
     @FXML
     private void onEditLP(ActionEvent event) {
         LPTitleField.setDisable(false);
@@ -138,7 +150,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         saveLPButton.setDisable(false);
         editLPButton.setVisible(false);
     }
-
+    /**
+     * Saves changes to an existing lesson plan or creates a new one.
+     */
     @FXML
     private void onSaveEditedLP(ActionEvent event) {
         LessonPlan sel = LPDropdown.getValue();
@@ -164,7 +178,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         }
         clearSelectionState();
     }
-
+    /**
+     * Deletes the selected lesson plan.
+     */
     @FXML
     private void onRemoveLP(ActionEvent event) {
         LessonPlan sel = LPDropdown.getValue();
@@ -178,7 +194,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         }
         clearSelectionState();
     }
-
+    /**
+     * Clears the UI state to its default.
+     */
     private void clearSelectionState() {
         addLPButton.setVisible(true);
         removeLPButton.setVisible(false);
@@ -188,6 +206,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         LPDetailsText.setDisable(true);
         LPDropdown.getSelectionModel().clearSelection();
     }
+    /**
+     * Handles the Add Lesson Plan action. Prompts the user to use AI or manual entry.
+     */
     @FXML
     private void onAddLP(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -211,6 +232,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             } // else Cancel — do nothing
         }
     }
+    /**
+     * Displays a dialog to select a released file and triggers AI generation.
+     */
     private void showWeekSelectionAndGenerateAI() {
         try {
             String subjectId = currentSubject.getId();
@@ -256,6 +280,11 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             e.printStackTrace();
         }
     }
+    /**
+     * Shows a preview of the selected study file and confirms AI-based generation.
+     *
+     * @param storyFile the selected study file
+     */
     private void previewAndConfirmLessonGeneration(StudyFile storyFile) {
         try {
             String storyText = new String(storyFile.getData(), StandardCharsets.UTF_8);
@@ -285,8 +314,11 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             e.printStackTrace();
         }
     }
-
-
+    /**
+     * Uses the selected study file as input for AI generation of a lesson plan.
+     *
+     * @param story the selected StudyFile object
+     */
     private void generateAIFromStudyFile(StudyFile story) {
         try {
             String storyText = new String(story.getData(), StandardCharsets.UTF_8);

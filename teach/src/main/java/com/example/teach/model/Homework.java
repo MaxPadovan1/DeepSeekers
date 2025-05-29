@@ -95,7 +95,11 @@ public class Homework {
     public String getDescription() {
         return description;
     }
-
+    /**
+     * Returns the week label or number associated with this homework.
+     *
+     * @return the week value
+     */
     public String getWeek() {
         return week;
     }
@@ -108,8 +112,16 @@ public class Homework {
     public String getDueDate() {
         return dueDate;
     }
-
+    /**
+     * Returns the release date for the homework.
+     *
+     * @return the release date string
+     */
     public String getReleaseDate(){return releaseDate;}
-
+    /**
+     * Returns the open date for the homework.
+     *
+     * @return the open date string
+     */
     public  String getOpenDate(){return openDate;}
 }
