@@ -1,4 +1,4 @@
-package com.example.teach.model;
+import com.example.teach.model.*;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
