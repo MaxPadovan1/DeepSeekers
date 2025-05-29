@@ -5,12 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles database operations related to assignment submissions.
+ * Data Access Object for managing assignment submissions in the database.
+ * <p>
+ * Provides methods to insert, update, retrieve, and query student submissions.
  */
 public class ASubmissionDAO {
 
     private final Connection conn = SQliteConnection.getInstance();
-
+    /**
+     * Inserts a new submission record into the database.
+     *
+     * @param s the {@link ASubmission} to insert
+     * @throws SQLException if a database error occurs
+     */
     public void submitAssignment(ASubmission s) throws SQLException {
         String sql = "INSERT INTO Submissions(id, assignment_id, student_id, file_path, timestamp) VALUES(?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -23,6 +30,13 @@ public class ASubmissionDAO {
         }
     }
 
+    /**
+     * Retrieves all submissions for a specific assignment.
+     *
+     * @param assignmentId the assignment ID to query
+     * @return a list of {@link ASubmission} objects submitted for the assignment
+     * @throws SQLException if a database error occurs
+     */
     public List<ASubmission> getSubmissionsByAssignmentId(String assignmentId) throws SQLException {
         List<ASubmission> list = new ArrayList<>();
         String sql = "SELECT id, assignment_id, student_id, file_path, timestamp FROM Submissions WHERE assignment_id=?";
@@ -42,6 +56,15 @@ public class ASubmissionDAO {
         }
         return list;
     }
+
+    /**
+     * Retrieves a specific submission by student ID and assignment ID.
+     *
+     * @param studentId    the student who submitted
+     * @param assignmentId the related assignment
+     * @return the {@link ASubmission} object if found, or {@code null} if none exists
+     * @throws SQLException if a database error occurs
+     */
     public ASubmission getSubmissionByStudentAndAssignment(String studentId, String assignmentId) throws SQLException {
         String sql = "SELECT * FROM Submissions WHERE student_id = ? AND assignment_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -62,6 +85,15 @@ public class ASubmissionDAO {
         return null;
     }
 
+    /**
+     * Inserts a new submission or updates an existing one (upsert pattern).
+     * <p>
+     * If a submission for the given (assignment_id, student_id) already exists,
+     * its file path and timestamp will be updated.
+     *
+     * @param s the {@link ASubmission} to insert or update
+     * @throws SQLException if a database error occurs
+     */
     public void upsertSubmission(ASubmission s) throws SQLException {
         String sql = """
         INSERT INTO Submissions(id, assignment_id, student_id, file_path, timestamp)
@@ -79,6 +111,4 @@ public class ASubmissionDAO {
             ps.executeUpdate();
         }
     }
-
-
 }

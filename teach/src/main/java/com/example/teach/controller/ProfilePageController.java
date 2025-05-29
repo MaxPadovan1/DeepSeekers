@@ -154,6 +154,10 @@ public class ProfilePageController {
     @FXML private void onViewPerformance(ActionEvent ev) {
         // TODO: load performance view
     }
+    /**
+     * Navigates back to the main dashboard page.
+     * Called from a "Back" button.
+     */
     @FXML
     private void goBack() {
         if (dashboardController != null) {

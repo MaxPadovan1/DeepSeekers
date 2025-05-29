@@ -9,9 +9,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+/**
+ * Controller for the Reset Password page.
+ * <p>
+ * Handles submission of the reset request and navigates back to the login screen.
+ */
 public class ResetController {
-
+    /**
+     * Invoked when the user clicks the "Submit" button on the reset page.
+     * <p>
+     * Loads the login screen and switches the current scene back to the login page.
+     *
+     * @param event the ActionEvent triggered by clicking the Submit button
+     */
     @FXML
     private void handleResetSubmit(ActionEvent event) {
         try {
@@ -28,7 +38,6 @@ public class ResetController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            // Optional: show errorLabel if needed
         }
     }
 

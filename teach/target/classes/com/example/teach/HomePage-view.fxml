@@ -68,76 +68,63 @@
         </VBox>
     </left>
 
+    <!-- Center Content -->
     <center>
-        <VBox>
+        <VBox spacing="20" style="-fx-padding: 20px;">
 
-        <!-- 📚 New Top VBox: Study | Assignment | Grade | Homework -->
-        <HBox spacing="120" style="-fx-background-color: #bdc3c7; -fx-padding: 10px; ">
-            <VBox alignment="CENTER" prefWidth="150" spacing="5" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <HBox alignment="CENTER" spacing="5">
-                    <Label text="🏠" style="-fx-font-size: 25px;-fx-padding:20px" />
-                    <Label text="Study" style="-fx-font-size: 16px; -fx-font-weight: bold;" fx:id="studyLabel" onMouseClicked="#goToStudyPage" />
-                </HBox>
-            </VBox>
-            <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Assignment" />
-            </VBox>
-            <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Grade" />
-            </VBox>
-            <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Homework" />
-            </VBox>
-            <VBox alignment="CENTER" prefWidth="150" style="-fx-background-color: #bdc3c7; -fx-background-radius: 8; -fx-padding: 10px;">
-                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Test" />
-            </VBox>
-        </HBox>
+            <!-- Navigation Tiles -->
+            <HBox spacing="40" alignment="CENTER">
+                <Button text="📚 Study" onMouseClicked="#goToStudyPage"
+                        style="-fx-font-size: 16px; -fx-padding: 20px 40px; -fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 10;"/>
+                <Button text="📝 Assignment" onMouseClicked="#onAssignment"
+                        style="-fx-font-size: 16px; -fx-padding: 20px 40px; -fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 10;"/>
+                <Button text="🎓 Grade" onMouseClicked="#onGrade"
+                        style="-fx-font-size: 16px; -fx-padding: 20px 40px; -fx-background-color: #1abc9c; -fx-text-fill: white; -fx-background-radius: 10;"/>
+                <Button text="📄 Homework" onMouseClicked="#onHomework"
+                        style="-fx-font-size: 16px; -fx-padding: 20px 40px; -fx-background-color: #9b59b6; -fx-text-fill: white; -fx-background-radius: 10;"/>
+                <Button text="🧪 Test" onMouseClicked="#onTest"
+                        style="-fx-font-size: 16px; -fx-padding: 20px 40px; -fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 10;"/>
+            </HBox>
 
-        <HBox spacing="20" style="-fx-padding: 20px;">
-            <!-- Left Side: VBox containing two VBoxes vertically -->
-            <VBox prefWidth="800" spacing="20" HBox.hgrow="ALWAYS">
-                <VBox prefHeight="300" style="-fx-background-color: #ecf0f1; -fx-padding: 20px; -fx-background-radius: 10;" VBox.vgrow="ALWAYS">
-                    <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text=" Class Info" />
-                        <TextArea prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight:normal;" text="Details..." />
+            <!-- Class Info + Recent Activities -->
+            <HBox spacing="20">
+                <VBox spacing="10" prefWidth="800" VBox.vgrow="ALWAYS">
+                    <Label text="📘 Class Info"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    <TextArea text="Details..." prefHeight="180" wrapText="true"
+                              style="-fx-font-size: 14px; -fx-background-color: #ecf0f1; -fx-padding: 10;"/>
 
+                    <Label text="📢 Recent Activities"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    <VBox fx:id="recentActivityBox" spacing="8"
+                          style="-fx-background-color: #f2f3f4; -fx-padding: 10; -fx-background-radius: 8;">
+                        <!-- Dynamic messages get added here -->
+                    </VBox>
                 </VBox>
 
-                <VBox prefHeight="300" style=" -fx-background-color:#d0d3d4; -fx-padding: 20px; -fx-background-radius: 10;" VBox.vgrow="ALWAYS">
-                    <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Teacher Messages" />
-                    <TextArea prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight:normal;" text="text..." />
+                <!-- Right: Homework, Test, Assignment Summary -->
+                <VBox spacing="10" prefWidth="400" style="-fx-background-color: #f4f6f6; -fx-padding: 15; -fx-background-radius: 10;">
+                    <Label text="📄 Homework" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                    <TextArea text="Week 1: Addition practice due 2 weeks ago" wrapText="true" editable="false"
+                              style="-fx-font-size: 12px; -fx-background-color: #d6eaf8;"/>
+                    <TextArea text="Week 1: Subtraction practice due 1 week ago" wrapText="true" editable="false"
+                              style="-fx-font-size: 12px; -fx-background-color: #d6eaf8;"/>
+                    <TextArea text="Week 1: Multiplication practice due yesterday" wrapText="true" editable="false"
+                              style="-fx-font-size: 12px; -fx-background-color: #d6eaf8;"/>
+
+                    <Label text="🧪 Tests" style="-fx-font-size: 16px; -fx-font-weight: bold; margin-top: 10;"/>
+                    <TextArea text="Math Test – Friday" wrapText="true" editable="false"
+                              style="-fx-font-size: 12px; -fx-background-color: #f9e79f;"/>
+                    <TextArea text="Science Quiz – Next Wednesday" wrapText="true" editable="false"
+                              style="-fx-font-size: 12px; -fx-background-color: #f9e79f;"/>
+
+                    <Label text="📝 Assignments" style="-fx-font-size: 16px; -fx-font-weight: bold; margin-top: 10;"/>
+                    <TextArea text="Assignment 1: Environment Essay – Due next Monday" wrapText="true" editable="false"
+                              style="-fx-font-size: 12px; -fx-background-color: #fadbd8;"/>
+                    <TextArea text="Assignment 2: Science Project – Due in 2 weeks" wrapText="true" editable="false"
+                              style="-fx-font-size: 12px; -fx-background-color: #fadbd8;"/>
                 </VBox>
-            </VBox>
-
-            <!-- Right Side: Single VBox (Homework + Test + Assignment all inside) -->
-            <VBox prefHeight="620" prefWidth="300" spacing="20" style="-fx-background-color: #bdc3c7; -fx-padding: 20px; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-
-                <!-- 📚 Homework Section -->
-                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Homework" />
-                <VBox spacing="10" style="-fx-background-color: #A9A9A9; -fx-padding: 10px; -fx-background-radius: 8;">
-                    <TextArea prefHeight="150.0" prefWidth="100.0" text="Week1                                            Due:&#10;Addition practice                          2 weeks ago" style="-fx-font-size: 11px; -fx-font-weight:bold;"/>
-                    <TextArea prefHeight="150.0" prefWidth="100.0" text="Week1                                            Due:&#10;Subtraction practice                          1 week ago" style="-fx-font-size: 11px; -fx-font-weight:bold;"/>
-                    <TextArea prefHeight="150.0" prefWidth="100.0" text="Week1                                            Due:&#10;Multiplication practice                          a day ago&#10;Division practice " style="-fx-font-size: 11px; -fx-font-weight:bold;"/>
-                </VBox>
-
-                <!-- 📝 Test Section -->
-                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Test" />
-                <VBox spacing="10" style="-fx-background-color: #A9A9A9; -fx-padding: 10px; -fx-background-radius: 8;">
-                    <TextArea prefHeight="150.0" prefWidth="100.0" text="Math Test&#10;Multiplication practice Date: Friday" style="-fx-font-size: 11px; -fx-font-weight:bold;"/>
-                    <TextArea prefHeight="150.0" prefWidth="100.0" text="Science Quiz&#10;Multiplication practice Date: Next Wednesday" style="-fx-font-size: 11px; -fx-font-weight:bold;"/>
-                </VBox>
-
-                <!-- 📖 Assignment Section -->
-                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Assignment" />
-                <VBox spacing="10" style="-fx-background-color: #A9A9A9; -fx-padding: 10px; -fx-background-radius: 8;">
-                    <TextArea prefHeight="150.0" prefWidth="100.0" text="Assignment 1: Essay on Environment&#10;Multiplication practice Due: Next Monday" style="-fx-font-size: 11px; -fx-font-weight:bold;"/>
-                    <TextArea prefHeight="150.0" prefWidth="100.0" text="Assignment 2: Science Project&#10;Multiplication practice Due: In 2 weeks" style="-fx-font-size: 11px; -fx-font-weight:bold;"/>
-                </VBox>
-
-            </VBox>
-
-
-
-        </HBox>
+            </HBox>
         </VBox>
     </center>
 

@@ -1,25 +1,87 @@
 package com.example.teach.controller;
 
-import com.example.teach.model.User;
+import com.example.teach.model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.UUID;
+/**
+ * Controller for the Lesson Plan page.
+ * Supports creating, editing, saving, and auto-generating lesson plans based on uploaded study materials.
+ */
 
 public class LessonPlanController implements SectionControllerBase, Initializable {
-
     private User currentUser;
     private DashboardController dashboardController;
+    private Subject currentSubject;
 
-    @FXML private Accordion weekAccordion;
-    @FXML private Button addWeekButton;
-    @FXML private Button removeWeekButton;
-    @FXML private ToggleButton toggleViewButton;
+    private final LessonPlanDAO lpDao = new LessonPlanDAO();
 
-    private int weekCount = 0;
+    @FXML private Button addLPButton;
+    @FXML private Button removeLPButton;
+    @FXML private Button editLPButton;
+    @FXML private Button saveLPButton;
+    @FXML private ComboBox<LessonPlan> LPDropdown;
+    @FXML private TextField LPTitleField;
+    @FXML private TextArea LPDetailsText;
+
+    private final ObservableList<LessonPlan> plans = FXCollections.observableArrayList();
+
+    private void prepareManualEntry() {
+        clearSelectionState();
+        LPTitleField.clear();
+        LPDetailsText.clear();
+        LPTitleField.setDisable(false);
+        LPTitleField.setEditable(true);
+        LPDetailsText.setDisable(false);
+        LPDetailsText.setEditable(true);
+        saveLPButton.setVisible(true);
+        saveLPButton.setDisable(false);
+    }
+    /**
+     * Initializes the controller and configures the ComboBox for selecting lesson plans.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        clearSelectionState();
+
+        // Setup ComboBox with custom display
+        LPDropdown.setItems(plans);
+        LPDropdown.setCellFactory(cb -> new ListCell<LessonPlan>() {
+            @Override
+            protected void updateItem(LessonPlan item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.getTitle());
+            }
+        });
+        LPDropdown.setConverter(new StringConverter<LessonPlan>() {
+            @Override
+            public String toString(LessonPlan lp) {
+                return lp == null ? "" : lp.getTitle();
+            }
+            @Override
+            public LessonPlan fromString(String string) {
+                return null; // not needed
+            }
+        });
+        LPDropdown.setOnAction(this::onLPSelected);
+    }
 
     @Override
     public void setUser(User user) {
@@ -32,83 +94,262 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
     }
 
     @Override
-    public void setSubject(com.example.teach.model.Subject subject) {
-        // Optional future implementation
+    public void setSubject(Subject subject) {
+        this.currentSubject = subject;
+        loadPlans();
+        clearSelectionState();
     }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        addWeekPane();
-        updateRemoveButtonState();
-    }
-
-    @FXML
-    private void onAddWeek() {
-        addWeekPane();
-        updateRemoveButtonState();
-    }
-
-    @FXML
-    private void onRemoveWeek() {
-        if (!weekAccordion.getPanes().isEmpty()) {
-            weekAccordion.getPanes().remove(weekAccordion.getPanes().size() - 1);
-            weekCount--;
+    /**
+     * Alternate method to support subject selection via a list (used during onboarding).
+     */
+    public void setSubject(List<Subject> subjects) {
+        if (subjects != null && !subjects.isEmpty()) {
+            setSubject(subjects.get(0));
         }
-        updateRemoveButtonState();
     }
-
-    private void updateRemoveButtonState() {
-        removeWeekButton.setDisable(weekCount == 0);
+    /**
+     * Loads all lesson plans related to the current subject.
+     */
+    private void loadPlans() {
+        plans.clear();
+        try {
+            plans.addAll(lpDao.findBySubject(currentSubject.getId()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+    /**
+     * Handles selection of a lesson plan from the dropdown.
+     */
+    @FXML
+    private void onLPSelected(ActionEvent event) {
+        LessonPlan sel = LPDropdown.getValue();
+        if (sel == null) return;
+        LPTitleField.setText(sel.getTitle());
+        LPDetailsText.setText(sel.getDetails());
+        LPTitleField.setDisable(false);
+        LPTitleField.setEditable(false);
+        LPDetailsText.setDisable(false);
+        LPDetailsText.setEditable(false);
 
-    private void addWeekPane() {
-        weekCount++;
-        TitledPane weekPane = new TitledPane();
-        weekPane.setText("Week " + weekCount);
+        removeLPButton.setVisible(true);
+        removeLPButton.setDisable(false);
+        editLPButton.setVisible(true);
+        editLPButton.setDisable(false);
+    }
+    /**
+     * Enables editing for the currently selected lesson plan.
+     */
+    @FXML
+    private void onEditLP(ActionEvent event) {
+        LPTitleField.setDisable(false);
+        LPTitleField.setEditable(true);
+        LPDetailsText.setDisable(false);
+        LPDetailsText.setEditable(true);
+        saveLPButton.setVisible(true);
+        saveLPButton.setDisable(false);
+        editLPButton.setVisible(false);
+    }
+    /**
+     * Saves changes to an existing lesson plan or creates a new one.
+     */
+    @FXML
+    private void onSaveEditedLP(ActionEvent event) {
+        LessonPlan sel = LPDropdown.getValue();
+        try {
+            if (sel == null) {
+                String id = UUID.randomUUID().toString();
+                LessonPlan lp = new LessonPlan(
+                        id,
+                        currentSubject.getId(),
+                        LPTitleField.getText(),
+                        LPDetailsText.getText());
+                lpDao.save(lp);
+                plans.add(lp);
+                LPDropdown.getSelectionModel().select(lp);
+            } else {
+                sel.setTitle(LPTitleField.getText());
+                sel.setDetails(LPDetailsText.getText());
+                LPDetailsText.setEditable(true);
+                lpDao.update(sel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        clearSelectionState();
+    }
+    /**
+     * Deletes the selected lesson plan.
+     */
+    @FXML
+    private void onRemoveLP(ActionEvent event) {
+        LessonPlan sel = LPDropdown.getValue();
+        if (sel != null) {
+            try {
+                lpDao.delete(sel.getId());
+                plans.remove(sel);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        clearSelectionState();
+    }
+    /**
+     * Clears the UI state to its default.
+     */
+    private void clearSelectionState() {
+        addLPButton.setVisible(true);
+        removeLPButton.setVisible(false);
+        editLPButton.setVisible(false);
+        saveLPButton.setVisible(false);
+        LPTitleField.setDisable(true);
+        LPDetailsText.setDisable(true);
+        LPDropdown.getSelectionModel().clearSelection();
+    }
+    /**
+     * Handles the Add Lesson Plan action. Prompts the user to use AI or manual entry.
+     */
+    @FXML
+    private void onAddLP(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Create Lesson Plan");
+        alert.setHeaderText("Do you want to auto-generate the lesson plan using AI?");
+        alert.setContentText("Choose 'Yes' to use AI, or 'No' to enter the plan manually.");
 
-        Accordion dayAccordion = new Accordion();
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        ButtonType yesButton = new ButtonType("Yes");
+        ButtonType noButton = new ButtonType("No");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        for (String day : days) {
-            VBox dayContent = new VBox(10);
-            dayContent.setStyle("-fx-background-color: #A9A9A9;");
+        alert.getButtonTypes().setAll(yesButton, noButton, cancelButton);
 
-            TextArea overview = new TextArea();
-            overview.setPromptText("Overview");
-            overview.setPrefHeight(120);
-            overview.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight: bold;");
-            overview.setEditable(false);
+        Optional<ButtonType> result = alert.showAndWait();
 
-            TextArea details = new TextArea();
-            details.setPromptText("Details");
-            details.setPrefHeight(120);
-            details.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight: bold;");
-            details.setEditable(false);
+        if (result.isPresent()) {
+            if (result.get() == yesButton) {
+                showWeekSelectionAndGenerateAI();
+            } else if (result.get() == noButton) {
+                prepareManualEntry();
+            } // else Cancel — do nothing
+        }
+    }
+    /**
+     * Displays a dialog to select a released file and triggers AI generation.
+     */
+    private void showWeekSelectionAndGenerateAI() {
+        try {
+            String subjectId = currentSubject.getId();
+            List<StudyFile> releasedFiles = SQLiteDAO.getReleasedFilesForWeek(subjectId, "Week 1"); // You can iterate all weeks if needed
 
-            Button editBtn = new Button("Edit");
-            editBtn.setStyle("-fx-font-size: 8px; -fx-font-weight: bold;");
-            editBtn.setOnAction(e -> {
-                boolean nowEditable = !overview.isEditable(); // Toggle state
-                overview.setEditable(nowEditable);
-                details.setEditable(nowEditable);
-                editBtn.setText(nowEditable ? "Done" : "Edit");
+            if (releasedFiles.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("No Files Found");
+                alert.setHeaderText("No released short stories found.");
+                alert.setContentText("Please upload and release course content from the Study page.");
+                alert.showAndWait();
+                return;
+            }
+
+            // Convert files to choice labels like "Week 1: short_story.txt"
+            List<String> choices = releasedFiles.stream()
+                    .map(file -> "Week 1: " + file.getFileName())
+                    .toList();
+
+            ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+            dialog.setTitle("Select Course Content");
+            dialog.setHeaderText("Choose course content to preview and generate a lesson plan.");
+            dialog.setContentText("Content:");
+
+            Optional<String> selected = dialog.showAndWait();
+
+            selected.ifPresent(selectionLabel -> {
+                // Extract file name back from the label
+                String fileName = selectionLabel.substring(selectionLabel.indexOf(":") + 2);
+                StudyFile selectedFile = releasedFiles.stream()
+                        .filter(f -> f.getFileName().equals(fileName))
+                        .findFirst()
+                        .orElse(null);
+
+                if (selectedFile != null) {
+                    // Show preview dialog
+                    previewAndConfirmLessonGeneration(selectedFile);
+                }
             });
 
-            dayContent.getChildren().addAll(editBtn, overview, details);
-
-            TitledPane dayPane = new TitledPane(day, dayContent);
-            dayPane.setStyle("-fx-background-color: #BDC3C7;");
-            dayAccordion.getPanes().add(dayPane);
-        }
-
-        weekPane.setContent(dayAccordion);
-        weekPane.setStyle("-fx-background-color: #BDC3C7; -fx-padding: 20px;");
-        weekAccordion.getPanes().add(weekPane);
-    }
-    @FXML
-    private void goBack() {
-        if (dashboardController != null) {
-            dashboardController.goToDashboard(null);
+        } catch (Exception e) {
+            LPDetailsText.setText(" Failed to load study files.");
+            e.printStackTrace();
         }
     }
+    /**
+     * Shows a preview of the selected study file and confirms AI-based generation.
+     *
+     * @param storyFile the selected study file
+     */
+    private void previewAndConfirmLessonGeneration(StudyFile storyFile) {
+        try {
+            String storyText = new String(storyFile.getData(), StandardCharsets.UTF_8);
+
+            Alert previewDialog = new Alert(Alert.AlertType.CONFIRMATION);
+            previewDialog.setTitle("Preview Course Content");
+            previewDialog.setHeaderText("Would you like to generate a lesson plan based on this Content?");
+
+            TextArea previewText = new TextArea(storyText);
+            previewText.setWrapText(true);
+            previewText.setEditable(false);
+            previewText.setPrefWidth(600);
+            previewText.setPrefHeight(400);
+            previewDialog.getDialogPane().setContent(previewText);
+
+            ButtonType generateButton = new ButtonType("Generate Lesson Plan");
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            previewDialog.getButtonTypes().setAll(generateButton, cancelButton);
+
+            Optional<ButtonType> result = previewDialog.showAndWait();
+            if (result.isPresent() && result.get() == generateButton) {
+                generateAIFromStudyFile(storyFile);
+            }
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Error previewing content.").showAndWait();
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Uses the selected study file as input for AI generation of a lesson plan.
+     *
+     * @param story the selected StudyFile object
+     */
+    private void generateAIFromStudyFile(StudyFile story) {
+        try {
+            String storyText = new String(story.getData(), StandardCharsets.UTF_8);
+
+            String prompt = "Using this Course Content:\n\n" + storyText + "\n\n" +
+                    "Generate a lesson plan including:\n" +
+                    "- 2 to 3 learning objectives\n" +
+                    "- 2 discussion questions\n" +
+                    "- 1 suggested classroom activity\n" +
+                    "Keep output under 200 words.";
+
+            String result = AIService.getInstance().generateLessonPlan(prompt);
+
+            LPTitleField.setText(story.getTitle());
+            LPDetailsText.setText(result);
+            LPTitleField.setDisable(false);
+            LPTitleField.setEditable(true);
+            LPDetailsText.setDisable(false);
+            LPDetailsText.setEditable(true);
+            saveLPButton.setVisible(true);
+            saveLPButton.setDisable(false);
+
+        } catch (Exception e) {
+            LPDetailsText.setText("Lesson plan generation failed.");
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
 }

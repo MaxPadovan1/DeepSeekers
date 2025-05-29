@@ -196,10 +196,31 @@ public class DashboardController implements Initializable {
                     if (ctrl instanceof LessonPlanController lp) {
                         lp.setDashboardController(this);
                         lp.setUser(currentUser);
-                        //c.setSubjects(subjects);
+                        lp.setSubject(subjects);
                     }
                 });
         //System.out.println("Clicked on Lesson plan");
+    }
+    @FXML
+    public void goToGradePage(MouseEvent ev) {
+        String fxml;
+        if (currentUser instanceof Teacher) {
+            fxml = "/com/example/teach/homeworkgradepage.fxml";
+        } else {
+            fxml = "/com/example/teach/studentgradepage.fxml";
+        }
+
+        navigateTo(fxml, "Dashboard / Grade Page", ctrl -> {
+            if (ctrl instanceof SectionControllerBase c) {
+                c.setDashboardController(this);
+                c.setUser(currentUser);
+                if (currentUser instanceof Teacher t) {
+                    c.setSubject(t.getSubject());
+                } else if (currentUser instanceof Student s && !s.getSubjects().isEmpty()) {
+                    c.setSubject(s.getSubjects().get(0)); // assuming single subject
+                }
+            }
+        });
     }
 
     /**
@@ -268,6 +289,13 @@ public class DashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+    /**
+     * Handles the logout action triggered from the user menu.
+     * Loads the login page FXML and replaces the current scene's root with the login view,
+     * effectively logging the user out and returning them to the login screen.
+     *
+     * @param event the ActionEvent triggered by clicking the "Logout" menu item
+     */
     @FXML
     private void handleLogout(ActionEvent event) {
 

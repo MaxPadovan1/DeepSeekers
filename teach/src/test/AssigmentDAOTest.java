@@ -71,16 +71,52 @@ class AssignmentDAOTest extends DatabaseTestBase {
         Assignment a = new Assignment("A4", "CS", "Java", "Inheritance", "2025-05-30", false);
         assignmentDao.add(a);
 
-        // Release it
         assignmentDao.releaseAssignment("A4");
 
-        List<Assignment> assignments = assignmentDao.getBySubject("CS");
-        assertEquals(1, assignments.size());
-        assertTrue(assignments.get(0).isReleased());
+        Assignment released = assignmentDao.getBySubject("CS").get(0);
+        assertTrue(released.isReleased());
 
-        // Should appear in getReleasedAssignments()
-        List<Assignment> released = assignmentDao.getReleasedAssignments("CS");
-        assertEquals(1, released.size());
-        assertEquals("A4", released.get(0).getId());
+        List<Assignment> releasedList = assignmentDao.getReleasedAssignments("CS");
+        assertEquals(1, releasedList.size());
+        assertEquals("A4", releasedList.get(0).getId());
+    }
+
+    @Test
+    void unreleaseAssignmentWorksCorrectly() throws Exception {
+        Assignment a = new Assignment("A5", "CS", "Networking", "TCP/IP basics", "2025-06-01", true);
+        assignmentDao.add(a);
+
+        assignmentDao.unreleaseAssignment("A5");
+
+        Assignment updated = assignmentDao.getBySubject("CS").get(0);
+        assertFalse(updated.isReleased());
+
+        List<Assignment> releasedList = assignmentDao.getReleasedAssignments("CS");
+        assertTrue(releasedList.isEmpty());
+    }
+
+    @Test
+    void removeAssignmentDeletesCorrectly() throws Exception {
+        Assignment a = new Assignment("A6", "CS", "Databases", "Normalization", "2025-06-10", true);
+        assignmentDao.add(a);
+
+        assignmentDao.removeAssignment("A6");
+
+        List<Assignment> afterDeletion = assignmentDao.getBySubject("CS");
+        assertTrue(afterDeletion.isEmpty());
+    }
+
+    @Test
+    void updateAssignmentModifiesFields() throws Exception {
+        Assignment original = new Assignment("A7", "CS", "Old Title", "Old Desc", "2025-06-15", false);
+        assignmentDao.add(original);
+
+        Assignment updated = new Assignment("A7", "CS", "New Title", "New Desc", "2025-07-01", false);
+        assignmentDao.updateAssignment(updated);
+
+        Assignment fetched = assignmentDao.getBySubject("CS").get(0);
+        assertEquals("New Title", fetched.getTitle());
+        assertEquals("New Desc", fetched.getDescription());
+        assertEquals("2025-07-01", fetched.getDueDate());
     }
 }

@@ -109,6 +109,16 @@ public class SQLiteDAO {
                             ")"
             );
 
+            // Lesson Plan table
+            stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS LessonPlans (" +
+                            "  id           TEXT PRIMARY KEY, " +
+                            "  subject_id   TEXT NOT NULL REFERENCES Subjects(id), " +
+                            "  title        TEXT NOT NULL, " +
+                            "  details      TEXT" +
+                            ")"
+            );
+
             // Homework table (fixed)
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Homework (" +
@@ -199,10 +209,17 @@ public class SQLiteDAO {
             e.printStackTrace();
             // In production, consider logging to a file or system logger
         }
-
-
     }
-
+    /**
+     * Saves a study file to the {@code study_files} table.
+     *
+     * @param subjectId   the subject this file belongs to
+     * @param week        the week label associated with the file
+     * @param fileName    original filename
+     * @param title       display title for the file
+     * @param data        binary data of the file
+     * @param isReleased  whether the file should be marked as released
+     */
     public static void saveStudyFile(String subjectId, String week, String fileName, String title, byte[] data, boolean isReleased) {
         String sql = "INSERT INTO study_files (subject_id, week, file_name, title, file_data, is_released) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = SQliteConnection.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -217,7 +234,12 @@ public class SQLiteDAO {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Marks all pending (unreleased) study files for a given subject as released and sets their week.
+     *
+     * @param subjectId the subject whose files are to be updated
+     * @param week      the week label to assign to the files
+     */
     public static void releasePendingFiles(String subjectId, String week) {
         String sql = "UPDATE study_files SET week = ?, is_released = 1 WHERE subject_id = ? AND is_released = 0";
         try (Connection conn = SQliteConnection.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -228,7 +250,13 @@ public class SQLiteDAO {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Retrieves all released study files for a given subject and week.
+     *
+     * @param subjectId the ID of the subject
+     * @param week      the week for which files are released
+     * @return a list of {@link StudyFile} objects containing file data
+     */
     public static List<StudyFile> getReleasedFilesForWeek(String subjectId, String week) {
         List<StudyFile> files = new ArrayList<>();
         String sql = "SELECT file_name, title, file_data FROM study_files WHERE subject_id = ? AND week = ? AND is_released = 1";

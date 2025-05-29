@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * Data Access Object for managing Assignment records in the database.
  * <p>
- * Provides methods to retrieve assignments by subject and to add new assignments.
+ * Provides methods to retrieve, add, update, release, unrelease, and delete assignments.
+ * Communicates with the underlying SQLite database via JDBC.
  */
 public class AssignmentDAO {
 
@@ -15,7 +16,7 @@ public class AssignmentDAO {
     private final Connection conn = SQliteConnection.getInstance();
 
     /**
-     * Fetches all assignments for the given subject ID.
+     * Fetches all assignments for the given subject ID, regardless of release status.
      *
      * @param subjectId the ID of the subject whose assignments to retrieve
      * @return a list of {@link Assignment} objects belonging to the subject
@@ -61,6 +62,12 @@ public class AssignmentDAO {
         }
     }
 
+    /**
+     * Marks the assignment with the given ID as released (is_released = 1).
+     *
+     * @param assignmentId the ID of the assignment to release
+     * @throws SQLException if a database access error occurs
+     */
     public void releaseAssignment(String assignmentId) throws SQLException {
         String sql = "UPDATE Assignments SET is_released = 1 WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -69,6 +76,13 @@ public class AssignmentDAO {
         }
     }
 
+    /**
+     * Retrieves only the released assignments for the given subject.
+     *
+     * @param subjectId the subject ID to filter by
+     * @return list of released assignments
+     * @throws SQLException if a database access error occurs
+     */
     public List<Assignment> getReleasedAssignments(String subjectId) throws SQLException {
         List<Assignment> out = new ArrayList<>();
         String sql = "SELECT id, title, description, due_date, is_released FROM Assignments WHERE subject_id=? AND is_released=1";
@@ -89,6 +103,13 @@ public class AssignmentDAO {
         }
         return out;
     }
+
+    /**
+     * Deletes the assignment with the given ID from the database.
+     *
+     * @param assignmentId the ID of the assignment to delete
+     * @throws SQLException if a database access error occurs
+     */
     public void removeAssignment(String assignmentId) throws SQLException {
         String sql = "DELETE FROM Assignments WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -96,6 +117,14 @@ public class AssignmentDAO {
             ps.executeUpdate();
         }
     }
+
+    /**
+     * Updates the title, description, and due date of an existing assignment.
+     * This does not modify the is_released status.
+     *
+     * @param assignment the assignment object containing updated values
+     * @throws SQLException if a database access error occurs
+     */
     public void updateAssignment(Assignment assignment) throws SQLException {
         String sql = "UPDATE Assignments SET title = ?, description = ?, due_date = ? WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -107,6 +136,12 @@ public class AssignmentDAO {
         }
     }
 
+    /**
+     * Marks the assignment with the given ID as not released (is_released = 0).
+     *
+     * @param assignmentId the ID of the assignment to unrelease
+     * @throws SQLException if a database access error occurs
+     */
     public void unreleaseAssignment(String assignmentId) throws SQLException {
         String sql = "UPDATE Assignments SET is_released = 0 WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -114,6 +149,4 @@ public class AssignmentDAO {
             ps.executeUpdate();
         }
     }
-
-
 }

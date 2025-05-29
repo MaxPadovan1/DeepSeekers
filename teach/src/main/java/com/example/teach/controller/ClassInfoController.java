@@ -123,6 +123,11 @@ public class ClassInfoController {
         int row = index / 4;
         studentListContainer.add(classBox, col, row);
     }
+    /**
+     * Handles the back navigation action.
+     * If the DashboardController is available, navigates the user back to the Dashboard view.
+     * You can replace this with navigation to the Subject Home Page if needed instead.
+     */
     @FXML
     private void goBack() {
         if (dashboardController != null) {
