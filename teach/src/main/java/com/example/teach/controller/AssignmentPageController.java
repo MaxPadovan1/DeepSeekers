@@ -118,7 +118,7 @@ public class AssignmentPageController implements SectionControllerBase {
     private void updateUIForUserRole() {
         if (user == null || subject == null) return;
 
-        System.out.println("[AssignmentPageController] User is " + user.getClass().getSimpleName());
+        //System.out.println("[AssignmentPageController] User is " + user.getClass().getSimpleName());
 
         boolean isTeacher = user instanceof Teacher;
 

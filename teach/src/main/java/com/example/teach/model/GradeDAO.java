@@ -12,30 +12,6 @@ public class GradeDAO {
 
     public GradeDAO() {
         this.conn = SQliteConnection.getInstance();
-        createGradeTable();
-    }
-
-    /**
-     * Creates the Grades table if it doesn't exist.
-     */
-    private void createGradeTable() {
-        try (Statement stmt = conn.createStatement()) {
-            stmt.execute(
-                    "CREATE TABLE IF NOT EXISTS Grades (" +
-                            "id TEXT PRIMARY KEY, " +
-                            "assignment_id TEXT NOT NULL, " +
-                            "student_id TEXT NOT NULL, " +
-                            "grade TEXT, " +
-                            "feedback TEXT, " +
-                            "submitted_time TEXT, " +
-                            "FOREIGN KEY(assignment_id) REFERENCES Assignments(id), " +
-                            "FOREIGN KEY(student_id) REFERENCES Students(id), " +
-                            "UNIQUE (assignment_id, student_id)" +
-                            ")"
-            );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -52,13 +28,13 @@ public class GradeDAO {
         """;
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            System.out.println("\uD83D\uDCDD Attempting to save grade:");
-            System.out.println("ID: " + grade.getId());
-            System.out.println("Assignment ID: " + grade.getAssignmentId());
-            System.out.println("Student ID: " + grade.getStudentId());
-            System.out.println("Grade: " + grade.getGrade());
-            System.out.println("Feedback: " + grade.getFeedback());
-            System.out.println("Submitted Time: " + grade.getSubmittedTime());
+//            System.out.println("\uD83D\uDCDD Attempting to save grade:");
+//            System.out.println("ID: " + grade.getId());
+//            System.out.println("Assignment ID: " + grade.getAssignmentId());
+//            System.out.println("Student ID: " + grade.getStudentId());
+//            System.out.println("Grade: " + grade.getGrade());
+//            System.out.println("Feedback: " + grade.getFeedback());
+//            System.out.println("Submitted Time: " + grade.getSubmittedTime());
 
             ps.setString(1, grade.getId());
             ps.setString(2, grade.getAssignmentId());
@@ -68,7 +44,7 @@ public class GradeDAO {
             ps.setString(6, grade.getSubmittedTime());
 
             int result = ps.executeUpdate();
-            System.out.println(" Rows affected: " + result);
+//            System.out.println(" Rows affected: " + result);
             return result > 0;
 
         } catch (SQLException e) {
