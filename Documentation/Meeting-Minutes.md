@@ -114,8 +114,30 @@
 - Planned on how to limit the Final presentation to exactly 5 minutes depending on everyone's pace.
 ##### Glen, Kai, Nav, and Max attended the meeting on 22nd of May.
 
-### May 24, 25, 26, 27 May
+### May 24
 - Final presentation discussions and conclusion on code work.
 - Helping each other with necessary tasks.
-##### Glen, Kai, Nav, Angela and Max attended the meeting on 29th of May.
+##### Glen, Kai, Nav, Angela and Max attended the meeting on 24th of May.
+
+
+### May 26
+- Final presentation discussions and conclusion on code work.
+- working on finishing sprint 4.
+- Helping each other with necessary tasks.
+##### Glen, Kai, Nav, Angela attended the meeting on 24th of May.
+
+### May 27
+- Final presentation discussions and conclusion on code work.
+- working on finishing sprint 4.
+- Helping each other with necessary tasks.
+##### Glen, Kai, Nav, Angela and Max attended the meeting on 24th of May.
+
+### May 29
+- Final presentation discussions and conclusion on code work.
+- modifying the code, finishing the documentations, arranging on the documents for submission.
+- one final check for the code.
+- Helping each other with necessary tasks.
+##### Glen, Kai, Nav, Angela and Max attended the meeting on 24th of May.
+
+
   
