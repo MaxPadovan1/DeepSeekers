@@ -48,5 +48,23 @@ do, so they had forgot to start that until someone else followed up and asked fo
 - Some team members became occupied with other assignments, which caused slight delays in our progress.
 - As the semester came to an end, a few members were unable to attend meetings due to exam preparation.
 
+# Sprint Retrospective – Sprint 4(May 29, 2025)
 
+## What went well
+- We were able to complete all must have, should have and most of the could have tasks by the expected time.
+- We had time to go through each tasks and check if everything is done according to the requirements.
+- We had members contributing their time, effort and skills into the project.
+- We had daily meetings, after the 12th week, to maintain strong communication.
+- We were able to successfully implement AI into our application, which worked according to our needs. Moreover, we modified and updated our UI and backend, by making sure all the features are working and user satisfying.
+- We were able to conduct using user testing, which helped us understand the challenges that a user might face while using our app, if our app our user satisfying, understandable and reliable. This gave us an opportunity to work on improving our application.
+- Members helped each other with tasks and merge conflicts, 
+
+## What Didn't Go Well
+- All the members had different availabilities and busy schedules, because of the end of semester rush.Some members weren't able to attend some meetings and took time responding, which lead to concerns and disagreements sometimes.
+- Some of the members fell sick with flu, So they had to take their time resting.
+- Had to do lots of rollback and implement different models of AI until finding the most suitable one for our project. There were also some merge conflicts.
+
+## Appreciations
+- We appreciate every members that contributed in this assessment to complete it within the expected time frame and for putting time and effort into the project even between their busy schedules.
+  
 
