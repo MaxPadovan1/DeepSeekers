@@ -27,9 +27,14 @@ The following features are planned for release during the semester:
 ##  Out of scope
 
 ### Test page
-- Teacher relesase test and grading
-- Student access test content and submittion
+- Teacher release test and grading
+- Student access test content and submission
 
+### Other out of scope feature
+- Auto-grading submissions
+- Plagiarism checker for submissions
+- Flashcard generation for students
+- Cheating detection for submissions
 ---
 
 ## Timeline
@@ -39,7 +44,7 @@ The following features are planned for release during the semester:
 | Sprint 1    | Week 5–7     | Determine project management tool, write user stories, create low/medium fidelity UI design & prototype, configure project management tool |
 | Sprint 2    | Week 7-9       | Create javaFX UI codes for “must-have” pages: sign in/sign up, profile page, user viewing assignment, homework page, subject homepage, dashboard, class info & study material.  |
 | Sprint 3    | Week 9-11       | Code “should-have” pages: teacher releases (assignments, homework, study material), grading, student submissions & test participation. Create SQLite database storing the created user, files, homework and assignment. Record a walk through vedio for the demo |
-| Sprint 4    | Week 11-13      | Code “should-have” functuions: teacher using AI assist in homework, assignment and lesson plan |
+| Sprint 4    | Week 11-13      | Code “should-have” functuions: teacher using AI assist in homework, assignment and lesson plan. Refactoring and cleaning the existing code |
 
 ---
 
