@@ -87,10 +87,20 @@ public class Assignment {
         return dueDate;
     }
 
+    /**
+     * Returns whether the assignment has been released to students.
+     *
+     * @return true if released, false otherwise
+     */
     public boolean isReleased() {
         return isReleased;
     }
 
+    /**
+     * Returns a string representation of the assignment for UI display.
+     *
+     * @return formatted title and due date string
+     */
     @Override
     public String toString() {
         return title + " (Due: " + dueDate + ")";

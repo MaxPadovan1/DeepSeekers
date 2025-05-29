@@ -1,0 +1,10 @@
+Course: Introduction to Programming
+
+Week 1: Understanding Computers and Programming Languages
+Week 2: Variables, Data Types, and Expressions
+Week 3: Control Flow – if, else, switch
+Week 4: Loops – while, for, do-while
+Week 5: Methods and Modular Programming
+Week 6: Arrays and Collections
+Week 7: Object-Oriented Programming Basics
+Week 8: Exception Handling and File I/O

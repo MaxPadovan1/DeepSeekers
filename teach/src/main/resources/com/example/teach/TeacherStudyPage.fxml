@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teach.controller.TeacherStudyPageController">
+
+   <VBox alignment="TOP_CENTER" spacing="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+
+      <Label style="-fx-font-size: 20px;" text="Teacher Study Page">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin></Label>
+
+      <!-- Week selection -->
+      <ComboBox fx:id="weekDropdown" prefHeight="23.0" prefWidth="389.0" promptText="Select Week" />
+
+      <!-- Title input -->
+      <TextField fx:id="titleInput" prefWidth="300.0" promptText="Enter title" />
+
+      <!-- Upload & Release buttons -->
+      <HBox spacing="10">
+         <Button fx:id="uploadButton" onAction="#handleUpload" text="Upload">
+            <HBox.margin>
+               <Insets left="20.0" />
+            </HBox.margin>
+            <font>
+               <Font size="14.0" />
+            </font></Button>
+         <Button fx:id="releaseButton" onAction="#handleRelease" text="Release">
+            <HBox.margin>
+               <Insets left="30.0" />
+            </HBox.margin>
+            <font>
+               <Font size="14.0" />
+            </font></Button>
+      </HBox>
+
+      <!-- 🔽 状态标签：用于显示上传或错误信息 -->
+      <Label fx:id="statusLabel" style="-fx-text-fill: darkgreen; -fx-font-style: italic;" text="Status messages will appear here" />
+
+      <!-- 文件列表显示 -->
+      <ListView fx:id="fileListView" prefHeight="300.0" prefWidth="600.0" />
+
+   </VBox>
+</AnchorPane>

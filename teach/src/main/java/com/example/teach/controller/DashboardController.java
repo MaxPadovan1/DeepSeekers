@@ -196,7 +196,7 @@ public class DashboardController implements Initializable {
                     if (ctrl instanceof LessonPlanController lp) {
                         lp.setDashboardController(this);
                         lp.setUser(currentUser);
-                        //c.setSubjects(subjects);
+                        lp.setSubject(subjects);
                     }
                 });
         //System.out.println("Clicked on Lesson plan");

@@ -13,25 +13,44 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ComboBox?>
 <VBox prefHeight="720.0" prefWidth="1280.0"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.teach.controller.StudyPageController">
 
    <!-- Control buttons visible only to teachers -->
-   <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
+   <VBox alignment="TOP_CENTER" spacing="15.0" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-      <Region HBox.hgrow="ALWAYS"/>
+      <!-- 页面标题 -->
+      <Label text="Study Materials Upload" style="-fx-font-size: 20px;"/>
 
-      <Button fx:id="addWeekButton" text="➕ Add Week" onAction="#onAddWeek"/>
-      <Button fx:id="removeWeekButton" text="➖ Remove Week" onAction="#onRemoveWeek"/>
-      <ToggleButton fx:id="toggleViewButton" text="👁️‍🗨️ Student View"/>
-   </HBox>
+      <!-- 周次选择 -->
+      <ComboBox fx:id="weekDropdown" promptText="Select Week" prefWidth="200.0"/>
+
+      <!-- 添加周次按钮 -->
+      <HBox spacing="10">
+         <Button text="Add Week" onAction="#onAddWeek"/>
+      </HBox>
+
+      <!-- 上传功能区 -->
+      <HBox spacing="10">
+         <Button text="Upload File" onAction="#onUpload"/>
+         <Button text="Upload Link" onAction="#onUploadLink"/>
+      </HBox>
+
+      <!-- 状态显示 -->
+      <Label fx:id="statusLabel" text="Status" wrapText="true"/>
+
+      <!-- 文件与链接列表 -->
+      <ListView fx:id="fileListView" prefHeight="300.0" prefWidth="600.0"/>
+
+   </VBox>
 
    <!-- Accordion that holds all week panes, content dynamically added from controller -->
    <Accordion fx:id="weekAccordion" VBox.vgrow="ALWAYS"/>
 </VBox>
-
 <!--   <VBox prefHeight="553.0" prefWidth="1280.0">-->
 <!--      <Accordion>-->
 <!--         <panes>-->
