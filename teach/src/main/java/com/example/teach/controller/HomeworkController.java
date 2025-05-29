@@ -44,14 +44,31 @@ public class HomeworkController implements SectionControllerBase {
     public void setUser(User user) {
         this.currentUser = user;
 
-        // Only show the AI button for teachers
-        if (enhanceWithAIButton != null) {
-            boolean isTeacher = user instanceof Teacher;
-            enhanceWithAIButton.setVisible(isTeacher);
-            enhanceWithAIButton.setManaged(isTeacher);
-            enhanceWithAIButton.setDisable(!isTeacher);
+        boolean isTeacher = user instanceof Teacher;
+
+        addHomeworkButton.setVisible(isTeacher);
+        addHomeworkButton.setManaged(isTeacher);
+
+        editHomeworkButton.setVisible(isTeacher);
+        editHomeworkButton.setManaged(isTeacher);
+
+        saveHomeworkButton.setVisible(isTeacher);
+        saveHomeworkButton.setManaged(isTeacher);
+
+        deleteHomeworkButton.setVisible(isTeacher);
+        deleteHomeworkButton.setManaged(isTeacher);
+
+        releaseHomeworkButton.setVisible(isTeacher);
+        releaseHomeworkButton.setManaged(isTeacher);
+
+        enhanceWithAIButton.setVisible(isTeacher);
+        enhanceWithAIButton.setManaged(isTeacher);
+
+        if (!isTeacher) {
+            teacherStatusLabel.setText("🔒 View-only mode. Homework is visible but cannot be edited.");
         }
     }
+
     /**
      * Sets the current subject context and loads existing homework.
      * @param subject the selected subject
@@ -69,17 +86,24 @@ public class HomeworkController implements SectionControllerBase {
      */
     private void loadHomeworks() {
         try {
-            List<Homework> list = homeworkDAO.getBySubject(currentSubject.getId());
+            List<Homework> list;
+            if (currentUser instanceof Teacher) {
+                list = homeworkDAO.getBySubject(currentSubject.getId());
+            } else {
+                list = homeworkDAO.getReleasedBySubject(currentSubject.getId());
+            }
             homeworkDropdown.setItems(FXCollections.observableArrayList(list));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     /**
      * Handler for adding new homework, optionally using AI assistance.
      */
     @FXML
     private void onAddHomework() {
+        if (!(currentUser instanceof Teacher)) return;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Add Homework");
         alert.setHeaderText("Do you want to auto-generate this homework using course content?");
@@ -135,27 +159,38 @@ public class HomeworkController implements SectionControllerBase {
         }
 
         try {
+            Homework hw;
+
             if (addingNew) {
-                Homework hw = new Homework(
+                hw = new Homework(
                         currentSubject.getId(),
-                        "Week 1", // Placeholder week
+                        "Week 1", // You can make this dynamic later
                         title,
                         description,
                         dueDate.toString(),
-                        null,
-                        null,
+                        null, // releaseDate
+                        null, // openDate
                         UUID.randomUUID().toString()
                 );
                 homeworkDAO.add(hw);
-                teacherStatusLabel.setText("Homework added.");
+            } else {
+                hw = editingHomework;
+                hw.setTitle(title);
+                hw.setDescription(description);
+                hw.setDueDate(dueDate.toString());
+                homeworkDAO.update(hw);
             }
-            loadHomeworks();
+
+            teacherStatusLabel.setText("Homework saved. Click 'Release' to publish it to students.");
+            loadHomeworks(); // Refresh the dropdown
+            homeworkDropdown.setValue(hw); // Select the newly added or edited homework
             enableEditing(false);
         } catch (SQLException e) {
             e.printStackTrace();
-            teacherStatusLabel.setText("Error saving homework.");
+            teacherStatusLabel.setText("Error saving or releasing homework.");
         }
     }
+
     /**
      * Deletes the selected homework.
      */
@@ -177,8 +212,39 @@ public class HomeworkController implements SectionControllerBase {
      */
     @FXML
     private void onToggleRelease() {
-        teacherStatusLabel.setText("Release toggle not implemented.");
+        if (!(currentUser instanceof Teacher)) return;
+
+        Homework selected = homeworkDropdown.getValue();
+        if (selected == null) {
+            teacherStatusLabel.setText("Please select homework to release/unrelease.");
+            return;
+        }
+
+        boolean isReleased = selected.getReleaseDate() != null;
+
+        try {
+            if (isReleased) {
+                homeworkDAO.unreleaseHomework(selected.getId());
+                teacherStatusLabel.setText(" Homework has been unpublished.");
+            } else {
+                homeworkDAO.releaseHomework(selected.getId());
+                teacherStatusLabel.setText("Homework has been released to students.");
+            }
+
+            // Reload list to reflect release state and re-select
+            loadHomeworks();
+            homeworkDropdown.setValue(
+                    homeworkDAO.getBySubject(currentSubject.getId()).stream()
+                            .filter(hw -> hw.getId().equals(selected.getId()))
+                            .findFirst().orElse(null)
+            );
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            teacherStatusLabel.setText("Error toggling release status.");
+        }
     }
+
     /**
      * Populates the UI with selected homework details.
      */
@@ -186,16 +252,22 @@ public class HomeworkController implements SectionControllerBase {
     private void onHomeworkSelected() {
         Homework selected = homeworkDropdown.getValue();
         if (selected == null) return;
+
         editingHomework = selected;
         homeworkTitleField.setText(selected.getTitle());
         homeworkDetailsText.setText(selected.getDescription());
         homeworkDueDatePicker.setValue(LocalDate.parse(selected.getDueDate()));
+
+        boolean isReleased = selected.getReleaseDate() != null;
+        releaseHomeworkButton.setText(isReleased ? "Unrelease" : "Release");
+
         editHomeworkButton.setDisable(false);
         deleteHomeworkButton.setDisable(false);
         releaseHomeworkButton.setDisable(false);
         saveHomeworkButton.setDisable(true);
         enableEditing(false);
     }
+
     /**
      * Opens a dialog to choose course content and generates homework using AI.
      */
@@ -207,7 +279,7 @@ public class HomeworkController implements SectionControllerBase {
 
         List<StudyFile> released = SQLiteDAO.getReleasedFilesForWeek(subjectId, "Week 1"); // can make dynamic later
         if (released.isEmpty()) {
-            teacherStatusLabel.setText("❌ No released stories found in Study page.");
+            teacherStatusLabel.setText("No released stories found in Study page.");
             return;
         }
 
@@ -261,7 +333,7 @@ public class HomeworkController implements SectionControllerBase {
 
         } catch (Exception e) {
             e.printStackTrace();
-            teacherStatusLabel.setText("❌ Failed to preview content.");
+            teacherStatusLabel.setText("Failed to preview content.");
         }
     }
     /**
@@ -311,11 +383,17 @@ public class HomeworkController implements SectionControllerBase {
      */
 
     private void enableEditing(boolean enable) {
-        homeworkTitleField.setDisable(!enable);
-        homeworkDetailsText.setDisable(!enable);
+        // For both teachers and students: allow scroll & text visibility
+        homeworkTitleField.setEditable(enable);
+        homeworkTitleField.setDisable(false);
+
+        homeworkDetailsText.setEditable(enable);
+        homeworkDetailsText.setDisable(false); // allow scroll
+
         homeworkDueDatePicker.setDisable(!enable);
         saveHomeworkButton.setDisable(!enable);
     }
+
 
     /**
      * Enhances manually entered homework using the AIService.
@@ -325,7 +403,7 @@ public class HomeworkController implements SectionControllerBase {
         String original = homeworkDetailsText.getText();
 
         if (original.isBlank()) {
-            teacherStatusLabel.setText("❌ Please enter homework questions first.");
+            teacherStatusLabel.setText("Please enter homework questions first.");
             return;
         }
 
@@ -357,7 +435,7 @@ public class HomeworkController implements SectionControllerBase {
 
                 dialog.showAndWait().ifPresent(edited -> {
                     homeworkDetailsText.setText(edited);
-                    teacherStatusLabel.setText("✅ Homework enhanced. Review before saving.");
+                    teacherStatusLabel.setText("Homework enhanced. Review before saving.");
                 });
             });
         }).start();
