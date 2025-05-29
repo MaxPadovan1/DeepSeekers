@@ -42,21 +42,21 @@
                 <!-- Left Column -->
                 <VBox spacing="20" HBox.hgrow="ALWAYS">
 
-                    <!-- 📘 Subject Info Box -->
+                    <!-- Subject Info Box -->
                     <VBox spacing="10"
                           style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;
                              -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);"
                           VBox.vgrow="ALWAYS">
-                        <Label text="📘 Subject Info" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                        <Label text=" Subject Info" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                         <TextArea fx:id="subjectInfoArea" wrapText="true" VBox.vgrow="ALWAYS"
                                   style="-fx-font-size: 14px;" />
                     </VBox>
 
-                    <!-- 👩‍🏫 Teacher Info Box -->
+                    <!-- Teacher Info Box -->
                     <VBox spacing="10"
                           style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;
                              -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
-                        <Label text="👩‍🏫 Teacher Info" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                        <Label text=" Teacher Info" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                         <TextArea fx:id="teacherInfoArea" wrapText="true"
                                   style="-fx-font-size: 14px;" />
                     </VBox>
@@ -67,10 +67,14 @@
                       style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;
                          -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
 
-                    <!-- 📝 Assignment Box -->
-                    <Label text="📝 Assignments" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    <!-- Assignment Box -->
+                    <Label text="Assignments" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                     <VBox fx:id="assignmentBox" spacing="10"
-                          style="-fx-background-color: #FADBD8; -fx-padding: 10; -fx-background-radius: 8;">
+                          style=" -fx-padding: 10; -fx-background-radius: 8; "
+                          VBox.vgrow="ALWAYS">
+                        <TextArea fx:id="AssignmentArea" wrapText="true"
+                                  style="-fx-font-size: 14px;"
+                                  VBox.vgrow="ALWAYS"/>
                         <!-- Add assignment entries programmatically -->
                     </VBox>
 
