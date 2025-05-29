@@ -7,7 +7,7 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.teach.controller.HomeWorkGradePageController"
             prefWidth="960" prefHeight="600"
-            style="-fx-background-color: #ECECEC;">
+            style="-fx-background-color: #ecf0f1;">
 
     <center>
         <VBox alignment="TOP_CENTER"

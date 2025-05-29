@@ -7,7 +7,7 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.teach.controller.SignUpViewBasicController"
       prefWidth="1280" prefHeight="720"
-      spacing="15" alignment="CENTER">
+      spacing="15" alignment="CENTER" style="-fx-background-color: #ecf0f1;">
     <!-- Define the ToggleGroup for role selection -->
     <VBox spacing="15" alignment="CENTER">
     <fx:define>
@@ -37,23 +37,25 @@
     <TextField fx:id="emailField"     promptText="Email" maxWidth="800" prefHeight="30"/>
     <PasswordField fx:id="passwordField" promptText="Password" maxWidth="800" prefHeight="30"/>
 
-    <!-- Subjects for Students -->
-    <VBox fx:id="studentPane" spacing="5" visible="false">
-        <children>
-            <Label text="Select up to 4 subjects:"/>
-            <ScrollPane prefHeight="150" prefWidth="320">
+        <!-- Subjects for Students -->
+        <VBox fx:id="studentPane" spacing="10" visible="false"
+              alignment="CENTER"
+              style="-fx-background-color: #ecf0f1; -fx-padding: 10;">
+            <Label text="Select up to 4 subjects:" style="-fx-font-size: 14px; -fx-font-weight: bold;-fx-background-color: #ecf0f1;"/>
+
+            <ScrollPane prefHeight="150" prefWidth="320" fitToWidth="true" style="-fx-background-color: transparent; -fx-background-color: #ecf0f1;">
                 <content>
-                    <VBox fx:id="subjectCheckboxContainer" spacing="8">
+                    <VBox fx:id="subjectCheckboxContainer" spacing="8" alignment="CENTER" style="-fx-background-color: #ecf0f1;">
                         <padding>
                             <Insets top="5" right="5" bottom="5" left="5" />
                         </padding>
                     </VBox>
                 </content>
             </ScrollPane>
-        </children>
-    </VBox>
+        </VBox>
 
-    <!-- Subject for Teachers -->
+
+        <!-- Subject for Teachers -->
     <VBox fx:id="teacherPane" spacing="5" visible="false" >
         <children>
             <Label text="Select your subject:" />
