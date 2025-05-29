@@ -47,7 +47,7 @@
 
 ### April 7
 - Configured Project Management tool.
-#### Max and Nav met online on discord.
+##### Max and Nav met online on discord.
 
 ### April 8
 - 4th weekly meeting.
@@ -93,11 +93,51 @@
 - 9th weekly online meeting.
 - Assigned tasks to each team members in terms of backend and frontend work.
 - Had concerns about work management, splitting and assigning of work to members as everyone had a busy schedule with other assignments and personal matters.
-### Glen, Kai, Nav, Angela and Max attended the meeting online on 13th of May.
+##### Glen, Kai, Nav, Angela and Max attended the meeting online on 13th of May.
 
 ### May 15
 - weekly scrum meeting.
 - Modified the frontend UI, added more features in the controllers, made sure that all the must have elements and most of the should have elements are working properly.
 - Lack of teamwork was seen that specific week, because of the busy schedules of some of the members, which resulted in the inability to complete some of the tasks.
 - Resolved it by making sure that the members get their tasks done within 2-3 days so that we don't waste a lot of time on some of the sprints and move on to the next.
-#### Glen, Kai, Nav, Angela and Max attended the tutoriaal on 15th of May and submitted the checkpoint.
+##### Glen, Kai, Nav, Angela and Max attended the tutoriaal on 15th of May and submitted the checkpoint.
+
+### May 20
+- 10th weeekly online meeting.
+- Discussed about modifying the backend code and frontend code, implementing AI, and focusing on Final Presentation.
+- Decided to do an online meeting everyday starting May 21st to plan on Final presentation.
+##### Glen, Kai, Nav, Angela and Max attended the meeting on 20th of May.
+
+### May 22
+- weekly scrum meeting.
+- Split the coding work among members and decided to modify the UI to make it look more attractive.
+- Planned on how to limit the Final presentation to exactly 5 minutes depending on everyone's pace.
+##### Glen, Kai, Nav, and Max attended the meeting on 22nd of May.
+
+### May 24
+- Final presentation discussions and conclusion on code work.
+- Helping each other with necessary tasks.
+##### Glen, Kai, Nav, Angela and Max attended the meeting on 24th of May.
+
+
+### May 26
+- Final presentation discussions and conclusion on code work.
+- working on finishing sprint 4.
+- Helping each other with necessary tasks.
+##### Glen, Kai, Nav, Angela attended the meeting on 24th of May.
+
+### May 27
+- Final presentation discussions and conclusion on code work.
+- working on finishing sprint 4.
+- Helping each other with necessary tasks.
+##### Glen, Kai, Nav, Angela and Max attended the meeting on 24th of May.
+
+### May 29
+- Final presentation discussions and conclusion on code work.
+- modifying the code, finishing the documentations, arranging on the documents for submission.
+- one final check for the code.
+- Helping each other with necessary tasks.
+##### Glen, Kai, Nav, Angela and Max attended the meeting on 24th of May.
+
+
+  

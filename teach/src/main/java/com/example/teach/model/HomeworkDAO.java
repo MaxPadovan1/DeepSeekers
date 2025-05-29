@@ -74,4 +74,56 @@ public class HomeworkDAO {
             ps.executeUpdate();
         }
     }
+    public void update(Homework h) throws SQLException {
+        String sql = "UPDATE Homework SET week = ?, title = ?, description = ?, due_date = ?, release_date = ?, open_date = ? WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, h.getWeek());
+            ps.setString(2, h.getTitle());
+            ps.setString(3, h.getDescription());
+            ps.setString(4, h.getDueDate());
+            ps.setString(5, h.getReleaseDate());
+            ps.setString(6, h.getOpenDate());
+            ps.setString(7, h.getId());
+            ps.executeUpdate();
+        }
+    }
+    public void releaseHomework(String homeworkId) throws SQLException {
+        String sql = "UPDATE Homework SET release_date = date('now') WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, homeworkId);
+            ps.executeUpdate();
+        }
+    }
+
+    public void unreleaseHomework(String homeworkId) throws SQLException {
+        String sql = "UPDATE Homework SET release_date = NULL WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, homeworkId);
+            ps.executeUpdate();
+        }
+    }
+    public List<Homework> getReleasedBySubject(String subjectId) throws SQLException {
+        List<Homework> out = new ArrayList<>();
+        String sql = "SELECT * FROM Homework WHERE subject_id = ? AND release_date IS NOT NULL";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, subjectId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Homework hw = new Homework(
+                            subjectId,
+                            rs.getString("week"),
+                            rs.getString("title"),
+                            rs.getString("description"),
+                            rs.getString("due_date"),
+                            rs.getString("release_date"),
+                            rs.getString("open_date"),
+                            rs.getString("id")
+                    );
+                    out.add(hw);
+                }
+            }
+        }
+        return out;
+    }
+
 }

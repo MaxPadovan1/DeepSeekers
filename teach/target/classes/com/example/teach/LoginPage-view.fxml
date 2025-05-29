@@ -10,7 +10,7 @@
 <VBox alignment="CENTER" spacing="20"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.teach.controller.LoginPageController">
+      fx:controller="com.example.teach.controller.LoginPageController" style="-fx-background-color:#ecf0f1;">
 
     <!-- Header -->
     <HBox alignment="CENTER">
