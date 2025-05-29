@@ -175,23 +175,23 @@ public class SignUpViewBasicController {
         }
 
         // **DEBUG SIGNUP DUMP**
-        System.out.println("=== DEBUG SIGNUP DUMP ===");
-        System.out.println("ID:       " + id);
-        System.out.println("Name:     " + fn + " " + ln);
-        System.out.println("Email:    " + email);
-        System.out.println("Password: " + pw);  // show raw password
+//        System.out.println("=== DEBUG SIGNUP DUMP ===");
+//        System.out.println("ID:       " + id);
+//        System.out.println("Name:     " + fn + " " + ln);
+//        System.out.println("Email:    " + email);
+//        System.out.println("Password: " + pw);  // show raw password
         String pwHash = User.hashPassword(pw);
-        System.out.println("Hash:     " + pwHash);  // show password hash
-        System.out.println("Role:     " + (studentRadio.isSelected() ? "Student" : "Teacher"));
-        System.out.println("Subjects: " + subjectIds);
-        System.out.println("=========================");
+//        System.out.println("Hash:     " + pwHash);  // show password hash
+//        System.out.println("Role:     " + (studentRadio.isSelected() ? "Student" : "Teacher"));
+//        System.out.println("Subjects: " + subjectIds);
+//        System.out.println("=========================");
 
         // Create user
         User newUser = User.signUp(id, pwHash, fn, ln, email, subjectIds);
         if (newUser != null) {
-            System.out.println("✅ Signed up: " + newUser);
+//            System.out.println("✅ Signed up: " + newUser);
         } else {
-            System.out.println("❌ Sign-up failed for id=" + id);
+//            System.out.println("❌ Sign-up failed for id=" + id);
         }
 
         // Navigate back to Login

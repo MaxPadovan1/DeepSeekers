@@ -146,9 +146,19 @@ public class SQLiteDAO {
                             ")"
             );
 
-
-
-
+            stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS Grades (" +
+                            "id TEXT PRIMARY KEY, " +
+                            "assignment_id TEXT NOT NULL, " +
+                            "student_id TEXT NOT NULL, " +
+                            "grade TEXT, " +
+                            "feedback TEXT, " +
+                            "submitted_time TEXT, " +
+                            "FOREIGN KEY(assignment_id) REFERENCES Assignments(id), " +
+                            "FOREIGN KEY(student_id) REFERENCES Students(id), " +
+                            "UNIQUE (assignment_id, student_id)" +
+                            ")"
+            );
 
 
             // Study table
@@ -201,6 +211,10 @@ public class SQLiteDAO {
 
             try {
                 stmt.execute("ALTER TABLE Homeworks ADD COLUMN open_date TEXT");
+            } catch (SQLException ignore) {}
+
+            try {
+                stmt.execute("UPDATE Subjects SET id = 'BIO150', name = 'General Biology' WHERE id = 'TESTSUBJECT';");
             } catch (SQLException ignore) {}
 
 

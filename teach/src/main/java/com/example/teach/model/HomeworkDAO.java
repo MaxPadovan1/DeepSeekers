@@ -58,6 +58,9 @@ public class HomeworkDAO {
             stmt.executeUpdate();
         }
     }
+    protected Connection getConnection() {
+        return conn;
+    }
 
     /**
      * Inserts a new homework record into the database.

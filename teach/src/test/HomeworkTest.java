@@ -2,26 +2,29 @@ import com.example.teach.model.Homework;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class HomeworkTest {
-    @Test
-    void constructorAndGetters() {
-        Homework h = new Homework(
-                "SUB2",                 // subjectid
-                "2",                  // ✅ week
-                "Read Chapter",       // title
-                "Read chapters 3–5",  // description
-                "2025-06-01",         // dueDate
-                "2025-05-01",         // releaseDate
-                "2025-05-20",      // openDate
-                "H1"               // Id
-        );
+public class HomeworkTest {
 
-        assertEquals("H1", h.getId());
-        assertEquals("SUB2", h.getSubjectId());
-        assertEquals("2", h.getWeek()); // ✅ 新增断言
-        assertEquals("Read Chapter", h.getTitle());
-        assertEquals("Read chapters 3–5", h.getDescription());
-        assertEquals("2025-06-01", h.getDueDate());
+    @Test
+    public void testHomeworkConstructorAndGetters() {
+        String subjectId = "math101";
+        String week = "Week 3";
+        String title = "Algebra Homework";
+        String description = "Solve all problems in chapter 2";
+        String dueDate = "2025-06-01";
+        String releaseDate = "2025-05-25";
+        String openDate = "2025-05-27";
+        String id = "hw001";
+
+        Homework homework = new Homework(subjectId, week, title, description, dueDate, releaseDate, openDate, id);
+
+        assertEquals(subjectId, homework.getSubjectId());
+        assertEquals(week, homework.getWeek());
+        assertEquals(title, homework.getTitle());
+        assertEquals(description, homework.getDescription());
+        assertEquals(dueDate, homework.getDueDate());
+        assertEquals(releaseDate, homework.getReleaseDate());
+        assertEquals(openDate, homework.getOpenDate());
+        assertEquals(id, homework.getId());
     }
 }
 

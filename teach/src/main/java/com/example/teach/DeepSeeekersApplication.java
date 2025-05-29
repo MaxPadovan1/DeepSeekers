@@ -1,6 +1,5 @@
 package com.example.teach;
 
-import com.example.teach.model.AdminDAO;
 import com.example.teach.model.SQLiteDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +13,7 @@ import java.nio.file.Paths;
 /**
  * Main entry point for the DeepSeekers JavaFX application.
  * <p>
- * This class initializes the database schema (via {@link SQLiteDAO}),
- * optionally allows a full reset (via {@link AdminDAO#CLEAN_DB}),
+ * This class initializes the database schema (via {@link SQLiteDAO})
  * and then loads the login screen from FXML.
  */
 public class DeepSeeekersApplication extends Application {
@@ -31,14 +29,7 @@ public class DeepSeeekersApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        // 1️. Ensure the database and required tables exist
-        new SQLiteDAO();   // triggers createSchema()
-
-        // 2. Construct AdminDAO for potential maintenance operations
-        AdminDAO admin = new AdminDAO();
-        //admin.CLEAN_DB(); // use with caution: drops & recreates all tables
-
-        // 3️. Load and display the login screen from FXML
+        new SQLiteDAO();
         FXMLLoader loader = new FXMLLoader(
                 DeepSeeekersApplication.class.getResource("LoginPage-view.fxml")
         );

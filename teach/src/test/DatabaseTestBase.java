@@ -28,6 +28,7 @@ public abstract class DatabaseTestBase {
             st.executeUpdate("DELETE FROM Submissions");
             st.executeUpdate("DELETE FROM study_files");
             st.executeUpdate("DELETE FROM StudentSubjects");
+            st.executeUpdate("DELETE FROM Grades");
             st.executeUpdate("DELETE FROM Teachers");
             st.executeUpdate("DELETE FROM Students");
             st.executeUpdate("DELETE FROM Users");

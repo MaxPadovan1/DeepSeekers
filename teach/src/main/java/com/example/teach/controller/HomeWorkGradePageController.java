@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.ResourceBundle;
 /**
- * Controller for the Homework & Grade Page. Handles both teacher and student views.
+ * Controller for the Homework and Grade Page. Handles both teacher and student views.
  * Teachers can review and submit grades; students can view their feedback and marks.
  */
 public class HomeWorkGradePageController implements Initializable, SectionControllerBase {

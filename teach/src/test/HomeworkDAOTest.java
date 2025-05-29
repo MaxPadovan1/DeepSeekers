@@ -1,4 +1,5 @@
-import com.example.teach.model.*;
+import com.example.teach.model.Homework;
+import com.example.teach.model.HomeworkDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,42 +17,45 @@ class HomeworkDAOTest extends DatabaseTestBase {
         super.cleanTables();
         homeworkDao = new HomeworkDAO();
 
-        // Seed a subject for homework foreign key
+        // Seed subject for foreign key constraint
         try (Statement st = conn.createStatement()) {
-            st.executeUpdate("INSERT INTO Subjects(id, name) VALUES('ENG', 'English')");
+            st.executeUpdate("INSERT INTO Subjects(id, name) VALUES('CS', 'Python')");
         }
     }
 
     @Test
     void addAndFetchHomeworkWorks() throws Exception {
-        Homework h1 = new Homework("ENG", "2", "Essay", "Write about summer", "2025-06-01", "2025-05-01", "2025-05-20","H1");
-        homeworkDao.add(h1);
+        Homework hw = new Homework("CS", "Week 1", "Intro", "Solve Q1-5", "2025-06-01", "2025-05-25", "2025-05-26", "HW1");
+        homeworkDao.add(hw);
 
-        List<Homework> homeworks = homeworkDao.getBySubject("ENG");
+        List<Homework> list = homeworkDao.getBySubject("CS");
 
-        assertEquals(1, homeworks.size());
-        Homework fetched = homeworks.get(0);
-
-        assertEquals("H1", fetched.getId());
-        assertEquals("ENG", fetched.getSubjectId());
-        assertEquals("Essay", fetched.getTitle());
-        assertEquals("Write about summer", fetched.getDescription());
+        assertEquals(1, list.size());
+        Homework fetched = list.get(0);
+        assertEquals("HW1", fetched.getId());
+        assertEquals("CS", fetched.getSubjectId());
+        assertEquals("Week 1", fetched.getWeek());
+        assertEquals("Intro", fetched.getTitle());
+        assertEquals("Solve Q1-5", fetched.getDescription());
         assertEquals("2025-06-01", fetched.getDueDate());
-        assertEquals("2025-05-01", fetched.getReleaseDate());
-        assertEquals("2025-05-20", fetched.getOpenDate());
+        assertEquals("2025-05-25", fetched.getReleaseDate());
+        assertEquals("2025-05-26", fetched.getOpenDate());
     }
 
     @Test
     void getBySubjectReturnsEmptyIfNoneExist() throws Exception {
-        List<Homework> homeworks = homeworkDao.getBySubject("ENG");
-        assertTrue(homeworks.isEmpty());
+        List<Homework> list = homeworkDao.getBySubject("CS");
+        assertTrue(list.isEmpty());
     }
 
     @Test
-    void addMultipleHomeworksAndFetch() throws Exception {
-        Homework h1 = new Homework("SUB3", "3", "Grammar", "Tenses exercise", "2025-06-10", "2025-05-01", "2025-05-20", "H2");
-        Homework h2 = new Homework("SUB4", "3", "Vocabulary", "Learn 50 new words", "2025-06-15", "2025-05-01", "2025-05-20", "H3");
+    void deleteHomeworkById() throws Exception {
+        Homework hw = new Homework("CS", "Week 2", "Functions", "Complete exercises", "2025-06-10", "2025-06-01", "2025-06-03", "HW2");
+        homeworkDao.add(hw);
 
+        homeworkDao.delete("HW2");
 
+        List<Homework> after = homeworkDao.getBySubject("CS");
+        assertTrue(after.isEmpty());
     }
 }
