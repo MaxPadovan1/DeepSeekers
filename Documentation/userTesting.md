@@ -14,13 +14,13 @@ receive suggestions and feedback to improve the code.
 - **Date:** ______29-05-25______
 - **Feature Being Tested:** ____DeepTeach Application____
 
-##  Observation Notes
+###  Observation Notes
 The user followed the expected path. The user signed up, logged in, navigated from the dashboard, knew that the labels on the top were buttons that helps navigate to different pages.
 The user knew what the AI buttons were used for and got a clear understanding on seeing the AI work. 
 The user was also able to upload, edit, add, release and delete necesaary files in homeworks, assignments and lesson plan.
 The user was also able to logout without any difficulty.
 
-##  User Feedback
+###  User Feedback
 
 1. Asked the user if there was anything confusing or unclear?
    > __The user replied that she found the study page a bit confusing, because she did not know if that page was used to upload lecture notes, because it doesn't have any specific keywords that show that.__
@@ -32,8 +32,8 @@ The user was also able to logout without any difficulty.
    > ____Make study page understandable. The creators could have added more features so that the page looks a little more interesting and occupied.____
 5. Would you feel confident using this feature again?
    - Yes,The user said that she found it satisfying and that, the application has some potential, but needs improvement.
-   - 
-## Your Reflections
+     
+### Your Reflections
 
 As the developer, I learned that the study page has to be made more understandable.
 The UI cn be modified to make it look better with an interesting theme in the background, maybe. Additional features, could be added to make it a more efficient application.
