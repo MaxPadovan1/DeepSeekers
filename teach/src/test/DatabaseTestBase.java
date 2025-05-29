@@ -26,6 +26,7 @@ public abstract class DatabaseTestBase {
         try (Statement st = conn.createStatement()) {
             // Delete in correct order to avoid FK violations
             st.executeUpdate("DELETE FROM Submissions");
+            st.executeUpdate("DELETE FROM study_files");
             st.executeUpdate("DELETE FROM StudentSubjects");
             st.executeUpdate("DELETE FROM Teachers");
             st.executeUpdate("DELETE FROM Students");
@@ -33,6 +34,7 @@ public abstract class DatabaseTestBase {
             st.executeUpdate("DELETE FROM Assignments");
             st.executeUpdate("DELETE FROM Homework");
             st.executeUpdate("DELETE FROM Study");
+            st.executeUpdate("DELETE FROM LessonPlans");
             st.executeUpdate("DELETE FROM Subjects");
         }
         dao = new UserDAO();
