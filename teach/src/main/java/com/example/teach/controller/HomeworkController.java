@@ -82,7 +82,7 @@ public class HomeworkController implements SectionControllerBase {
     private void onAddHomework() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Add Homework");
-        alert.setHeaderText("Do you want to auto-generate this homework using a short story?");
+        alert.setHeaderText("Do you want to auto-generate this homework using course content?");
         alert.setContentText("Choose 'Yes' to generate with AI, or 'No' to enter manually.");
 
         ButtonType yesButton = new ButtonType("Yes");
@@ -197,7 +197,7 @@ public class HomeworkController implements SectionControllerBase {
         enableEditing(false);
     }
     /**
-     * Opens a dialog to choose a short story and generates homework using AI.
+     * Opens a dialog to choose course content and generates homework using AI.
      */
     @FXML
     private void onGenerateWithAI() {
@@ -216,9 +216,9 @@ public class HomeworkController implements SectionControllerBase {
                 .toList();
 
         ChoiceDialog<String> dialog = new ChoiceDialog<>(options.get(0), options);
-        dialog.setTitle("Select Short Story");
-        dialog.setHeaderText("Choose a short story to base the homework on:");
-        dialog.setContentText("Story:");
+        dialog.setTitle("Select Course Content:");
+        dialog.setHeaderText("Choose course content to base the homework on:");
+        dialog.setContentText("Course Content:");
 
         Optional<String> selected = dialog.showAndWait();
         if (selected.isEmpty()) return;
@@ -234,7 +234,7 @@ public class HomeworkController implements SectionControllerBase {
         }
     }
     /**
-     * Shows preview of selected short story before generating homework.
+     * Shows preview of selected course content before generating homework.
      * @param storyFile the selected StudyFile
      */
     private void previewAndGenerateHomeworkFromStory(StudyFile storyFile) {
@@ -242,8 +242,8 @@ public class HomeworkController implements SectionControllerBase {
             String storyText = new String(storyFile.getData(), StandardCharsets.UTF_8);
 
             Alert preview = new Alert(Alert.AlertType.CONFIRMATION);
-            preview.setTitle("Preview Short Story");
-            preview.setHeaderText("Use this short story to generate homework questions?");
+            preview.setTitle("Preview Course Content");
+            preview.setHeaderText("Use this course content to generate homework questions?");
             TextArea content = new TextArea(storyText);
             content.setWrapText(true);
             content.setEditable(false);
@@ -261,20 +261,20 @@ public class HomeworkController implements SectionControllerBase {
 
         } catch (Exception e) {
             e.printStackTrace();
-            teacherStatusLabel.setText("❌ Failed to preview story.");
+            teacherStatusLabel.setText("❌ Failed to preview content.");
         }
     }
     /**
-     * Sends the short story to AI service and updates the homework form with the generated content.
-     * @param title title of the story
-     * @param storyText the full text of the story
+     * Sends the course content to AI service and updates the homework form with the generated content.
+     * @param title title of the content
+     * @param storyText the full text of the content
      */
     private void runAIHomeworkGeneration(String title, String storyText) {
         teacherStatusLabel.setText("AI is generating homework...");
 
         new Thread(() -> {
             AIService ai = AIService.getInstance();
-            String prompt = "Using the following short story:\n\n" + storyText + "\n\n"
+            String prompt = "Using the following course content:\n\n" + storyText + "\n\n"
                     + "Generate 3 to 5 homework questions that assess reading comprehension and critical thinking. "
                     + "Number the questions clearly. Keep it suitable for high school students.";
 

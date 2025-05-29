@@ -220,7 +220,7 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("No Files Found");
                 alert.setHeaderText("No released short stories found.");
-                alert.setContentText("Please upload and release a short story from the Study page.");
+                alert.setContentText("Please upload and release course content from the Study page.");
                 alert.showAndWait();
                 return;
             }
@@ -231,9 +231,9 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
                     .toList();
 
             ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
-            dialog.setTitle("Select Short Story");
-            dialog.setHeaderText("Choose a short story to preview and generate a lesson plan.");
-            dialog.setContentText("Story:");
+            dialog.setTitle("Select Course Content");
+            dialog.setHeaderText("Choose course content to preview and generate a lesson plan.");
+            dialog.setContentText("Content:");
 
             Optional<String> selected = dialog.showAndWait();
 
@@ -252,7 +252,7 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             });
 
         } catch (Exception e) {
-            LPDetailsText.setText("❌ Failed to load study files.");
+            LPDetailsText.setText(" Failed to load study files.");
             e.printStackTrace();
         }
     }
@@ -261,8 +261,8 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             String storyText = new String(storyFile.getData(), StandardCharsets.UTF_8);
 
             Alert previewDialog = new Alert(Alert.AlertType.CONFIRMATION);
-            previewDialog.setTitle("Preview Short Story");
-            previewDialog.setHeaderText("Would you like to generate a lesson plan based on this story?");
+            previewDialog.setTitle("Preview Course Content");
+            previewDialog.setHeaderText("Would you like to generate a lesson plan based on this Content?");
 
             TextArea previewText = new TextArea(storyText);
             previewText.setWrapText(true);
@@ -281,7 +281,7 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             }
 
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "❌ Error previewing story.").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error previewing content.").showAndWait();
             e.printStackTrace();
         }
     }
@@ -291,7 +291,7 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
         try {
             String storyText = new String(story.getData(), StandardCharsets.UTF_8);
 
-            String prompt = "Using this short story:\n\n" + storyText + "\n\n" +
+            String prompt = "Using this Course Content:\n\n" + storyText + "\n\n" +
                     "Generate a lesson plan including:\n" +
                     "- 2 to 3 learning objectives\n" +
                     "- 2 discussion questions\n" +
@@ -310,7 +310,7 @@ public class LessonPlanController implements SectionControllerBase, Initializabl
             saveLPButton.setDisable(false);
 
         } catch (Exception e) {
-            LPDetailsText.setText("❌ Lesson plan generation failed.");
+            LPDetailsText.setText("Lesson plan generation failed.");
             e.printStackTrace();
         }
     }
