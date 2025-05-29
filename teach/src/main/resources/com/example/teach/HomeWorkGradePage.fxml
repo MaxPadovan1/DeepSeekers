@@ -6,45 +6,15 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.teach.controller.HomeWorkGradePageController"
-            prefHeight="800.0" prefWidth="1280.0"
+            prefHeight="600.0" prefWidth="1280.0"
             style="-fx-background-color: #ECECEC;">
 
     <children>
-        <!-- Student List Label -->
-        <Label layoutX="20" layoutY="0" text="Student List" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-
-        <!-- Student ListView -->
-        <ListView fx:id="studentListView" layoutX="20" layoutY="30" prefWidth="200" prefHeight="700" />
-
-        <!-- Feedback TextArea -->
-        <VBox layoutX="240" layoutY="30">
-            <children>
-                <Label text="Feedback" />
-                <TextArea fx:id="feedbackArea" prefWidth="600" prefHeight="300" />
-            </children>
-        </VBox>
-
-        <!-- Grade and Submitted Time stacked -->
-        <VBox layoutX="860" layoutY="30" spacing="30">
-            <children>
-                <VBox>
-                    <Label text="Grade" />
-                    <TextArea fx:id="gradeArea" prefWidth="240" prefHeight="80" />
-                </VBox>
-                <VBox>
-                    <Label text="Submitted Time" />
-                    <TextArea fx:id="submittedArea" prefWidth="240" prefHeight="80" />
-                </VBox>
-            </children>
-        </VBox>
-
-        <!-- Buttons aligned under feedback -->
-        <HBox layoutX="240" layoutY="350" spacing="20">
-            <children>
-                <Button fx:id="editButton" text="Edit" onAction="#handleEdit" />
-                <Button fx:id="submitGradeButton" text="Submit" onAction="#handleSubmit" />
-            </children>
-        </HBox>
+        <Accordion fx:id="accordion"
+                   layoutX="20" layoutY="30"
+                   prefWidth="1240" prefHeight="400"
+                   VBox.vgrow="ALWAYS"
+                   style="-fx-border-color: #CCC; -fx-border-radius: 5;" />
     </children>
 
 </AnchorPane>

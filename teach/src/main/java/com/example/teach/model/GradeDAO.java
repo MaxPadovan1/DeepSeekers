@@ -1,8 +1,5 @@
 package com.example.teach.model;
 
-import com.example.teach.model.Grade;
-import com.example.teach.model.SQliteConnection;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,20 +42,56 @@ public class GradeDAO {
      * Inserts or updates a grade entry.
      */
     public boolean saveOrUpdateGrade(Grade grade) {
-        String sql = "INSERT OR REPLACE INTO Grades(id, assignment_id, student_id, grade, feedback, submitted_time) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = """
+            INSERT INTO Grades(id, assignment_id, student_id, grade, feedback, submitted_time)
+            VALUES (?, ?, ?, ?, ?, ?)
+            ON CONFLICT(assignment_id, student_id) DO UPDATE SET
+                grade = excluded.grade,
+                feedback = excluded.feedback,
+                submitted_time = excluded.submitted_time
+        """;
+
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            System.out.println("\uD83D\uDCDD Attempting to save grade:");
+            System.out.println("ID: " + grade.getId());
+            System.out.println("Assignment ID: " + grade.getAssignmentId());
+            System.out.println("Student ID: " + grade.getStudentId());
+            System.out.println("Grade: " + grade.getGrade());
+            System.out.println("Feedback: " + grade.getFeedback());
+            System.out.println("Submitted Time: " + grade.getSubmittedTime());
+
             ps.setString(1, grade.getId());
             ps.setString(2, grade.getAssignmentId());
             ps.setString(3, grade.getStudentId());
             ps.setString(4, grade.getGrade());
             ps.setString(5, grade.getFeedback());
             ps.setString(6, grade.getSubmittedTime());
-            return ps.executeUpdate() > 0;
+
+            int result = ps.executeUpdate();
+            System.out.println(" Rows affected: " + result);
+            return result > 0;
+
         } catch (SQLException e) {
+            System.err.println(" SQL ERROR while saving grade:");
+            System.err.println("Message: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Grade getGradeByAssignmentAndStudent(String assignmentId, String studentId) {
+        String sql = "SELECT * FROM Grades WHERE assignment_id = ? AND student_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, assignmentId);
+            ps.setString(2, studentId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return mapRowToGrade(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
