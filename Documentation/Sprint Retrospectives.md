@@ -36,7 +36,7 @@
 - Sometimes, some of the team members received the task but because of there was some time clash or they got something to
 do, so they had forgot to start that until someone else followed up and asked for the result.
 
-# Sprint Retrospective – Sprint 3 (April 16, 2025)
+# Sprint Retrospective – Sprint 3 (May 16, 2025)
 
 ## What Went Well
 - All team members are consistently engaged in the project.
