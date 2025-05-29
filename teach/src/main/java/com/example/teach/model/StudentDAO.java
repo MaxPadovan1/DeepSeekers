@@ -29,9 +29,10 @@ public class StudentDAO {
         List<Student> students = new ArrayList<>();
 
         String sql = """
-                SELECT s.id, s.passwordHash, s.firstName, s.lastName, s.email
+                SELECT u.id, u.passwordHash, u.firstName, u.lastName, u.email
                 FROM Students s
                 JOIN StudentSubjects ss ON s.id = ss.student_id
+                JOIN Users u ON u.id = s.id
                 WHERE ss.subject_id = ?
                 """;
 
@@ -65,8 +66,12 @@ public class StudentDAO {
      * @return the corresponding {@link Student} object, or {@code null} if not found
      */
     public Student getStudentById(String id) {
-        String sql = "SELECT u.id, u.passwordHash, u.firstName, u.lastName, u.email " +
-                "FROM Users u JOIN Students s ON u.id = s.id WHERE u.id = ?";
+        String sql = """
+            SELECT u.id, u.passwordHash, u.firstName, u.lastName, u.email
+            FROM Students s
+            JOIN Users u ON u.id = s.id
+            WHERE u.id = ?
+            """;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
