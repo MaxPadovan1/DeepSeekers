@@ -14,7 +14,10 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.*;
 import java.util.ResourceBundle;
-
+/**
+ * Controller for the Homework & Grade Page. Handles both teacher and student views.
+ * Teachers can review and submit grades; students can view their feedback and marks.
+ */
 public class HomeWorkGradePageController implements Initializable, SectionControllerBase {
 
     private User currentUser;
@@ -50,7 +53,9 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
     public void setDashboardController(DashboardController dashboardController) {
         this.dashboardController = dashboardController;
     }
-
+    /**
+     * Ensures required context (user and subject) is available before loading data.
+     */
     private void trySetup() {
         if (currentUser != null && currentSubject != null) {
             if (currentUser instanceof Teacher) {
@@ -70,7 +75,9 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
             }
         }
     }
-
+    /**
+     * Loads students who have submitted assignments and displays them in a ListView.
+     */
     private void loadStudentList() {
         ASubmissionDAO submissionDAO = new ASubmissionDAO();
         AssignmentDAO assignmentDAO = new AssignmentDAO();
@@ -117,10 +124,9 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
             e.printStackTrace();
         }
     }
-
-
-
-
+    /**
+     * Loads and displays all assignment submissions (for teachers).
+     */
     private void loadAssignmentSubmissions() {
         try {
             AssignmentDAO assignmentDAO = new AssignmentDAO();
@@ -164,9 +170,9 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
             e.printStackTrace();
         }
     }
-
-
-
+    /**
+     * Loads grades for the current student and populates the accordion.
+     */
     private void loadGrades() {
         if (currentUser == null || !(currentUser instanceof Student) || currentSubject == null) return;
 
@@ -217,7 +223,9 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
             e.printStackTrace();
         }
     }
-
+    /**
+     * Builds a titled pane for a specific assignment and student, with optional editing.
+     */
     private TitledPane createPane(String title, String feedback, String grade, String submittedTime, String assignmentId, String studentId) {
         TextArea feedbackArea = new TextArea(feedback);
         TextArea gradeArea = new TextArea(grade);
@@ -296,15 +304,16 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
 
         return pane;
     }
-
-
-
-
-
+    /**
+     * Not used—editing is handled inline per pane.
+     */
     @FXML
     private void handleEdit() {
         // No longer needed since edit is managed per pane
     }
+    /**
+     * Submits all grades edited within the accordion panes.
+     */
     @FXML
     private void handleSubmit() {
         for (TitledPane pane : accordion.getPanes()) {
