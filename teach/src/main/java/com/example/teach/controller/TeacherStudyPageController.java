@@ -102,7 +102,7 @@ public class TeacherStudyPageController implements SectionControllerBase{
         int weekNumber = extractWeekNumber(selectedWeekName);
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Upload Short Story or Lecture Note");
+        fileChooser.setTitle("Upload Course Content.");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt"),
                 new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),

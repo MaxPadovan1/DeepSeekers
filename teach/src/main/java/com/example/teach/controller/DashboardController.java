@@ -289,6 +289,13 @@ public class DashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+    /**
+     * Handles the logout action triggered from the user menu.
+     * Loads the login page FXML and replaces the current scene's root with the login view,
+     * effectively logging the user out and returning them to the login screen.
+     *
+     * @param event the ActionEvent triggered by clicking the "Logout" menu item
+     */
     @FXML
     private void handleLogout(ActionEvent event) {
 
