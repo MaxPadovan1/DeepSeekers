@@ -114,6 +114,8 @@
 - Planned on how to limit the Final presentation to exactly 5 minutes depending on everyone's pace.
 ##### Glen, Kai, Nav, and Max attended the meeting on 22nd of May.
 
-### May 23. 24, 25, 26 and 27
+### May 24, 25, 26, 27 May
 - Final presentation discussions and conclusion on code work.
 - Helping each other with necessary tasks.
+##### Glen, Kai, Nav, Angela and Max attended the meeting on 29th of May.
+  
