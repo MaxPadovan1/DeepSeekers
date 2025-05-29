@@ -22,13 +22,13 @@ The following features are planned for release during the semester:
 
 ### Submissions & Overview
 - Students submit assignments and homeworks
-- Teachers access a student overview dashboard, and grade the students' sumbittion
+- Teachers access a student overview dashboard and grade the students' sumbittion
 - 
 ##  Out of scope
 
 ### Test page
-- Teacher relesase test and grade it
-- Student access test content and submit
+- Teacher relesase test and grading
+- Student access test content and submittion
 
 ---
 
@@ -37,23 +37,24 @@ The following features are planned for release during the semester:
 | **Phase**   | **Duration** | **Tasks** |
 |-------------|--------------|-----------|
 | Sprint 1    | Week 5–7     | Determine project management tool, write user stories, create low/medium fidelity UI design & prototype, configure project management tool |
-| Sprint 2    | Week 7-9       | Code UI for “must-have” pages: sign in/sign up, profile page, user viewing assignment, homework page, subject homepage, dashboard, class info & study material |
-| Sprint 3    | Week 9-11       | Code “should-have” pages: teacher releases (assignments, homework, study material), grading, student submissions & test participation |
-| Sprint 4    | Week 11-13      | Code “can-have” pages: user views class info, teacher checks for cheating |
+| Sprint 2    | Week 7-9       | Create javaFX UI codes for “must-have” pages: sign in/sign up, profile page, user viewing assignment, homework page, subject homepage, dashboard, class info & study material |
+| Sprint 3    | Week 9-11       | Code “should-have” pages: teacher releases (assignments, homework, study material), grading, student submissions & test participation. Create SQLite database storing the created user, files, homework and assignment |
+| Sprint 4    | Week 11-13      | Code “should-have” functuions: teacher using AI assist in homework, assignment and lesson plan |
 
 ---
 
 ##  Resources
 
 ### Team Members:
-- **Backend:** Navaneeth, Max Padovan, Angela Suresh Thomas, Glen Joshy Pallan, Kaiyu Shen
+- **Backend:** Angela Suresh Thomas, Glen Joshy Pallan, Kaiyu Shen, Navaneeth, Max Padovan
 - **Frontend/Controllers:** Angela Suresh Thomas, Glen Joshy Pallan, Kaiyu Shen, Navaneeth, Max Padovan
-- **Testing & Integration:** Navaneeth
+- **Testing:**  Angela Suresh Thomas, Glen Joshy Pallan, Kaiyu Shen, Navaneeth, Max Padovan
+- **Integration:** Navaneeth
 
 ### Tools:
 - Java 21, JavaFX, SQLite
 - IntelliJ IDEA, GitHub, JUnit
-- olama4j
+- Ollama4j
 
 ### Infrastructure:
 - Local development environments
