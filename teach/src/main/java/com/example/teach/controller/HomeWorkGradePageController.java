@@ -4,6 +4,7 @@ import com.example.teach.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -54,10 +55,13 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
         if (currentUser != null && currentSubject != null) {
             if (currentUser instanceof Teacher) {
                 loadStudentList();
+                loadAssignmentSubmissions();  // 🔵 CALL IT HERE ✅
                 if (studentListView != null) studentListView.setVisible(true);
                 if (submitGradeButton != null) submitGradeButton.setVisible(true);
                 if (editButton != null) editButton.setVisible(true);
-            } else {
+            }
+
+            else {
                 selectedStudentId = currentUser.getId();
                 loadGrades();
                 if (studentListView != null) studentListView.setVisible(false);
@@ -119,35 +123,48 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
 
     private void loadAssignmentSubmissions() {
         try {
-            List<Assignment> assignments = new AssignmentDAO().getBySubject(currentSubject.getId());
+            AssignmentDAO assignmentDAO = new AssignmentDAO();
+            ASubmissionDAO submissionDAO = new ASubmissionDAO();
+            GradeDAO gradeDAO = new GradeDAO();
+
+            List<Assignment> assignments = assignmentDAO.getBySubject(currentSubject.getId());
             if (assignments.isEmpty()) return;
 
-            Assignment selectedAssignment = assignments.get(0); // You can make this dynamic with dropdown
-            List<ASubmission> submissions = new ASubmissionDAO().getSubmissionsByAssignmentId(selectedAssignment.getId());
-            List<Grade> grades = new GradeDAO().getGradesForAssignment(selectedAssignment.getId());
+            accordion.getPanes().clear();
 
-            Map<String, Grade> studentGrades = new HashMap<>();
-            for (Grade g : grades) {
-                studentGrades.put(g.getStudentId(), g);
+            for (Assignment assignment : assignments) {
+                List<ASubmission> submissions = submissionDAO.getSubmissionsByAssignmentId(assignment.getId());
+                List<Grade> grades = gradeDAO.getGradesForAssignment(assignment.getId());
+
+                Map<String, Grade> studentGrades = new HashMap<>();
+                for (Grade g : grades) {
+                    studentGrades.put(g.getStudentId(), g);
+                }
+
+                for (ASubmission sub : submissions) {
+                    String studentId = sub.getStudentId();
+                    Grade grade = studentGrades.get(studentId);
+
+                    String feedback = (grade != null && grade.getFeedback() != null) ? grade.getFeedback() : "";
+                    String mark = (grade != null && grade.getGrade() != null) ? grade.getGrade() : "";
+                    String time = (sub.getTimestamp() != null) ? sub.getTimestamp() : "N/A";
+
+                    accordion.getPanes().add(
+                            createPane("Assignment: " + assignment.getTitle() + " - Student: " + studentId,
+                                    feedback, mark, time, assignment.getId(), studentId)
+                    );
+                }
             }
 
-            accordion.getPanes().clear();
-            for (ASubmission sub : submissions) {
-                Grade grade = studentGrades.get(sub.getStudentId());
-
-                String feedback = grade != null ? grade.getFeedback() : "";
-                String mark = grade != null ? grade.getGrade() : "";
-                String time = sub.getTimestamp();
-
-                accordion.getPanes().add(
-                        createPane("Student: " + sub.getStudentId(), feedback, mark, time, selectedAssignment.getId(), sub.getStudentId())
-                );
+            if (!accordion.getPanes().isEmpty()) {
+                accordion.setExpandedPane(accordion.getPanes().get(0));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
 
     private void loadGrades() {
@@ -201,9 +218,6 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
         }
     }
 
-
-
-
     private TitledPane createPane(String title, String feedback, String grade, String submittedTime, String assignmentId, String studentId) {
         TextArea feedbackArea = new TextArea(feedback);
         TextArea gradeArea = new TextArea(grade);
@@ -211,23 +225,28 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
 
         boolean isTeacher = currentUser instanceof Teacher;
 
+        // Edit permissions
         feedbackArea.setEditable(isTeacher);
         gradeArea.setEditable(isTeacher);
         submittedArea.setEditable(false);
-        feedbackArea.setPrefRowCount(3);
-        gradeArea.setPrefRowCount(1);
-        submittedArea.setPrefRowCount(1);
 
+        // Wrapping and sizing
         feedbackArea.setWrapText(true);
         gradeArea.setWrapText(true);
         submittedArea.setWrapText(true);
 
-        feedbackArea.setMaxHeight(100);
-        gradeArea.setMaxHeight(60);
-        submittedArea.setMaxHeight(60);// submission time is always read-only
+        feedbackArea.setPrefHeight(200);
+        feedbackArea.setPrefWidth(600);
 
+        gradeArea.setPrefHeight(40);
+        submittedArea.setPrefHeight(40);
+        gradeArea.setPrefWidth(250);
+        submittedArea.setPrefWidth(250);
+
+        // Submit button
         Button submitBtn = new Button("Submit Grade");
         submitBtn.setVisible(isTeacher);
+        submitBtn.setManaged(isTeacher);
         submitBtn.setOnAction(e -> {
             Grade g = new Grade(
                     UUID.randomUUID().toString(),
@@ -238,21 +257,35 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
                     submittedArea.getText()
             );
             new GradeDAO().saveOrUpdateGrade(g);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "✅ Grade submitted.");
-            alert.showAndWait();
+            new Alert(Alert.AlertType.INFORMATION, " Grade submitted.").showAndWait();
         });
 
-        VBox feedbackBox = new VBox(new Text("Feedback"), feedbackArea);
-        VBox gradeBox = new VBox(new Text("Grade"), gradeArea);
-        VBox submittedBox = new VBox(new Text("Submitted Time"), submittedArea);
-        VBox buttonsBox = new VBox(submitBtn);
+        // Layout
+        VBox feedbackBox = new VBox(10, new Label("Feedback"), feedbackArea);
+        feedbackBox.setPrefWidth(600);
 
-        HBox content = new HBox(20, feedbackBox, gradeBox, submittedBox, buttonsBox);
-        AnchorPane root = new AnchorPane(content);
-        AnchorPane.setTopAnchor(content, 10.0);
-        AnchorPane.setLeftAnchor(content, 10.0);
+        VBox gradeTimeBox = new VBox(10,
+                new VBox(5, new Label("Grade"), gradeArea),
+                new VBox(5, new Label("Submitted Time"), submittedArea)
+        );
+        gradeTimeBox.setPrefWidth(250);
 
-        TitledPane pane = new TitledPane(title, root);
+        VBox buttonBox = new VBox(submitBtn);
+        buttonBox.setPrefWidth(150);
+        buttonBox.setSpacing(20);
+
+        HBox content = new HBox(50, feedbackBox, gradeTimeBox, buttonBox);
+        content.setPadding(new Insets(20));
+        content.setPrefWidth(1000);
+
+        ScrollPane scrollPane = new ScrollPane(content);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
+        TitledPane pane = new TitledPane(title, scrollPane);
+        pane.setExpanded(true);
         pane.setUserData(Map.of(
                 "assignmentId", assignmentId,
                 "studentId", studentId,
@@ -263,6 +296,8 @@ public class HomeWorkGradePageController implements Initializable, SectionContro
 
         return pane;
     }
+
+
 
 
 

@@ -201,6 +201,27 @@ public class DashboardController implements Initializable {
                 });
         //System.out.println("Clicked on Lesson plan");
     }
+    @FXML
+    public void goToGradePage(MouseEvent ev) {
+        String fxml;
+        if (currentUser instanceof Teacher) {
+            fxml = "/com/example/teach/homeworkgradepage.fxml";
+        } else {
+            fxml = "/com/example/teach/studentgradepage.fxml";
+        }
+
+        navigateTo(fxml, "Dashboard / Grade Page", ctrl -> {
+            if (ctrl instanceof SectionControllerBase c) {
+                c.setDashboardController(this);
+                c.setUser(currentUser);
+                if (currentUser instanceof Teacher t) {
+                    c.setSubject(t.getSubject());
+                } else if (currentUser instanceof Student s && !s.getSubjects().isEmpty()) {
+                    c.setSubject(s.getSubjects().get(0)); // assuming single subject
+                }
+            }
+        });
+    }
 
     /**
      * Stub for showing notifications (implementation omitted).
