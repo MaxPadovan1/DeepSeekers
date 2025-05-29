@@ -199,7 +199,6 @@ public class DashboardController implements Initializable {
                         lp.setSubject(subjects);
                     }
                 });
-        //System.out.println("Clicked on Lesson plan");
     }
     @FXML
     public void goToGradePage(MouseEvent ev) {

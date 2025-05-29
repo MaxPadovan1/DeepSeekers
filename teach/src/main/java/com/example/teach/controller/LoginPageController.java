@@ -52,8 +52,6 @@ public class LoginPageController {
             // 3a) Failure
             errorLabel.setText("Invalid username or password.");
         } else {
-            // 3b) Success → debug print + open dashboard
-            System.out.println("🔑 Logged in: " + loggedIn);
             openDashboard(event, loggedIn);
         }
     }
