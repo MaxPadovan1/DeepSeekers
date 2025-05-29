@@ -12,7 +12,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
+/**
+ * Controller for managing Homework creation, editing, deletion, and AI-assisted generation.
+ * Supports teacher-only features and integrates with the AIService for content generation.
+ */
 public class HomeworkController implements SectionControllerBase {
 
     @FXML private VBox teacherSection;
@@ -33,7 +36,10 @@ public class HomeworkController implements SectionControllerBase {
     private User currentUser;
     private Homework editingHomework;
     private boolean addingNew = false;
-
+    /**
+     * Sets the current user and adjusts UI based on user role.
+     * @param user the logged-in user
+     */
     @Override
     public void setUser(User user) {
         this.currentUser = user;
@@ -46,8 +52,10 @@ public class HomeworkController implements SectionControllerBase {
             enhanceWithAIButton.setDisable(!isTeacher);
         }
     }
-
-
+    /**
+     * Sets the current subject context and loads existing homework.
+     * @param subject the selected subject
+     */
     @Override
     public void setSubject(Subject subject) {
         this.currentSubject = subject;
@@ -56,7 +64,9 @@ public class HomeworkController implements SectionControllerBase {
 
     @Override
     public void setDashboardController(DashboardController controller) {}
-
+    /**
+     * Loads homework from the database for the current subject.
+     */
     private void loadHomeworks() {
         try {
             List<Homework> list = homeworkDAO.getBySubject(currentSubject.getId());
@@ -65,7 +75,9 @@ public class HomeworkController implements SectionControllerBase {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Handler for adding new homework, optionally using AI assistance.
+     */
     @FXML
     private void onAddHomework() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -98,8 +110,9 @@ public class HomeworkController implements SectionControllerBase {
             teacherStatusLabel.setText("Enter homework details manually.");
         }
     }
-
-
+    /**
+     * Enables editing of the selected homework item.
+     */
     @FXML
     private void onEditHomework() {
         if (editingHomework == null) return;
@@ -107,7 +120,9 @@ public class HomeworkController implements SectionControllerBase {
         addingNew = false;
         teacherStatusLabel.setText("Editing homework. Make changes and save.");
     }
-
+    /**
+     * Saves newly added or edited homework into the database.
+     */
     @FXML
     private void onSaveHomework() {
         String title = homeworkTitleField.getText();
@@ -141,7 +156,9 @@ public class HomeworkController implements SectionControllerBase {
             teacherStatusLabel.setText("Error saving homework.");
         }
     }
-
+    /**
+     * Deletes the selected homework.
+     */
     @FXML
     private void onDeleteHomework() {
         Homework selected = homeworkDropdown.getValue();
@@ -155,12 +172,16 @@ public class HomeworkController implements SectionControllerBase {
             teacherStatusLabel.setText("Failed to delete homework.");
         }
     }
-
+    /**
+     * Placeholder method for release functionality.
+     */
     @FXML
     private void onToggleRelease() {
         teacherStatusLabel.setText("Release toggle not implemented.");
     }
-
+    /**
+     * Populates the UI with selected homework details.
+     */
     @FXML
     private void onHomeworkSelected() {
         Homework selected = homeworkDropdown.getValue();
@@ -175,7 +196,9 @@ public class HomeworkController implements SectionControllerBase {
         saveHomeworkButton.setDisable(true);
         enableEditing(false);
     }
-
+    /**
+     * Opens a dialog to choose a short story and generates homework using AI.
+     */
     @FXML
     private void onGenerateWithAI() {
         if (!(currentUser instanceof Teacher)) return;
@@ -210,6 +233,10 @@ public class HomeworkController implements SectionControllerBase {
             previewAndGenerateHomeworkFromStory(selectedFile);
         }
     }
+    /**
+     * Shows preview of selected short story before generating homework.
+     * @param storyFile the selected StudyFile
+     */
     private void previewAndGenerateHomeworkFromStory(StudyFile storyFile) {
         try {
             String storyText = new String(storyFile.getData(), StandardCharsets.UTF_8);
@@ -237,6 +264,11 @@ public class HomeworkController implements SectionControllerBase {
             teacherStatusLabel.setText("❌ Failed to preview story.");
         }
     }
+    /**
+     * Sends the short story to AI service and updates the homework form with the generated content.
+     * @param title title of the story
+     * @param storyText the full text of the story
+     */
     private void runAIHomeworkGeneration(String title, String storyText) {
         teacherStatusLabel.setText("AI is generating homework...");
 
@@ -273,7 +305,10 @@ public class HomeworkController implements SectionControllerBase {
         }).start();
     }
 
-
+    /**
+     * Enables or disables editing of form fields.
+     * @param enable true to enable, false to disable
+     */
 
     private void enableEditing(boolean enable) {
         homeworkTitleField.setDisable(!enable);
@@ -281,6 +316,10 @@ public class HomeworkController implements SectionControllerBase {
         homeworkDueDatePicker.setDisable(!enable);
         saveHomeworkButton.setDisable(!enable);
     }
+
+    /**
+     * Enhances manually entered homework using the AIService.
+     */
     @FXML
     private void onEnhanceWithAI() {
         String original = homeworkDetailsText.getText();
