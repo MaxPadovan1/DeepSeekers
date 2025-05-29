@@ -1,4 +1,4 @@
-# Sprint Retrospective – Sprint 1 (May 4, 2025)
+# Sprint Retrospective – Sprint 1 (April 11, 2025)
 
 ## Team
 - Angela Suresh Thomas
@@ -24,7 +24,7 @@
 - Everyone is an integral part of the team.
 
 
-# Sprint Retrospective – Sprint 2 (May 27, 2025)
+# Sprint Retrospective – Sprint 2 (May 4, 2025)
 
 ## What Went Well
 - Everyone is working on the project, we have good communication, doing team meeting every weeks and ensure that tasks are assigned according to each person's abilities.
@@ -36,7 +36,7 @@
 - Sometimes, some of the team members received the task but because of there was some time clash or they got something to
 do, so they had forgot to start that until someone else followed up and asked for the result.
 
-# Sprint Retrospective – Sprint 3 (April 10, 2025)
+# Sprint Retrospective – Sprint 3 (April 16, 2025)
 
 ## What Went Well
 - All team members are consistently engaged in the project.
@@ -48,7 +48,7 @@ do, so they had forgot to start that until someone else followed up and asked fo
 - Some team members became occupied with other assignments, which caused slight delays in our progress.
 - As the semester came to an end, a few members were unable to attend meetings due to exam preparation.
 
-# Sprint Retrospective – Sprint 4(May 29, 2025)
+# Sprint Retrospective – Sprint 4 (May 29, 2025)
 
 ## What went well
 - We were able to complete all must have, should have and most of the could have tasks by the expected time.
