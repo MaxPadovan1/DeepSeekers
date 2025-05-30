@@ -222,13 +222,6 @@ public class DashboardController implements Initializable {
         });
     }
 
-    /**
-     * Stub for showing notifications (implementation omitted).
-     */
-    @FXML
-    private void showNotifications() {
-        // TODO: implement notifications view
-    }
 
     /**
      * Handles clicks on subject tiles by index.

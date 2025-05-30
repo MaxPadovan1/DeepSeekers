@@ -78,16 +78,7 @@
                 <Label fx:id="greetingLabel" style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold"/>
                 <Region HBox.hgrow="ALWAYS"/>
 
-                <Button fx:id="notificationButton" onAction="#showNotifications"
-                        style="-fx-background-color: transparent;">
-                    <graphic>
-                        <ImageView fitWidth="24" fitHeight="24">
-                            <image>
-                                <Image url="@images/notification_bell.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
+
             </HBox>
 
             <!-- Centered Dashboard Tiles -->
