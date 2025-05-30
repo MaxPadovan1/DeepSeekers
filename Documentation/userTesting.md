@@ -32,9 +32,35 @@ The user was also able to logout without any difficulty.
    > ____Make study page understandable. The creators could have added more features so that the page looks a little more interesting and occupied.____
 5. Would you feel confident using this feature again?
    - Yes,The user said that she found it satisfying and that, the application has some potential, but needs improvement.
+---
+##  User 2- Test Information
+
+- **Tester Name:** ____Varun Jude Culas____
+- **Date:** ______30-05-25______
+- **Feature Being Tested:** ____DeepTeach Application____
+
+###  Observation Notes
+The user followed the expected path like the previous user. The user signed up, logged in, navigated from the dashboard, knew that the labels on the top were buttons that helps navigate to different pages.
+The user knew what the AI buttons were used for and got a clear understanding on seeing the AI work. 
+The user was also able to upload, edit, add, release and delete necesaary files in homeworks, assignments and lesson plan.
+The user noticed the menu button and used to open the classinfo, profile and lesson plan(teachers).
+The user was also able to logout without any difficulty.
+
+###  User Feedback
+
+1. Asked the user if there was anything confusing or unclear?
+   > __The user did not understand the study page at all.__
+2. Asked the user if the task was easy or hard to complete? Why?
+   > __The user replied that the application was easy to understand, hence it was easy to finish it without errors, except the fact that she found the pages to be  very minimalistic.__
+4. What did they like about the interface?
+   > __The application had all the basic necessary features needed for a teaching assistant application. The interface was user-friendly, easy to read and understand.__
+4. What could be improved?
+   > ____The user suggested that the UI is very simplisitic and basic and needs improvements to make it more appealing and user-satisfying.____
+5. Would you feel confident using this feature again?
+   - Yes,The user said that she found it satisfying and user-efficient, but needs UI development.
      
 ### Your Reflections
 
-As the developer, I learned that the study page has to be made more understandable.
-The UI cn be modified to make it look better with an interesting theme in the background, maybe. Additional features, could be added to make it a more efficient application.
+As the developer, I learned that the UI should be modified to make it look better with an interesting theme in the background, maybe. 
+Additional features, could be added to make it a more efficient application.
 
