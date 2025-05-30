@@ -59,10 +59,10 @@ The user was also able to logout without any difficulty.
 5. Would you feel confident using this feature again?
    - Yes,The user said that she found it satisfying and user-efficient, but needs UI development.
      
-### Your Reflections
-
+###  Your Reflections
 As the developer, I learned that the UI should be modified to make it look better with an interesting theme in the background, maybe. 
 Additional features, could be added to make it a more efficient application.
+
 ---
 ##  User 3- Test Information
 
