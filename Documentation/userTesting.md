@@ -53,7 +53,7 @@ The user was also able to logout without any difficulty.
 2. Asked the user if the task was easy or hard to complete? Why?
    > __The user replied that the application was easy to understand, hence it was easy to finish it without errors, except the fact that she found the pages to be  very minimalistic.__
 4. What did they like about the interface?
-   > __The application had all the basic necessary features needed for a teaching assistant application. The interface was user-friendly, easy to read and understand.__
+   > __The application had all the basic necessary features needed for a teaching assistant application. The interface was user-friendly, easy to read and understand.She also liked the homepage which looked occupied with content.__
 4. What could be improved?
    > ____The user suggested that the UI is very simplisitic and basic and needs improvements to make it more appealing and user-satisfying.____
 5. Would you feel confident using this feature again?
@@ -63,4 +63,32 @@ The user was also able to logout without any difficulty.
 
 As the developer, I learned that the UI should be modified to make it look better with an interesting theme in the background, maybe. 
 Additional features, could be added to make it a more efficient application.
+---
+##  User 3- Test Information
+
+- **Tester Name:** ____Binoy Biju____
+- **Date:** ______30-05-25______
+- **Feature Being Tested:** ____DeepTeach Application____
+
+###  Observation Notes
+The user followed the same path as the previous users. He was able to navigate without difficulties and was able to locate buttons.
+
+###  User Feedback
+
+1. Asked the user if there was anything confusing or unclear?
+   > __The user did not understand the study page and suggested to change the page name to course content or lecture notes.__
+2. Asked the user if the task was easy or hard to complete? Why?
+   > __The user replied that the application was user friendly and understandable, hence it was easy to finish it without errors, except the fact that he found the texts to look almost similar to javascript.__
+4. What did they like about the interface?
+   > __The application had all the basic necessary features needed for a teaching assistant application. The interface was user-friendly, and effective. The user liked the profile page and appreciated how it had necessarry information listing textfields.__
+4. What could be improved?
+   > ____The user suggested to change the name of the study page to course content page and change the texts in the code to look like plain text with a different font, than how it looks now( he said,' the texts look a bit like javascript code')____
+5. Would you feel confident using this feature again?
+   - Yes,The user said that she found it satisfying and would definitely use it again, and that it has potential, if improved.
+     
+### Your Reflections
+
+As the developer, I learned that the UI should be modified to make it look better with an interesting theme in the background, maybe. 
+Changing the texts and theme of the project to a more user appealing one would make our project look better.
+
 
